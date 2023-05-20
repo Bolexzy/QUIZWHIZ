@@ -1,0 +1,33 @@
+{
+	"user": "Samuel",
+	"quiz_id": "829423982",
+	"title": "math",
+	"time_of_quiz": "datetime",
+	"alloted_time_mins": "30",
+	"questions": [
+		{
+			"id": "1",
+			"options": {
+				"A": "america",
+				"B": "nigeria",
+				"C": "ghana",
+				"D": "south africa"
+			},
+			"answer": [
+				"A"
+			]
+		},
+		{
+			"id": "2",
+			"options": {
+				"A": ";alsplsad",
+				"B": "pqlwdwl",
+				"C": "qwldko",
+				"D": "[wd[d"
+			},
+			"answer": [
+				"A"
+			]
+		}
+	]
+}
