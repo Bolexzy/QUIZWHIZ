@@ -29,6 +29,7 @@ app.post('/register', (req, res) => {
 		.then((userCredential) => {
 			/* signed in */
 			const user = userCredential.user;
+			user.photoURL = "https://drive.google.com/file/d/1C3xdzHzAtKi-yhwm__445azLmlGy97ng/view?usp=sharing"
 			sendEmailVerification(auth.currentUser)
 				.then(() => {
 					/* verified email */
@@ -85,6 +86,26 @@ app.get("/authstate", (req, res) => {
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			res.send({ "message": "user is signed in", ...user })
+		} else {
+			res.send({ "message": "user is signed out", ...user })
+		}
+	});
+})
+
+
+app.post('/change_pic', (req, res) => {
+	const { photoUrl } = req.body;
+	const auth = getAuth();
+
+	onAuthStateChanged(auth, (user) => {
+		if (user) {
+			updateProfile(auth.currentUser, {
+				photoURL: photoUrl
+			}).then(() => {
+				res.status(200).json({ "message": "success" })
+			}).catch((error) => {
+				res.status(error.code).json({ "message": error.message })
+			});
 		} else {
 			res.send({ "message": "user is signed out", ...user })
 		}
