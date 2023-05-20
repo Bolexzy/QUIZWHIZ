@@ -3,6 +3,7 @@ const { initializeApp } = require('firebase/app')
 
 const express = require('express')
 const bodyParser = require('body-parser')
+const { nanoid } = require("nanoid")
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -19,6 +20,22 @@ const firebaseConfig = {
 
 /* initialize firebase app */
 const firebaseApp = initializeApp(firebaseConfig);
+
+/* get ref to firestore collection */
+const db = firebase.firestore();
+
+// Define a middleware to allow access to only authenticated users
+function isLoggedIn(req, res, next) {
+	const auth = getAuth();
+
+	onAuthStateChanged(auth, (user) => {
+		if (user) {
+			next()
+		} else {
+			res.status(401).json({ "message": "unauthorized" })
+		}
+	});
+}
 
 /* register a new user */
 app.post('/register', (req, res) => {
@@ -68,7 +85,7 @@ app.post('/login', (req, res) => {
 })
 
 /* logout a user */
-app.get("/logout", (req, res) => {
+app.get("/logout", isLoggedIn, (req, res) => {
 	const auth = getAuth();
 
 	signOut(auth).then(() => {
@@ -83,6 +100,7 @@ app.get("/logout", (req, res) => {
 app.get("/authstate", (req, res) => {
 	const auth = getAuth();
 	const user_data = auth.currentUser;
+
 	onAuthStateChanged(auth, (user) => {
 		if (user) {
 			res.send({ "message": "user is signed in", user: user_data })
@@ -93,7 +111,7 @@ app.get("/authstate", (req, res) => {
 })
 
 
-app.post('/change_pic', (req, res) => {
+app.post('/change_pic', isLoggedIn, (req, res) => {
 	const { photoUrl } = req.body;
 	const auth = getAuth();
 
@@ -124,6 +142,67 @@ app.post('/resetpassword', (req, res) => {
 		.catch((error) => {
 			res.status(error.code).json({ "message": error.message });
 		});
+})
+
+
+/* create a quiz */
+app.post('/create_quiz', isLoggedIn, (req, res) => {
+	const auth = getAuth();
+	const user = auth.currentUser;
+	const question_id = nanoid(20) + "_" + user.uid;
+	let questions = req.body;
+
+	questions = { ...questions, "user_id": user.uid, question_id }
+
+	db.collection("Questions").doc(question_id).set(questions)
+		.then(() => {
+			res.status(201).json({ "message": "success", questions })
+		}).catch((error) => {
+			res.status(500).json({ "message": error })
+		});
+})
+
+/* update a quiz */
+app.put('/update_quiz/:question_id', isLoggedIn, (req, res) => {
+	const question_id = req.params.question_id;
+	const updatedQuestion = req.body;
+
+	db.collection(Questions).doc(question_id).update({
+		updatedQuestion
+	})
+		.then(() => {
+			res.status(201).json({ "message": "success", updatedQuestion })
+		}).catch((error) => {
+			res.status(500).json({ "message": error });
+		});
+})
+
+/* delete a quiz */
+app.delete('/update_quiz/:question_id', isLoggedIn, (req, res) => {
+	const question_id = req.params.question_id;
+
+	db.collection(Questions).doc(question_id).delete()
+		.then(() => {
+			res.status(200).json({ "message": "success" })
+		}).catch((error) => {
+			res.status(500).json({ "message": error });
+		});
+})
+
+
+/* get user created quizes */
+app.get('/my_questions', isLoggedIn, (req, res) => {
+	collection_list = []
+	db.collection("Questions").where("quiz_id", "==", quizId).get()
+		.then((querySnapshot) => {
+			querySnapshot.forEach(doc => {
+				collection_list.push(doc.data())
+			})
+			res.status(200).json({ "message": "success", collection_list })
+		})
+		.catch((error) => {
+			res.status(500).json({ "message": error })
+		})
 })
 
 

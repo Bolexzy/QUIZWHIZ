@@ -1,40 +1,33 @@
 {
-    "quiz_id": "829423982",
-    "title":"math",
-    "time_of_quiz": "datetime",
-    "alloted_time_mins": "30",
-    "questions": [
-    {
-        "id": "3873",
-        "question": "question 0",
-        "options":{
-            "A": "america",
-            "B": "nigeria",
-            "C": "ghana",
-            "D": "south africa"
-        },
-        "answer":  ["A"]
-    },
-    {
-        "id": "345",
-        "question": "question 1",
-        "options":{
-            "A": ";alsplsad",
-            "B": "pqlwdwl",
-            "C": "qwldko",
-            "D": "[wd[d"
-        },
-        "answer": ["A"]
-    },
-    {
-        "id": "6336",
-        "question": "question 2",
-        "options":{
-            "A": "apldsdskl",
-            "B": "lpsdlwp",
-            "C": "lwdlpwdl",
-            "D": "psl[scl["
-        },
-        "answer":  ["A"]
-    }
-]
+	"user": "Samuel",
+	"quiz_id": "829423982",
+	"title": "math",
+	"time_of_quiz": "datetime",
+	"alloted_time_mins": "30",
+	"questions": [
+		{
+			"id": "1",
+			"options": {
+				"A": "america",
+				"B": "nigeria",
+				"C": "ghana",
+				"D": "south africa"
+			},
+			"answer": [
+				"A"
+			]
+		},
+		{
+			"id": "2",
+			"options": {
+				"A": ";alsplsad",
+				"B": "pqlwdwl",
+				"C": "qwldko",
+				"D": "[wd[d"
+			},
+			"answer": [
+				"A"
+			]
+		}
+	]
+}
