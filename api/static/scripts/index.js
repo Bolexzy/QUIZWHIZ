@@ -192,7 +192,7 @@ app.put('/update_quiz/:question_id', async (req, res) => {
 })
 
 /* delete a quiz */
-app.delete('/update_quiz/:question_id', async (req, res) => {
+app.delete('/delete_quiz/:question_id', async (req, res) => {
 	try {
 		const question_id = req.params.question_id;
 
