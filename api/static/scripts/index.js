@@ -1,5 +1,7 @@
-const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail } = require("firebase/auth")
+const { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail, onAuthStateChanged } = require("firebase/auth")
 const { initializeApp } = require('firebase/app')
+const { getFirestore, collection, setDoc, doc, updateDoc, deleteDoc, getDocs } = require("firebase/firestore");
+
 
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -8,6 +10,13 @@ const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json())
+
+const winston = require('winston');
+const logger = winston.createLogger({
+	level: 'info',
+	transports: [new winston.transports.Console()]
+});
+
 
 const firebaseConfig = {
 	apiKey: "AIzaSyDrcB0RrBSaQn5-2mbYmGyS5zlzkc9slps",
@@ -21,20 +30,22 @@ const firebaseConfig = {
 /* initialize firebase app */
 const firebaseApp = initializeApp(firebaseConfig);
 
-/* get ref to firestore collection */
-const db = firebase.firestore();
+// Initialize Cloud Firestore and get a reference to the service
+const db = getFirestore(firebaseApp);
 
 // Define a middleware to allow access to only authenticated users
 function isLoggedIn(req, res, next) {
 	const auth = getAuth();
+	const user_id = auth.currentUser.uid;
 
-	onAuthStateChanged(auth, (user) => {
-		if (user) {
-			next()
-		} else {
-			res.status(401).json({ "message": "unauthorized" })
-		}
-	});
+	if (user_id) {
+		logger.log('info', "mid: " + user_id)
+		req.user_id = user_id;
+		next()
+	}
+	else {
+		res.status(401).send("unauthorized");
+	}
 }
 
 /* register a new user */
@@ -80,7 +91,7 @@ app.post('/login', (req, res) => {
 
 		})
 		.catch((error) => {
-			res.status(error.code).json({ "message": error.message });
+			res.json({ "message": error.message });
 		});
 })
 
@@ -115,19 +126,18 @@ app.post('/change_pic', isLoggedIn, (req, res) => {
 	const { photoUrl } = req.body;
 	const auth = getAuth();
 
-	onAuthStateChanged(auth, (user) => {
-		if (user) {
-			updateProfile(auth.currentUser, {
-				photoURL: photoUrl
-			}).then(() => {
-				res.status(200).json({ "message": "success" })
-			}).catch((error) => {
-				res.status(error.code).json({ "message": error.message })
-			});
-		} else {
-			res.send({ "message": "user is signed out", ...user })
-		}
-	});
+	if (auth.currentUser) {
+		updateProfile(auth.currentUser, {
+			photoURL: photoUrl, 
+		}).then(() => {
+			res.status(200).json({ "message": "success", photoUrl })
+		}).catch((error) => {
+			res.status(error.code).json({ "message": error.message })
+		});
+	} else {
+		res.send({ "message": "user is signed out", ...user })
+	}
+
 })
 
 
@@ -146,63 +156,73 @@ app.post('/resetpassword', (req, res) => {
 
 
 /* create a quiz */
-app.post('/create_quiz', isLoggedIn, (req, res) => {
-	const auth = getAuth();
-	const user = auth.currentUser;
-	const question_id = nanoid(20) + "_" + user.uid;
-	let questions = req.body;
+/* method of creating quiz may not be too optimal */
+/* may change the question_id to the user_id in future for faster queries */
+app.post('/create_quiz', async (req, res) => {
 
-	questions = { ...questions, "user_id": user.uid, question_id }
+	try {
+		const auth = getAuth()
+		const user_id = auth.currentUser.uid;
+		const question_id = nanoid(20) + "_" + user_id;
+		let questions = req.body;
+		questions = { ...questions, "user_id": user_id, question_id }
 
-	db.collection("Questions").doc(question_id).set(questions)
-		.then(() => {
-			res.status(201).json({ "message": "success", questions })
-		}).catch((error) => {
-			res.status(500).json({ "message": error })
-		});
+		const docRef = await setDoc(doc(db, "Questions", question_id), questions);
+		res.status(201).json({ "message": "success", questions, "doc": docRef })
+	} catch (e) {
+		res.status(500).json({ "message": e.message })
+	}
 })
 
 /* update a quiz */
-app.put('/update_quiz/:question_id', isLoggedIn, (req, res) => {
-	const question_id = req.params.question_id;
-	const updatedQuestion = req.body;
+app.put('/update_quiz/:question_id', async (req, res) => {
 
-	db.collection(Questions).doc(question_id).update({
-		updatedQuestion
-	})
-		.then(() => {
-			res.status(201).json({ "message": "success", updatedQuestion })
-		}).catch((error) => {
-			res.status(500).json({ "message": error });
-		});
+	try {
+		const question_id = req.params.question_id;
+		const updatedQuestion = req.body;
+
+		const docRef = doc(db, "Questions", question_id);
+		await updateDoc(docRef, updatedQuestion);
+		res.status(200).json({ "message": "success" })
+	} catch (error) {
+		res.status(500).json({ "message": error.message })
+	}
+
 })
 
 /* delete a quiz */
-app.delete('/update_quiz/:question_id', isLoggedIn, (req, res) => {
-	const question_id = req.params.question_id;
+app.delete('/delete_quiz/:question_id', async (req, res) => {
+	try {
+		const question_id = req.params.question_id;
 
-	db.collection(Questions).doc(question_id).delete()
-		.then(() => {
-			res.status(200).json({ "message": "success" })
-		}).catch((error) => {
-			res.status(500).json({ "message": error });
-		});
+		await deleteDoc(doc(db, "Questions", question_id));
+		res.status(200).json({ "message": "success" })
+
+	} catch (error) {
+		res.status(500).json({ "message": error.message })
+	}
+
 })
 
 
 /* get user created quizes */
-app.get('/my_questions', isLoggedIn, (req, res) => {
-	collection_list = []
-	db.collection("Questions").where("quiz_id", "==", quizId).get()
-		.then((querySnapshot) => {
-			querySnapshot.forEach(doc => {
-				collection_list.push(doc.data())
-			})
-			res.status(200).json({ "message": "success", collection_list })
-		})
-		.catch((error) => {
-			res.status(500).json({ "message": error })
-		})
+app.get('/my_questions', async (req, res) => {
+
+	try {
+		let collection_list = []
+		const querySnapshot = await getDocs(collection(db, "Questions"));
+
+		querySnapshot.forEach((doc) => {
+			if (getAuth().currentUser && (doc.data().user_id === getAuth().currentUser.uid)) {
+				collection_list.push(doc.data());
+			}
+		});
+
+		res.json({ "message": "success", collection_list })
+	} catch (error) {
+		res.status(500).json({ "message": error.message })
+	}
+
 })
 
 
