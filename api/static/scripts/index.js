@@ -126,19 +126,18 @@ app.post('/change_pic', isLoggedIn, (req, res) => {
 	const { photoUrl } = req.body;
 	const auth = getAuth();
 
-	onAuthStateChanged(auth, (user) => {
-		if (user) {
-			updateProfile(auth.currentUser, {
-				photoURL: photoUrl
-			}).then(() => {
-				res.status(200).json({ "message": "success" })
-			}).catch((error) => {
-				res.status(error.code).json({ "message": error.message })
-			});
-		} else {
-			res.send({ "message": "user is signed out", ...user })
-		}
-	});
+	if (auth.currentUser) {
+		updateProfile(auth.currentUser, {
+			photoURL: photoUrl, 
+		}).then(() => {
+			res.status(200).json({ "message": "success", photoUrl })
+		}).catch((error) => {
+			res.status(error.code).json({ "message": error.message })
+		});
+	} else {
+		res.send({ "message": "user is signed out", ...user })
+	}
+
 })
 
 

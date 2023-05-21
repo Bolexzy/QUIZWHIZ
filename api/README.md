@@ -11,7 +11,7 @@
 - /resetpassword POST (body of request requires email)
 - /authstate GET (get user data like photoUrl, displayName, email etc)
 - /logout GET (logout user)
-- /change_pic POST (body of request requires photoUrl)
+- /change_pic POST (body of request requires photoUrl, also returns current photoUrl)
 
 ## Question endpoints
 - /my_questions GET (get questions created by user)
