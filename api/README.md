@@ -1,5 +1,5 @@
 # Purpose
-- Script in this directory handle the authentication backend and user questions
+- Script in this directory handles the authentication backend and user questions
 
 ## to start script in development
 - ```npm run start```
