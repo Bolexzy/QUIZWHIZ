@@ -2,8 +2,8 @@
 - Script in this directory handle the authentication backend and user questions
 
 ## to start script in development
-- npm run start
-- script runs on port 4000
+- ```npm run start```
+- script runs on port 4000, eg To create a new user make  a post request with email and password in body to ```http://localhost:4000/register```
 
 ## Authentication endpoints
 - /login POST (body of request requires email and password)
