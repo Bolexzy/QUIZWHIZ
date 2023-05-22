@@ -9,39 +9,53 @@ import QuizSettingPage from './components/quiz_settings_components/QuizSettingPa
 import QuizTakingPage from './components/quiz_taking_component/QuizTakingPage';
 
 import './index.css';
+import Page from './components/Page';
 import LandingPage from './components/landing_page/LandingPage';
 
 
 const router = createBrowserRouter([
   {
     path: '/',
-    // modified to landing page
-    element:<Root />,
+    element: <Page />,
     children: [
       {
         index: true,
         element: (<LandingPage />),
       },
       {
-        path: '/setting',
-        element: (
-          <Center>
-            <Text>Setting page</Text>
-          </Center>
-        ),
-      },
-      {
-        path: "/takequiz",
-        element:<QuizTakingPage />,
-      },
-      {
-        path: '/setquiz',
-        element: <QuizSettingPage />,
-      },
+        path: 'backend',
+        element: <Root />,
+        children: [
+          {
+            index: true,
+            element: (
+              <Center>
+                <Text>Home page</Text>
+              </Center>
+            ),
+          },
+          {
+            path: 'setting',
+            element: (
+              <Center>
+                <Text>Setting page</Text>
+              </Center>
+            ),
+          },
+          {
+            path: "takequiz",
+            element: <QuizTakingPage />,
+          },
+          {
+            path: 'setquiz',
+            element: <QuizSettingPage />,
+          },
+        ]
+      }
+
     ],
   },
 ]);
-
 function App() {
   return (
     <ChakraProvider theme={theme}>
