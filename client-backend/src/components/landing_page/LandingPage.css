@@ -1,0 +1,234 @@
+/* Start Global Rules */
+* {
+  box-sizing: border-box !important;
+}
+
+body {
+  font-family: 'Poppins', 'Open Sans', sans-serif;
+}
+
+:root {
+  --primary-orange: #f9a03f;
+  --secondary-color: #00ff00;
+  --accent-green: #ddf9c1;
+  --accent-grey: #e0e0e0;
+  --accent-brown: #813405;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* landing page header css start  */
+.container {
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Small */
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+/* Medium */
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+/* Large */
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+
+/* End Global Rules */
+
+.landing--header {
+  display: flex;
+  padding: 0px;
+  gap: 278px;
+  min-height: 100px;
+}
+
+@media (max-width: 767px) {
+  .landing--header {
+    min-height: auto;
+    display: initial;
+  }
+
+  hr {
+    margin-top: 20px;
+  }
+}
+
+.landing--header .container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+@media (max-width: 767px) {
+  .landing--header .container {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+.container .logo {
+  width: 327px;
+  height: 133px;
+  background-image: url('../../assets/logo.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center;
+}
+
+.container .links {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .container .links {
+    text-align: center;
+    gap: 10px;
+  }
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.container .links li {
+  margin-left: 30px;
+  color: var(--accent-grey);
+  cursor: pointer;
+  transition: 0.3s;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 38px;
+}
+
+@media (max-width: 767px) {
+  .container .links li {
+    margin-left: auto;
+  }
+}
+
+.container .links .login {
+  border-radius: 20px;
+  padding: 10px 20px;
+  color: var(--primary-orange);
+  background-color: #fff;
+  border: 0.791752px solid #f9a03f;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+}
+
+.container .links li:not(:last-child):hover {
+  color: var(--accent-brown);
+}
+
+.container .links li:last-child:hover {
+  background-color: var(--primary-orange);
+  color: #fff;
+}
+
+/* landing page header css end */
+hr {
+  border: 0.527835px solid #ecece8;
+}
+
+/* 
+main body css */
+
+/* .main--content {
+  display: flex;
+} */
+
+.main--content .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 auto;
+  gap: 140px;
+  min-height: calc(100vh - 80px);
+}
+
+@media (max-width: 767px) {
+  .main--content .container {
+    gap: 0;
+    min-height: calc(100vh - 101px);
+    justify-content: center;
+    flex-direction: column-reverse;
+  }
+}
+
+@media (max-width: 767px) {
+  .container .main--info {
+    text-align: center;
+  }
+}
+
+.container .main--info h1 {
+  color: #5d5d5d;
+  font-size: 60px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  line-height: 70px;
+  margin-bottom: 25px;
+}
+
+.container .main--info p {
+  border-left: 1.05567px solid #333333;
+  padding-left: 10px;
+  margin: 0;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: 27px;
+  color: #828282;
+}
+
+.container .main--info button {
+  border: 0;
+  border-radius: 5px;
+  padding: 12px 30px;
+  margin-top: 30px;
+  cursor: pointer;
+  color: #fff;
+  font-family: 'Poppins';
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(95.34deg, #f9a03f 0%, #ffcd2e 100%);
+  box-shadow: 0px 9.50103px 21.1134px -6.33402px #fbe18f;
+}
+
+.container .main--info button:hover {
+  background: var(--primary-orange);
+}
+
+.container .welcome--image {
+  width: 479px;
+  height: 460px;
+  background-image: url('../../assets/landingicon.png');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
