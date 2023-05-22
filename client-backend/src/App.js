@@ -12,6 +12,7 @@ import { Text, Center } from '@chakra-ui/react';
 
 import Root from './components/Root';
 import QuizSettingPage from './components/quiz_settings_components/QuizSettingPage';
+import QuizTakingPage from './components/quiz_taking_component/QuizTakingPage';
 
 import './index.css';
 
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/takequiz",
-        element:<Center><Text>I dont know what this is supposed to be</Text></Center>,
+        element:<QuizTakingPage />,
       },
       {
         path: "/setquiz",

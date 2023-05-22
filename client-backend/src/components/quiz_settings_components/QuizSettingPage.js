@@ -3,7 +3,7 @@ import { Button } from '@chakra-ui/react';
 import { Container } from '@chakra-ui/react'
 import { v4 } from "uuid";
 import DisplayQuestions from './DisplayQuestions';
-import questions from '../../quiz_questions.json';
+import questions from '../../set_quiz_questions.json';
 import QuizInfo from './QuizInfo';
 
 export default function QuizSettingPage() {

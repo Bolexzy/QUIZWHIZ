@@ -1,0 +1,113 @@
+[
+    {
+      "id": "3873",
+      "question": "What is the capital of France?",
+      "options": {
+        "A": "Paris",
+        "B": "Rome",
+        "C": "London",
+        "D": "Berlin"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3874",
+      "question": "Who wrote the play 'Romeo and Juliet'?",
+      "options": {
+        "A": "William Shakespeare",
+        "B": "Charles Dickens",
+        "C": "Jane Austen",
+        "D": "Mark Twain"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3875",
+      "question": "What is the largest planet in our solar system?",
+      "options": {
+        "A": "Jupiter",
+        "B": "Saturn",
+        "C": "Earth",
+        "D": "Mars"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3876",
+      "question": "What is the chemical symbol for gold?",
+      "options": {
+        "A": "Au",
+        "B": "Ag",
+        "C": "Fe",
+        "D": "Hg"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3877",
+      "question": "Who discovered the theory of relativity?",
+      "options": {
+        "A": "Albert Einstein",
+        "B": "Isaac Newton",
+        "C": "Galileo Galilei",
+        "D": "Nikola Tesla"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3878",
+      "question": "Which planet is known as the 'Red Planet'?",
+      "options": {
+        "A": "Mars",
+        "B": "Venus",
+        "C": "Mercury",
+        "D": "Neptune"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3879",
+      "question": "Who painted the Mona Lisa?",
+      "options": {
+        "A": "Leonardo da Vinci",
+        "B": "Pablo Picasso",
+        "C": "Vincent van Gogh",
+        "D": "Michelangelo"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3880",
+      "question": "Which scientist developed the theory of evolution?",
+      "options": {
+        "A": "Charles Darwin",
+        "B": "Marie Curie",
+        "C": "Stephen Hawking",
+        "D": "Louis Pasteur"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3881",
+      "question": "What is the chemical symbol for oxygen?",
+      "options": {
+        "A": "O",
+        "B": "C",
+        "C": "H",
+        "D": "N"
+      },
+      "answer": ["A"]
+    },
+    {
+      "id": "3882",
+      "question": "Who wrote the novel 'Pride and Prejudice'?",
+      "options": {
+        "A": "Jane Austen",
+        "B": "Emily Brontë",
+        "C": "Charlotte Brontë",
+        "D": "Virginia Woolf"
+      },
+      "answer": ["A"]
+    }
+  ]
+  
