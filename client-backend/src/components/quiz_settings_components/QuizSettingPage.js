@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button, Flex, Box } from '@chakra-ui/react';
 import { Container } from '@chakra-ui/react'
 import { v4 } from "uuid";
+import { useParams } from 'react-router-dom';
 import DisplayQuestions from './DisplayQuestions';
 import questions from '../../set_quiz_questions.json';
 import QuizInfo from './QuizInfo';
@@ -10,6 +11,11 @@ import AIQuestionGenerator from './ai_question_generator/AIQuestionGenerator';
 export default function QuizSettingPage() {
     const [quiz, setQuiz] = useState(questions);
     const [render, toggleRender] = useState(false);
+    const params = useParams();
+
+    //quizId
+    const quizId = params.quizId;
+    console.log(quizId)
 
     const createNewQuestionObject = () => {
         setQuiz((prevState) => [...prevState, {

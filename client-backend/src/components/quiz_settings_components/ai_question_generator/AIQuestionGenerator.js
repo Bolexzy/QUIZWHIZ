@@ -1,29 +1,28 @@
 import React, { useState } from 'react';
-import styles from './AIQuestionGenerator.module.css'; // Import the CSS file for styling
+import './AIQuestionGenerator.css'; // Import the CSS file for styling
 
-const AIQuestionGenerator = () => {
+const AIQuestionGenerator = ({appendToQuizArray}) => {
+
   const [subject, setSubject] = useState('');
   const [topic, setTopic] = useState('');
   const [numOfQuizzes, setNumOfQuizzes] = useState(0);
   const [level, setLevel] = useState('');
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // Perform form submission or data handling
-    // You can access the values using the component's state variables: subject, topic, numOfQuizzes, and level
-    // For example:
+    const prompt = generateAIPrompt(subject, topic, numOfQuizzes, level);
     console.log(subject, topic, numOfQuizzes, level);
-
-    // Clear form inputs
-    setSubject('');
-    setTopic('');
-    setNumOfQuizzes(0);
-    setLevel('');
   };
 
+
+  function generateAIPrompt(){
+    
+  }
+
   return (
-        <form className={styles.quiz_form} onSubmit={handleSubmit}>
+    <form className="quiz-form" onSubmit={handleSubmit}>
       <div className="form-group">
         <label htmlFor="subject">Subject:</label>
         <input
@@ -50,6 +49,7 @@ const AIQuestionGenerator = () => {
           type="number"
           id="numOfQuizzes"
           value={numOfQuizzes}
+          min={1} max={5}
           onChange={(e) => setNumOfQuizzes(parseInt(e.target.value))}
         />
       </div>
@@ -57,14 +57,18 @@ const AIQuestionGenerator = () => {
       <div className="form-group">
         <label htmlFor="level">Level:</label>
         <select id="level" value={level} onChange={(e) => setLevel(e.target.value)}>
-          <option value="">Select Level</option>
-          <option value="beginner">Beginner</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="advanced">Advanced</option>
+          <option value="">Neutral Level</option>
+          <option value="Nursery education">Nursery education</option>
+          <option value="Primary education">Primary education</option>
+          <option value="Lower secondary education">Lower secondary education</option>
+          <option value="Upper secondary education">Upper secondary education</option>
+          <option value="Bachelor degree education">Bachelor degree education</option>
+          <option value="Masters degree education">Masters degree education</option>
+          <option value="Doctorate degree education">Doctorate degree education</option>
         </select>
       </div>
 
-      <button type="submit">Submit</button>
+      <button className='stanbutton' type="submit">Submit</button>
     </form>
   );
 };

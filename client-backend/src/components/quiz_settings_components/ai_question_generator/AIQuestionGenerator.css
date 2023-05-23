@@ -1,4 +1,4 @@
-/* .quiz_form {
+.quiz-form {
     max-width: 400px;
     margin: 0 auto;
     padding: 20px;
@@ -26,7 +26,7 @@
     font-size: 16px;
   }
   
-  button {
+  .stanbutton {
     display: block;
     width: 100%;
     padding: 10px;
@@ -39,11 +39,11 @@
     transition: background-color 0.3s ease;
   }
   
-  button:hover {
+  .stanbutton:hover {
     background-color: #45a049;
   }
   
-  button:active {
+  .stanbutton:active {
     background-color: #3d8e41;
   }
-   */
+  

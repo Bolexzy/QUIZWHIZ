@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from "react-router-dom";
 
 const Main = ({ isSidebarOpen, openNav }) => {
-    
+
   return (
     <div id="main" style={{ marginLeft: isSidebarOpen ? '300px' : '0' }}>
       <header>
@@ -34,16 +34,16 @@ const Main = ({ isSidebarOpen, openNav }) => {
             </button>
           </div>
           <div className="nav--menu">
-            
-            <a disabled>
-            <Link to="/dashboard/setquiz">
-              <i
-                className="fa-solid fa-square-plus fa-2xl"
-                style={{ color: '#000000' }}
-              ></i>
+
+            <i>
+              <Link to="/dashboard/setquiz">
+                <i
+                  className="fa-solid fa-square-plus fa-2xl"
+                  style={{ color: '#000000' }}
+                ></i>
               </Link>
-            </a>
-            
+
+            </i>
             <a href="/learning/">
               <i
                 className="fa-solid fa-bell fa-2xl"
