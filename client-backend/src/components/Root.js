@@ -2,11 +2,15 @@ import React from 'react';
 import { Outlet } from "react-router-dom";
 import { Flex } from '@chakra-ui/react';
 import { Box } from '@chakra-ui/react';
+import firebaseApp from './firebase__init_scripts/firebaseAppInit';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 import Sidebar from './Sidebar';
 
 export default function Root() {
+
     return (
         <>
+        
             <Flex>
                 <Box bg='orange' w='6em' h='100%' pos='fixed'>
                     <Sidebar />
@@ -23,7 +27,6 @@ export default function Root() {
                     </Flex>
                 </Box>
             </Flex>
-
         </>
     );
 }

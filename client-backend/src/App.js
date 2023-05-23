@@ -1,17 +1,21 @@
-import React from 'react';
+import React,{createContext} from 'react';
 import { ChakraProvider, theme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-
 import { Text, Center } from '@chakra-ui/react';
+
 import './App.css';
 import Root from './components/Root';
 import Home from './components/homepage/Home';
 import QuizSettingPage from './components/quiz_settings_components/QuizSettingPage';
 import QuizTakingPage from './components/quiz_taking_component/QuizTakingPage';
+import LoginPage from './components/LoginPage';
 
 import './index.css';
 import Page from './components/Page';
 import LandingPage from './components/landing_page/LandingPage';
+
+
+
 
 const router = createBrowserRouter([
   {
@@ -27,8 +31,12 @@ const router = createBrowserRouter([
         element:<Home />
       },
       {
+        path: 'login',
+        element:<LoginPage />
+      },
+      {
         // modified to learning
-        path: 'backend',
+        path: 'dashboard',
         element: <Root />,
         children: [
           {
@@ -60,6 +68,8 @@ const router = createBrowserRouter([
     ],
   },
 ]);
+
+
 
 function App() {
   return (

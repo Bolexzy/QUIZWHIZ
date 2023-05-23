@@ -13,7 +13,7 @@ export default function Sidebar() {
     return (
         <Flex direction='column' alignItems='center' justifyContent='space-around' h='100%' py='7em'>
             <NavLink
-                to="/backend" 
+                to="/dashboard" 
                 end
             >
                 {({ isActive, isPending }) => (
@@ -29,7 +29,7 @@ export default function Sidebar() {
                 )}
             </NavLink>
             <NavLink
-                to="/backend/setting"
+                to="/dashboard/setting"
             >
                 {({ isActive, isPending }) => (
                     <IconButton
@@ -44,7 +44,7 @@ export default function Sidebar() {
                 )}
             </NavLink>
             <NavLink
-                to="/backend/takequiz"
+                to="/dashboard/takequiz"
             >
                 {({ isActive, isPending }) => (
                     <IconButton
@@ -59,7 +59,7 @@ export default function Sidebar() {
                 )}
             </NavLink>
             <NavLink
-                to="/backend/setquiz"
+                to="/dashboard/setquiz"
             >
                 {({ isActive, isPending }) => (
                     <IconButton
