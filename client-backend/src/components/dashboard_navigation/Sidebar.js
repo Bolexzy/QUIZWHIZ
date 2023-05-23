@@ -6,7 +6,6 @@ import { firebaseApp, auth } from '../firebase__init_scripts/firebaseAppInit';
 
 const Sidebar = ({ isSidebarOpen, closeNav }) => {
   const [user] = useAuthState(auth);
-  console.log(user)
   //   const closeNav = () => {
   //     document.getElementById('profile--sidebar').style.width = '0';
   //     document.getElementById('main').style.marginLeft = '0';
@@ -29,12 +28,12 @@ const Sidebar = ({ isSidebarOpen, closeNav }) => {
         ×
       </a>
       {
-        user?.photoURL ? <h3><Image
+        user?.photoURL ? <div><Image
           borderRadius='full'
           boxSize='150px'
           src={user?.photoURL}
           alt={user?.displayName}
-        /></h3> :
+        /></div> :
           <div className="profile--img"></div>
       }
       <br></br>

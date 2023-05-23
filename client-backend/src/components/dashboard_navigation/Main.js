@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 const Main = ({ isSidebarOpen, openNav }) => {
     
@@ -33,12 +34,14 @@ const Main = ({ isSidebarOpen, openNav }) => {
             </button>
           </div>
           <div className="nav--menu">
-            <a href="/setquiz">
+            <i>
+            <Link to="/dashboard/setquiz">
               <i
                 className="fa-solid fa-square-plus fa-2xl"
                 style={{ color: '#000000' }}
               ></i>
-            </a>
+              </Link>
+            </i>
             <a href="/learning/">
               <i
                 className="fa-solid fa-bell fa-2xl"

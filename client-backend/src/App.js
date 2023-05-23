@@ -50,13 +50,13 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: 'takequiz',
-            element: <QuizTakingPage />,
-          },
-          {
             path: 'setquiz',
             element: <QuizSettingPage />,
           },
+          {
+            path: 'takequiz',
+            element: <QuizTakingPage />,
+          }
         ],
       },
     ],
