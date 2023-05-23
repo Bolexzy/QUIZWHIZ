@@ -1,16 +1,20 @@
-import React, {useState} from 'react';
-import firebaseApp from './firebase__init_scripts/firebaseAppInit';
-import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
-import { redirect } from "react-router-dom";
+import React, { useState } from 'react';
+import { firebaseApp, auth } from './firebase__init_scripts/firebaseAppInit';
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { Box, Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import '../styles/LoginPage.css';
 
 const provider = new GoogleAuthProvider();
-const auth = getAuth();
 
 
 const LoginPage = () => {
 
+    const [user, loading] = useAuthState(auth);
     const [loginError, setLoginError] = useState('');
+    const navigate = useNavigate();
 
     const handleGoogleSignup = () => {
         signInWithPopup(auth, provider)
@@ -22,7 +26,7 @@ const LoginPage = () => {
                 const user = result.user;
                 console.log(user);
                 if (user) {
-                    return redirect("/dashboard");
+                    navigate("/dashboard", {replace: true})
                 }
                 // IdP data available using getAdditionalUserInfo(result)
                 // ...
@@ -40,6 +44,17 @@ const LoginPage = () => {
             });
     };
 
+    if (loading) {
+        return (
+            <Box padding='6' boxShadow='lg' bg='white'>
+                <SkeletonCircle size='20' />
+                <SkeletonText mt='4' noOfLines={20} spacing='5' skeletonHeight='5' />
+            </Box>
+        )
+    }
+    if (user) {
+        return <Navigate to="/dashboard" />
+    }
     return (
         <div className="login-page">
             <h1>Login</h1>
@@ -48,8 +63,8 @@ const LoginPage = () => {
                     <span className="login-error__message">{loginError}</span>
                 </div>
             }
-            <button className="google-signup-button" onClick={handleGoogleSignup}>
-                Sign up with Google
+            <button className="google-signin-button" onClick={handleGoogleSignup}>
+                Sign in with Google
             </button>
         </div>
     );
