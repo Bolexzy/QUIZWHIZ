@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Sidebar from './Sidebar';
-import Main from './Main';
-import Content from './Content'
-import './Home.css';
+import { Outlet } from 'react-router-dom';
+import Sidebar from './dashboard_navigation/Sidebar';
+import Main from './dashboard_navigation/Main';
+import './DashboardRoot.css';
 
-const Home = () => {
+const DashboardRoot = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
   const closeNav = () => {
@@ -21,9 +21,9 @@ const Home = () => {
       {isSidebarOpen && (
         <Sidebar isSidebarOpen={isSidebarOpen} closeNav={closeNav} />
       )}
-      <Content />
+      <Outlet />
     </div>
   );
 };
 
-export default Home;
+export default DashboardRoot;

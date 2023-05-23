@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Text, Center } from '@chakra-ui/react';
 
 import './App.css';
-import Root from './components/Root';
-import Home from './components/homepage/Home';
+import DashboardRoot from './components/DashboardRoot';
+import Content from './components/homepage/Content';
 import QuizSettingPage from './components/quiz_settings_components/QuizSettingPage';
 import QuizTakingPage from './components/quiz_taking_component/QuizTakingPage';
 import LoginPage from './components/LoginPage';
@@ -27,24 +27,18 @@ const router = createBrowserRouter([
         element: <LandingPage />,
       },
       {
-        path: 'learning',
-        element:<Home />
-      },
-      {
         path: 'login',
         element:<LoginPage />
       },
       {
         // modified to learning
         path: 'dashboard',
-        element: <Root />,
+        element: <DashboardRoot />,
         children: [
           {
             index: true,
             element: (
-              <Center>
-                <Text>Home page</Text>
-              </Center>
+              <Content />
             ),
           },
           {
