@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './AIQuestionGenerator.css'; // Import the CSS file for styling
 
-const QuizForm = () => {
+const AIQuestionGenerator = () => {
   const [subject, setSubject] = useState('');
   const [topic, setTopic] = useState('');
   const [numOfQuizzes, setNumOfQuizzes] = useState(0);
@@ -69,4 +69,4 @@ const QuizForm = () => {
   );
 };
 
-export default QuizForm;
+export default AIQuestionGenerator;
