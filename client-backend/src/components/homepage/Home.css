@@ -1,0 +1,473 @@
+/* Start Global Rules */
+/* * {
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+} */
+
+body {
+  width: 100vw;
+  font-family: 'Poppins', 'Open Sans', sans-serif;
+  /* background: #f5f6fa; */
+  background-image: url('../../assets/images/blob-scene-haikei.png') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+}
+
+#main {
+  transition: margin-left 0.5s;
+  padding-right: 15px;
+}
+
+a {
+  line-height: 1em;
+  display: inline-block;
+  text-decoration: none;
+  padding: 10px;
+}
+
+/* header styles starts here */
+
+#main header .container {
+  display: flex;
+  width: 100%;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Small */
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+/* Medium */
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+/* Large */
+@media (min-width: 1200px) {
+  .container {
+    width: 100%;
+  }
+}
+
+#main header {
+  display: flex;
+  padding: 0px;
+  width: 100vw;
+  background-color: #fff;
+  /* justify-content: first baseline; */
+  /* background-color: blue; */
+  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 767px) {
+  #main header {
+    min-height: auto;
+    display: initial;
+  }
+}
+
+@media (max-width: 767px) {
+  #main header .container {
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+#main header .logo {
+  width: 130px;
+  height: 60px;
+  background-image: url('../../assets/images/logo.png');
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: center center;
+}
+
+hr {
+  border: 0.527835px solid #ecece8;
+}
+
+.nav--menu {
+  margin-left: auto;
+  margin-right: auto;
+  align-self: center;
+}
+
+.nav--menu a {
+  cursor: pointer;
+  margin-right: 50px;
+}
+
+.nav--menu a:hover,
+i:hover {
+  color: #f1f1f1;
+}
+
+/* header styles ends here */
+
+/* header nav search input start */
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+}
+
+.search__input {
+  font-family: inherit;
+  font-size: inherit;
+  background-color: #f4f2f2;
+  border: 1px solid black;
+  color: #646464;
+  padding: 0.7rem 1rem;
+  border-radius: 20px;
+  width: 12em;
+  transition: all ease-in-out 0.5s;
+  margin-right: -2rem;
+}
+
+.search__input:hover,
+.search__input:focus {
+  box-shadow: 0 0 1em #00000013;
+}
+
+.search__input:focus {
+  outline: none;
+  background-color: #f0eeee;
+}
+
+.search__input::-webkit-input-placeholder {
+  font-weight: 100;
+  color: #ccc;
+}
+
+.search__input:focus + .search__button {
+  background-color: #f0eeee;
+}
+
+.search__button {
+  border: none;
+  background-color: #f4f2f2;
+  margin-top: 0.1em;
+}
+
+.search__button:hover {
+  cursor: pointer;
+}
+
+.search__icon {
+  height: 1.3em;
+  width: 1.3em;
+  fill: #b4b4b4;
+}
+/* header nav search input end */
+
+/* sidebar starts here */
+
+.sidebar {
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  /* background-color: #f8dda4; */
+  overflow-x: hidden;
+  border-radius: 0 10px 5px 0;
+  transition: 0.5s;
+  padding-top: 60px;
+  background-color: #f8dda4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23f9a03f' fill-opacity='0.64' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+}
+
+.sidebar .close-btn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.open-btn {
+  font-size: 1.875rem;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  padding-left: 0.9375rem;
+  padding-top: 0.65rem;
+  align-self: center;
+}
+
+.open-btn i {
+  color: var(--accent-brown);
+}
+
+.open-btn i:hover {
+  color: var(--primary-orange);
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {
+    padding-top: 15px;
+  }
+  .sidebar a {
+    font-size: 18px;
+  }
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  #profile--sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {
+    float: left;
+  }
+  #main {
+    margin-left: 0;
+  }
+  .open-btn {
+    display: none;
+  }
+  .close-btn {
+    display: none;
+  }
+}
+
+.close-btn:hover {
+  color: red;
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+
+.profile--img {
+  background-image: url(../../assets/images/profileicon.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 100%;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.sidebar h3 {
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 33px;
+  /* display: flex;
+  justify-content: space-around; */
+  text-align: center;
+  color: #000000;
+}
+
+.sidebar .stats {
+  width: 100%;
+  height: 200px;
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  padding-block: 20px;
+}
+
+.stats #total,
+#iq {
+  color: red;
+  font-weight: bold;
+}
+
+.sidebar .stats .quiz--total {
+  width: 120px;
+  background: #f9a03f;
+  opacity: 0.5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.sidebar .stats .iq--level {
+  width: 120px;
+  background: var(--accent-green);
+  opacity: 0.5;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.score--streak {
+  text-align: center;
+}
+
+.score--streak h4 {
+  font-size: 1.375rem;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.score--streak p {
+  font-size: 0.75rem;
+  padding: 0.625rem;
+  text-align: right;
+  line-height: 0.75rem;
+}
+
+.side--footer {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  height: 80px;
+  padding-top: 0.75rem;
+  text-align: center;
+  align-items: center;
+  background-color: #813405;
+  border-radius: 5px 5px 0 0;
+}
+
+.side--footer .exit--setting {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+  margin: 10px 0 0 10px;
+  color: white;
+}
+
+.side--footer a {
+  padding: 8px 8px 8px 10px;
+  text-decoration: none;
+  font-size: 0.875rem;
+  color: #818181;
+  transition: 0.3s;
+}
+
+.side--footer a:hover,
+.exit--setting i:hover {
+  color: #f1f1f1;
+}
+
+/* sidebar ends here */
+
+/* home content starts here */
+
+.home--content {
+  /* display: flex;
+    justify-content: space-between; */
+  flex-direction: row;
+  margin: 4.375rem 1.25rem;
+}
+
+.home--content h2 {
+  font-weight: 600;
+  line-height: 38px;
+}
+
+.home--content p {
+  padding: 0.625rem;
+}
+
+/* quiz card css starts here */
+
+.quiz--cards {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.card {
+  margin-top: 50px;
+  width: 250px;
+  height: 300px;
+  padding: 0.8em;
+  background: #f5f5f5;
+  position: relative;
+  overflow: visible;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+}
+
+.card-img {
+  background-color: #ffcaa6;
+  height: 40%;
+  width: 100%;
+  border-radius: 0.5rem;
+  transition: 0.3s ease;
+}
+
+.quiz-image1 {
+  background: url('../../assets/images/set.jpeg');
+  width: 100%;
+  height: 40%;
+  background-size: contain;
+  border-radius: 0.5rem;
+  transition: 0.3s ease;
+}
+
+.card-info {
+  padding-top: 10%;
+}
+
+.card-footer {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #ddd;
+}
+/*Text*/
+.text-title {
+  font-weight: 900;
+  font-size: 1.2em;
+  line-height: 1.5;
+}
+
+.text-body {
+  font-size: 0.9em;
+  padding-bottom: 10px;
+}
+
+/*Button*/
+.card-button {
+  border: 1px solid #252525;
+  display: flex;
+  padding: 0.3em;
+  cursor: pointer;
+  border-radius: 50px;
+  transition: 0.3s ease-in-out;
+}
+
+/*Hover*/
+.card-img:hover {
+  transform: translateY(-25%);
+  box-shadow: rgba(226, 196, 63, 0.25) 0px 13px 47px -5px,
+    rgba(180, 71, 71, 0.3) 0px 8px 16px -8px;
+}
+
+.card-button:hover {
+  border: 1px solid var(--primary-orange);
+  background-color: var(--primary-orange);
+}
+
+/* quiz card css starts here */
+/* home content starts here */

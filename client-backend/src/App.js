@@ -5,13 +5,13 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Text, Center } from '@chakra-ui/react';
 import './App.css';
 import Root from './components/Root';
+import Home from './components/homepage/Home';
 import QuizSettingPage from './components/quiz_settings_components/QuizSettingPage';
 import QuizTakingPage from './components/quiz_taking_component/QuizTakingPage';
 
 import './index.css';
 import Page from './components/Page';
 import LandingPage from './components/landing_page/LandingPage';
-
 
 const router = createBrowserRouter([
   {
@@ -20,11 +20,12 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: (<LandingPage />),
+        element: <LandingPage />,
       },
       {
-        path: 'backend',
-        element: <Root />,
+        // modified to learning
+        path: 'learning',
+        element: <Home />,
         children: [
           {
             index: true,
@@ -43,19 +44,19 @@ const router = createBrowserRouter([
             ),
           },
           {
-            path: "takequiz",
+            path: 'takequiz',
             element: <QuizTakingPage />,
           },
           {
             path: 'setquiz',
             element: <QuizSettingPage />,
           },
-        ]
-      }
-
+        ],
+      },
     ],
   },
 ]);
+
 function App() {
   return (
     <ChakraProvider theme={theme}>
