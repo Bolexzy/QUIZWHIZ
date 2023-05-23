@@ -21,7 +21,7 @@ export default function QuizSettingPage() {
                 "C": "enter option 3 here",
                 "D": "enter option 4 here"
             },
-            "answer": ["B", "D"]
+            "answer": []
         }]);
         console.log(quiz);
     }

@@ -99,12 +99,12 @@ hr {
   align-self: center;
 }
 
-.nav--menu i {
+.nav--menu a {
   cursor: pointer;
   margin-right: 50px;
 }
 
-.nav--menu i:hover,
+.nav--menu a:hover,
 i:hover {
   color: #f1f1f1;
 }

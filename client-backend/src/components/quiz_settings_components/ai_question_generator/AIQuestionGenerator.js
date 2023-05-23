@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './AIQuestionGenerator.css'; // Import the CSS file for styling
+import styles from './AIQuestionGenerator.module.css'; // Import the CSS file for styling
 
 const AIQuestionGenerator = () => {
   const [subject, setSubject] = useState('');
@@ -23,7 +23,7 @@ const AIQuestionGenerator = () => {
   };
 
   return (
-    <form className="quiz-form" onSubmit={handleSubmit}>
+        <form className={styles.quiz_form} onSubmit={handleSubmit}>
       <div className="form-group">
         <label htmlFor="subject">Subject:</label>
         <input

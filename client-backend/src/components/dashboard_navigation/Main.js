@@ -34,14 +34,16 @@ const Main = ({ isSidebarOpen, openNav }) => {
             </button>
           </div>
           <div className="nav--menu">
-            <i>
+            
+            <a disabled>
             <Link to="/dashboard/setquiz">
               <i
                 className="fa-solid fa-square-plus fa-2xl"
                 style={{ color: '#000000' }}
               ></i>
               </Link>
-            </i>
+            </a>
+            
             <a href="/learning/">
               <i
                 className="fa-solid fa-bell fa-2xl"
