@@ -2,7 +2,7 @@ import React from 'react';
 
 const Content = () => {
   return (
-    <div class="home--content">
+    <div className="home--content">
       <h2>My Quizzes</h2>
       <p>
         Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quae sunt
@@ -11,69 +11,69 @@ const Content = () => {
         doloribus?
       </p>
 
-      <div class="quiz--cards">
-        <div class="card">
-          <div class="card-img"></div>
-          <div class="card-info">
-            <p class="text-title">Quiz title </p>
-            <p class="text-body">Quiz description and details</p>
+      <div className="quiz--cards">
+        <div className="card">
+          <div className="card-img"></div>
+          <div className="card-info">
+            <p className="text-title">Quiz title </p>
+            <p className="text-body">Quiz description and details</p>
           </div>
-          <div class="card-footer">
-            <span class="text-title">50%</span>
-            <div class="card-button">
+          <div className="card-footer">
+            <span className="text-title">50%</span>
+            <div className="card-button">
               <i
-                class="fa-solid fa-arrow-right"
+                className="fa-solid fa-arrow-right"
                 style={{ color: '#1c1c1c' }}
               ></i>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-img quiz-image1"></div>
-          <div class="card-info">
-            <p class="text-title">Quiz title </p>
-            <p class="text-body">Quiz description and details</p>
+        <div className="card">
+          <div className="card-img quiz-image1"></div>
+          <div className="card-info">
+            <p className="text-title">Quiz title </p>
+            <p className="text-body">Quiz description and details</p>
           </div>
-          <div class="card-footer">
-            <span class="text-title">50%</span>
-            <div class="card-button">
+          <div className="card-footer">
+            <span className="text-title">50%</span>
+            <div className="card-button">
               <i
-                class="fa-solid fa-arrow-right"
+                className="fa-solid fa-arrow-right"
                 style={{ color: '#1c1c1c' }}
               ></i>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-img"></div>
-          <div class="card-info">
-            <p class="text-title">Quiz title </p>
-            <p class="text-body">Quiz description and details</p>
+        <div className="card">
+          <div className="card-img"></div>
+          <div className="card-info">
+            <p className="text-title">Quiz title </p>
+            <p className="text-body">Quiz description and details</p>
           </div>
-          <div class="card-footer">
-            <span class="text-title">50%</span>
-            <div class="card-button">
+          <div className="card-footer">
+            <span className="text-title">50%</span>
+            <div className="card-button">
               <i
-                class="fa-solid fa-arrow-right"
+                className="fa-solid fa-arrow-right"
                 style={{ color: '#1c1c1c' }}
               ></i>
             </div>
           </div>
         </div>
 
-        <div class="card">
-          <div class="card-img"></div>
-          <div class="card-info">
-            <p class="text-title">Quiz title </p>
-            <p class="text-body">Quiz description and details</p>
+        <div className="card">
+          <div className="card-img"></div>
+          <div className="card-info">
+            <p className="text-title">Quiz title </p>
+            <p className="text-body">Quiz description and details</p>
           </div>
-          <div class="card-footer">
-            <span class="text-title">50%</span>
-            <div class="card-button">
+          <div className="card-footer">
+            <span className="text-title">50%</span>
+            <div className="card-button">
               <i
-                class="fa-solid fa-arrow-right"
+                className="fa-solid fa-arrow-right"
                 style={{ color: '#1c1c1c' }}
               ></i>
             </div>
