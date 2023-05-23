@@ -38,7 +38,7 @@ const Sidebar = ({ isSidebarOpen, closeNav }) => {
           <div className="profile--img"></div>
       }
       <br></br>
-      <h3>Hi {user?.displayName}</h3>
+      <h3>Hi {user?.displayName}!</h3>
 
       <div className="stats">
         <div className="quiz--total">
