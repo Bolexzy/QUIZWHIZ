@@ -1,6 +1,11 @@
 import React from 'react';
+import { Image } from '@chakra-ui/react'
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { firebaseApp, auth } from '../firebase__init_scripts/firebaseAppInit';
+
 
 const Sidebar = ({ isSidebarOpen, closeNav }) => {
+  const [user] = useAuthState(auth);
   //   const closeNav = () => {
   //     document.getElementById('profile--sidebar').style.width = '0';
   //     document.getElementById('main').style.marginLeft = '0';
@@ -22,9 +27,17 @@ const Sidebar = ({ isSidebarOpen, closeNav }) => {
       <a href='#' className="close-btn" onClick={closeNav}>
         ×
       </a>
-      <div className="profile--img"></div>
+      {
+        user?.photoURL ? <div><Image
+          borderRadius='full'
+          boxSize='150px'
+          src={user?.photoURL}
+          alt={user?.displayName}
+        /></div> :
+          <div className="profile--img"></div>
+      }
       <br></br>
-      <h3>Hi mia!</h3>
+      <h3>Hi {user?.displayName}!</h3>
 
       <div className="stats">
         <div className="quiz--total">
