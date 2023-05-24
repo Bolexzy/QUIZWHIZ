@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Button, Flex, Box } from '@chakra-ui/react';
-import { Container } from '@chakra-ui/react'
 import { v4 } from "uuid";
 import { useParams } from 'react-router-dom';
 import DisplayQuestions from './DisplayQuestions';

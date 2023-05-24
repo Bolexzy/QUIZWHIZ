@@ -47,3 +47,6 @@
     background-color: #3d8e41;
   }
   
+  #AISubButton:disabled{
+    background-color: black;
+  }
