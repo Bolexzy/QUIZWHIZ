@@ -1,5 +1,5 @@
 import React from 'react';
-import { Stack } from '@chakra-ui/react'
+import { Stack, Box } from '@chakra-ui/react'
 import QuestionOption from './QuestionOption';
 
 export default function QuestionOptions({ questionId, options, setOptionsText, addOptionToCorrectAnswer, answer }) {
@@ -13,11 +13,11 @@ export default function QuestionOptions({ questionId, options, setOptionsText, a
     }
 
     return (
-        <>
+        <Box mt='20px'>
             <Stack spacing={5} direction='column'>
                 {showOptions(options)}
             </Stack>
-        </>
+        </Box>
     )
 
 }

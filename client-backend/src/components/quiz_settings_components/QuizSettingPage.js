@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { Button, Flex, Box } from '@chakra-ui/react';
 import { v4 } from "uuid";
 import { useParams } from 'react-router-dom';
@@ -9,7 +9,11 @@ import AIQuestionGenerator from './ai_question_generator/AIQuestionGenerator';
 
 export default function QuizSettingPage() {
     const [quiz, setQuiz] = useState(questions);
+    const [toggleCloseAll, setToggleCloseAll] = useState(true);
     const [render, toggleRender] = useState(false);
+    const addButton = useRef();
+    const closeOptionsRef = useRef([]);
+    //for getting url parameters
     const params = useParams();
 
     //quizId
@@ -28,7 +32,18 @@ export default function QuizSettingPage() {
             },
             "answer": []
         }]);
-        console.log(quiz);
+        addButton.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' });
+    }
+
+    const extendQuizArray = (questionsArray) => {
+        setQuiz((prevState) => [...prevState, ...questionsArray]);
+
+        setTimeout(() => { addButton.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' }) }, 1000)
+    }
+
+    const appendQuestionToQuiz = (questionObject) =>{
+        setQuiz((prevState) => [...prevState, questionObject]);
+        setTimeout(() => { addButton.current.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'start' }) }, 1000)
     }
 
     const removeQuestion = (questionId) => {
@@ -54,7 +69,6 @@ export default function QuizSettingPage() {
                 if (question.id === questionId) {
                     question.options[optionKey] = text;
                     toggleRender(!render);
-                    console.log(prevState)
                 }
             }
             return prevState;
@@ -72,25 +86,63 @@ export default function QuizSettingPage() {
                         question.answer = tmparr;
                     }
                     toggleRender(!render);
-                    console.log(prevState)
                 }
             }
             return prevState;
         });
     }
 
+
+    const toggleCloseAllOption = () => {
+        if (toggleCloseAll) {
+            closeAllOptions();
+            setToggleCloseAll(!toggleCloseAll)
+        } else {
+            OpenAllOptions();
+            setToggleCloseAll(!toggleCloseAll)
+        }
+    }
+
+    const closeAllOptions = () => {
+        const length = quiz.length - 1;
+
+        for (let i = 0; i <= length; i++) {
+            if (closeOptionsRef.current[i].getAttribute('aria-expanded') == 'true') {
+                closeOptionsRef.current[i].click()
+            }
+        }
+    }
+
+    const OpenAllOptions = () => {
+        const length = quiz.length - 1;
+
+        for (let i = 0; i <= length; i++) {
+            if (closeOptionsRef.current[i].getAttribute('aria-expanded') == 'false') {
+                closeOptionsRef.current[i].click()
+            }
+        }
+    }
+
     return (
-        <>
-            <Flex justifyContent="space-around">
-                <Box>
+        <Box maxW='85vw' p='3px' boxSizing='boarder-box' border='1px solid blue' pos='relative'>
+            {console.log(quiz)}
+            <Flex justifyContent="space-around" h='100%'>
+                <Box flex='3' border='1px solid red' position='relative'>
                     <QuizInfo quiz={quiz} />
-                    <DisplayQuestions quiz={quiz} removeQuestion={removeQuestion} setQuestiontext={setQuestiontext} setOptionsText={setOptionsText} addOptionToCorrectAnswer={addOptionToCorrectAnswer} />
-                    <Button colorScheme='blue' onClick={createNewQuestionObject}>+ Add Question</Button>
+                    <Box w='70%' overflowY='auto' p='15px' pt='30px' ml='70px' bg='white' borderRadius='20px' boxShadow='dark-lg'>
+                        {
+                            <Button w='100%' mb='15px' colorScheme='facebook' onClick={toggleCloseAllOption}>Toggle Close/Open All Options</Button>
+                        }
+                        <DisplayQuestions quiz={quiz} removeQuestion={removeQuestion} setQuestiontext={setQuestiontext} setOptionsText={setOptionsText} addOptionToCorrectAnswer={addOptionToCorrectAnswer} closeOptionsRef={closeOptionsRef} />
+                        <Button ref={addButton} w='100%' mt='15px' colorScheme='facebook' onClick={createNewQuestionObject}>+ Add Question</Button>
+                    </Box>
                 </Box>
-                <Box>
-                    <AIQuestionGenerator />
+                <Box flex='1' border='1px solid red'>
+                    <Box mt='20px'>
+                        <AIQuestionGenerator extendQuizArray={extendQuizArray} appendQuestionToQuiz={appendQuestionToQuiz} />
+                    </Box>
                 </Box>
             </Flex>
-        </>
+        </Box>
     )
 }
