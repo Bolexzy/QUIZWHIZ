@@ -3,16 +3,24 @@ import { ChakraProvider, theme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Text, Center } from '@chakra-ui/react';
 
-import './App.css';
+
+//Global Pages
+import LandingPage from './components/landing_page/LandingPage';
 import DashboardRoot from './components/DashboardRoot';
 import Home from './components/homepage/Home';
-import Quiz from './components/Quiz_creation_page/Quiz';
+import Page from './components/Page'
+
+//Stanley Components
+import './App.css';
+import './index.css';
+import QuizSettingPage from './components/quiz_settings_components/QuizSettingPage';
 import QuizTakingPage from './components/quiz_taking_component/QuizTakingPage';
 import LoginPage from './components/LoginPage';
 
-import './index.css';
-import Page from './components/Page';
-import LandingPage from './components/landing_page/LandingPage';
+
+//Bolexy Components
+import Quiz from './components/Quiz_creation_page/Quiz';
+
 
 const router = createBrowserRouter([
   {
@@ -28,7 +36,6 @@ const router = createBrowserRouter([
         element: <LoginPage />,
       },
       {
-        // modified to learning
         path: 'dashboard',
         element: <DashboardRoot />,
         children: [
@@ -52,6 +59,11 @@ const router = createBrowserRouter([
             // path: 'setquiz',
             path: 'setquiz/:quizId?',
             element: <Quiz />,
+          },
+          // test for my setquiz page
+          {
+            path: 'setquiz_stan/:quizId?',
+            element: <QuizSettingPage />,
           },
           {
             path: 'takequiz',
