@@ -1,10 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-
 const admin = require("firebase-admin");
-
-// const { getAuth } = require('firebase-admin/auth');
 
 admin.initializeApp({
   apiKey: "AIzaSyDrcB0RrBSaQn5-2mbYmGyS5zlzkc9slps",
@@ -16,16 +13,20 @@ admin.initializeApp({
   appId: "1:412874254362:web:9c8128380ab932112b89a3"
 });
 
-// const auth = getAuth(firebaseApp);
 const db = admin.firestore();
 
-//Test route
-router.post('/test', function(req, res) {
+//Test routes
+
+router.get('/', function(req, res) {
+  res.end('home');
+});
+
+router.get('/test', function(req, res) {
 
   res.send('doing something');
   
   db.collection('test').add({
-    me:'you'
+    me:'stan'
   });
 
   res.end();
@@ -34,11 +35,9 @@ router.post('/test', function(req, res) {
 
 /* Teacher routes */
 router.post('/setquiz/:quizId', function(req, res) {
-  res.send('hi from stan')
 
 
   res.end();
-
 });
 
 router.get('/getquiz/:quizId', function(req, res) {
