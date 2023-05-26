@@ -20,14 +20,17 @@ admin.initializeApp({
 const db = admin.firestore();
 
 //Test route
-router.post('/setquiz/:quizId', function(req, res) {
+router.post('/test', function(req, res) {
+
+  res.send('doing something');
+  
   db.collection('test').add({
     me:'you'
   });
 
-
   res.end();
 });
+
 
 /* Teacher routes */
 router.post('/setquiz/:quizId', function(req, res) {
