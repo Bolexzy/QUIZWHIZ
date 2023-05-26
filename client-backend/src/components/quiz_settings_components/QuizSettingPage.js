@@ -1,13 +1,21 @@
 import React, { useState, useRef } from 'react';
-import { Button, Flex, Box } from '@chakra-ui/react';
+import { Button, Flex, Box, Text } from '@chakra-ui/react';
 import { v4 } from "uuid";
 import { useParams } from 'react-router-dom';
 import DisplayQuestions from './DisplayQuestions';
 import questions from '../../set_quiz_questions.json';
-import QuizInfo from './QuizInfo';
+import QuizDetails from './QuizDetails';
 import AIQuestionGenerator from './ai_question_generator/AIQuestionGenerator';
 
+
 export default function QuizSettingPage() {
+    const [formValues, setFormValues] = useState({
+        title: '',
+        description: '',
+        alloted_time_in_mins: '',
+        quiz_start_datetime: '',
+        quiz_end_datetime: ''
+      });
     const [quiz, setQuiz] = useState(questions);
     const [toggleCloseAll, setToggleCloseAll] = useState(true);
     const [render, toggleRender] = useState(false);
@@ -124,12 +132,15 @@ export default function QuizSettingPage() {
     }
 
     return (
-        <Box maxW='85vw' p='3px' boxSizing='boarder-box' border='1px solid blue' pos='relative'>
+        <Box maxW='85vw' p='3px' boxSizing='boarder-box' pos='relative' mr='auto' ml='auto'>
             {console.log(quiz)}
+            <Box>
+            <QuizDetails formValues={formValues} setFormValues={setFormValues}  />
+            </Box>
             <Flex justifyContent="space-around" h='100%'>
-                <Box flex='3' border='1px solid red' position='relative'>
-                    <QuizInfo quiz={quiz} />
+                <Box flex='3' position='relative'>
                     <Box w='70%' overflowY='auto' p='15px' pt='30px' ml='70px' bg='white' borderRadius='20px' boxShadow='dark-lg'>
+                        <Text fontSize='2xl' fontWeight='bold'>Questions: {quiz.length}</Text>
                         {
                             <Button w='100%' mb='15px' colorScheme='facebook' onClick={toggleCloseAllOption}>Toggle Close/Open All Options</Button>
                         }
@@ -137,7 +148,7 @@ export default function QuizSettingPage() {
                         <Button ref={addButton} w='100%' mt='15px' colorScheme='facebook' onClick={createNewQuestionObject}>+ Add Question</Button>
                     </Box>
                 </Box>
-                <Box flex='1' border='1px solid red'>
+                <Box flex='1'>
                     <Box mt='20px'>
                         <AIQuestionGenerator extendQuizArray={extendQuizArray} appendQuestionToQuiz={appendQuestionToQuiz} />
                     </Box>

@@ -64,7 +64,7 @@ const LoginPage = () => {
                 </div>
             }
             <button className="google-signin-button" onClick={handleGoogleSignup}>
-                Sign in with Google
+                Continue with Google
             </button>
         </div>
     );

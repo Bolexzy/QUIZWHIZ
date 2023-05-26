@@ -32,7 +32,8 @@ export default function OneQuestion({ question, removeQuestion, setOptionsText, 
             <Box>
                 <Input
                     w='90%'
-                    value={question.question}
+                    value={question.question.slice(0,14) != 'Enter Question' ? question.question :''}
+                    placeholder={question.question}
                     onChange={(event) => {
                         setQuestiontext(question.id, event.target.value);
                     }}
@@ -50,7 +51,7 @@ export default function OneQuestion({ question, removeQuestion, setOptionsText, 
                                         ) : (
                                             <>
                                                 {
-                                                    question.answer.length > 0 ? question.answer.map((letter) => <Text fontFamily='cursive' color='black'>Ans{')'}  {question.options[letter]}</Text>): (<Text opacity='0.6'>No Option selected yet</Text>)
+                                                    question.answer.length > 0 ? question.answer.map((letter) => <Text fontFamily='cursive' color='black'>Ans{')'}  {question.options[letter]}</Text>): (<Text color='CaptionText' opacity='0.6'>No Option selected yet</Text>)
                                                 }
                                             </>
                                         )}
