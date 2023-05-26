@@ -16,7 +16,6 @@ admin.initializeApp({
 const db = admin.firestore();
 
 //Test routes
-
 router.get('/', function(req, res) {
   res.end('home');
 });
@@ -34,37 +33,50 @@ router.get('/test', function(req, res) {
 
 
 /* Teacher routes */
-router.post('/setquiz/:quizId', function(req, res) {
-
+router.post('/create_quiz/:quizId', function(req, res) {
+  /* userId is in the quiz object  */
 
   res.end();
 });
 
-router.get('/getquiz/:quizId', function(req, res) {
+
+router.post('/update_quiz/:id', function(req, res) {
+  /* userId is in the quiz object  */
+  res.end();
+});
+
+
+router.post('/delete_quiz/:id', function(req, res) {
+  /* userId is in the quiz object  */
+  res.end();
+});
+
+
+router.get('/quiz/:quizId', function(req, res) {
+  /* userId is in the quiz object  */
   res.send('hi from stan')
 
-
   res.end();
-
 });
 
 
 /* Student route */
-
 router.get('/quizinfo/:quizId', function(req, res) {
-  res.send('hi from stan')
-
 
   res.end();
 
 });
 
-router.get('/submit/:quizId', function(req, res) {
-  res.send('hi from stan')
 
+router.get('/taketest/:quizId', function(req, res) {
 
   res.end();
+});
 
+
+router.post('/submit/:quizId', function(req, res) {
+
+  res.end();
 });
 
 
