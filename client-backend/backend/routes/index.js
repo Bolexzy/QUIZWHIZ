@@ -2,12 +2,11 @@ var express = require('express');
 var router = express.Router();
 
 
-const { initializeApp  } = require('firebase-admin/app');
+const admin = require("firebase-admin");
+
 // const { getAuth } = require('firebase-admin/auth');
-const { getFirestore } = "firebase-admin/firestore";
 
-
-const firebaseApp = initializeApp({
+admin.initializeApp({
   apiKey: "AIzaSyDrcB0RrBSaQn5-2mbYmGyS5zlzkc9slps",
   authDomain: "quizwhiz-72df8.firebaseapp.com",
   databaseURL: "https://quizwhiz-72df8-default-rtdb.firebaseio.com",
@@ -18,22 +17,33 @@ const firebaseApp = initializeApp({
 });
 
 // const auth = getAuth(firebaseApp);
-const db = getFirestore(firebaseApp);
+const db = admin.firestore();
 
 //Test route
 router.post('/setquiz/:quizId', function(req, res) {
   db.collection('test').add({
     me:'you'
-  })
+  });
+
+
+  res.end();
 });
 
 /* Teacher routes */
 router.post('/setquiz/:quizId', function(req, res) {
   res.send('hi from stan')
+
+
+  res.end();
+
 });
 
 router.get('/getquiz/:quizId', function(req, res) {
   res.send('hi from stan')
+
+
+  res.end();
+
 });
 
 
@@ -41,10 +51,18 @@ router.get('/getquiz/:quizId', function(req, res) {
 
 router.get('/quizinfo/:quizId', function(req, res) {
   res.send('hi from stan')
+
+
+  res.end();
+
 });
 
 router.get('/submit/:quizId', function(req, res) {
   res.send('hi from stan')
+
+
+  res.end();
+
 });
 
 
