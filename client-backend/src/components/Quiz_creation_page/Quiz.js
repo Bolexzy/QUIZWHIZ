@@ -35,8 +35,8 @@ const Quiz = () => {
 
   return (
     <section className="quiz--page">
-      <div class="quiz--container">
-        <div class="quiz--cover">
+      <div className="quiz--container">
+        <div className="quiz--cover">
           <div style={{ width: '100%' }}>
             <input
               placeholder="Quiz title"

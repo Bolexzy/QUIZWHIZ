@@ -5,7 +5,7 @@ const Answer = ({ options, handleOptionChange }) => {
   return (
     options &&
     options.map(option => (
-      <label class="checkbox-container">
+      <label className="checkbox-container">
         <Checkbox colorScheme="green" defaultChecked></Checkbox>
         <input
           placeholder="Untitled Question"
@@ -14,7 +14,7 @@ const Answer = ({ options, handleOptionChange }) => {
           value={option.text}
           onChange={e => handleOptionChange(option.id, e.target.value)}
         />
-        <label for="input-field" class="input-label">
+        <label for="input-field" className="input-label">
           Option
         </label>
         <span className="input-highlight"></span>
