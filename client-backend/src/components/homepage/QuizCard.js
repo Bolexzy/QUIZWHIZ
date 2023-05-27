@@ -7,8 +7,9 @@ const QuizCard = props => {
         <div className="card-img">
           <img
             src={require(`../../assets/images/${
-              props.img == '' ? 'set.jpeg' : props.img
+              props.img === '' ? 'set.jpeg' : props.img
             }`)}
+            alt="quiz background"
           />
         </div>
         <div className="card-info">
