@@ -31,6 +31,16 @@ router.get('/test', function(req, res) {
   res.end();
 });
 
+//testpost
+router.post('/testpost', function(req, res) {
+
+  res.send('doing something');
+  
+  console.log(req.body)
+
+  res.end(req.body);
+});
+
 
 /* Teacher routes */
 router.post('/create_quiz/:quizId', function(req, res) {
