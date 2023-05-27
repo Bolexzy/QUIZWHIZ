@@ -5,6 +5,10 @@ const questionSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
+	question: {
+		type: String,
+		required: true
+	},
 	options: {
 		type: Map,
 		of: String,
@@ -17,25 +21,29 @@ const questionSchema = new mongoose.Schema({
 });
 
 const quizSchema = new mongoose.Schema({
+	test_id: {
+		type: String
+	},
+	user_id: {
+		type: String,
+	},
+	description: {
+		type: String
+	},
 	title: {
 		type: String,
-		required: true
 	},
-	created_by: {
-		type: String,
-		required: true
+	quiz_start_time: {
+		type: Number,
 	},
-	time_of_quiz: {
-		type: Date,
-		required: true
+	quiz_end_time: {
+		type: Number
 	},
 	alloted_time_mins: {
 		type: Number,
-		required: true
 	},
 	questions: {
 		type: [questionSchema],
-		required: true
 	}
 });
 

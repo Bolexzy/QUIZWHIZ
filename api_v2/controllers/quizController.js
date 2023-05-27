@@ -9,7 +9,7 @@ exports.getAllQuiz = (req, res) => {
 }
 
 exports.getQuizByUser = (req, res) => {
-	Quiz.find({ created_by: req.params.created_by })
+	Quiz.find({ user_id: req.params.user_id })
 		.then(result => {
 			return res.status(200).json(result)
 		})
@@ -29,15 +29,25 @@ exports.createQuiz = (req, res) => {
 }
 
 exports.updateQuiz = (req, res) => {
-	Quiz.findOneAndUpdate({ id: req.params.id }, req.body.question_body)
+	Quiz.findOneAndUpdate({ test_id: req.params.id }, req.body.question_body)
 		.then(result => {
 			return res.status(200).json(result)
 		})
 		.catch(error => res.status(500).json({ message: error.message }))
 }
 
+exports.get_one_quiz = (req, res) => {
+	Quiz.find({ test_id: req.params.test_id })
+		.then(result => {
+			return res.status(200).json(result)
+		})
+		.catch(error => {
+			res.status(500).json({ message: error.message })
+		})
+}
+
 exports.deleteQuiz = (req, res) => {
-	Quiz.findOneAndDelete({ id: req.params.id })
+	Quiz.findOneAndDelete({ test_id: req.params.id })
 		.then(result => {
 			return res.status(200).json(result)
 		})
