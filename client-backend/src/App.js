@@ -3,12 +3,13 @@ import { ChakraProvider, theme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Text, Center } from '@chakra-ui/react';
 
+// tfp_B7swZsvLcErHKmBxPGDCZ6VvvqZBU6YDG39iZgv8bsdC_h1JidZMSBpTN {typeformTOKEN}
 
 //Global Pages
 import LandingPage from './components/landing_page/LandingPage';
 import DashboardRoot from './components/DashboardRoot';
 import Home from './components/homepage/Home';
-import Page from './components/Page'
+import Page from './components/Page';
 
 //Stanley Components
 import './App.css';
@@ -17,10 +18,8 @@ import QuizSettingPage from './components/quiz_settings_components/QuizSettingPa
 import QuizTakingPage from './components/quiz_taking_component/QuizTakingPage';
 import LoginPage from './components/LoginPage';
 
-
 //Bolexy Components
 import Quiz from './components/Quiz_creation_page/Quiz';
-
 
 const router = createBrowserRouter([
   {
