@@ -28,6 +28,6 @@ app.use(bodyParser.json());
 app.use('/api/v2/', user_routes);
 app.use('/api/v2/', quiz_routes);
 
-app.listen(port, () => {
+app.listen(port, '0.0.0.0', () => {
 	logger.log('info', `Server listening on port ${port}`);
 });
