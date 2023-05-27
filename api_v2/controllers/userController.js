@@ -45,7 +45,7 @@ exports.register = async (req, res) => {
 			from: "no-reply@gmail.com",
 			to: email,
 			subject: 'Verify your email address',
-			html: `<p>Please click this link to verify your email address: <a href="http://${process.env.api_address}:${process.env.PORT}/api/v2/verify/${user.verificationToken}">Link<a>`
+			html: `<p>Please click this link to verify your email address: <a href="http://${process.env.api_address}/api/v2/verify/${user.verificationToken}">Link<a>`
 		};
 
 		transporter.sendMail(mailOptions, async (error, info) => {
