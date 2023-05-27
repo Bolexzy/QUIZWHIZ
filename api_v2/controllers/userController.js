@@ -108,7 +108,7 @@ exports.login = async (req, res) => {
 
 exports.verify = async (req, res) => {
 	try {
-		const user = await User.findOne({ verificationToken: req.query.token });
+		const user = await User.findOne({ verificationToken: req.params.token });
 
 		if (!user) {
 			return res.status(400).json({ message: 'Invalid verification token' });

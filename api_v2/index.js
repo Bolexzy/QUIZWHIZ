@@ -14,12 +14,12 @@ const logger = winston.createLogger({
 });
 
 
-mongoose.connect(process.env.DB_URI, {
+mongoose.connect(process.env.DB_URI_REMOTE, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 })
 	.then(() => logger.log('info', 'Connected to MongoDB'))
-	.catch((error) => logger.log(error));
+	.catch((error) => logger.log('info', error.message));
 
 
 app.use(bodyParser.json());
