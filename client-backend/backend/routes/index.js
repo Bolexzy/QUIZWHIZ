@@ -1,10 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-
 const admin = require("firebase-admin");
-
-// const { getAuth } = require('firebase-admin/auth');
 
 admin.initializeApp({
   apiKey: "AIzaSyDrcB0RrBSaQn5-2mbYmGyS5zlzkc9slps",
@@ -16,16 +13,19 @@ admin.initializeApp({
   appId: "1:412874254362:web:9c8128380ab932112b89a3"
 });
 
-// const auth = getAuth(firebaseApp);
 const db = admin.firestore();
 
-//Test route
-router.post('/test', function(req, res) {
+//Test routes
+router.get('/', function(req, res) {
+  res.end('home');
+});
+
+router.get('/test', function(req, res) {
 
   res.send('doing something');
   
   db.collection('test').add({
-    me:'you'
+    me:'stan'
   });
 
   res.end();
@@ -33,39 +33,50 @@ router.post('/test', function(req, res) {
 
 
 /* Teacher routes */
-router.post('/setquiz/:quizId', function(req, res) {
-  res.send('hi from stan')
-
+router.post('/create_quiz/:quizId', function(req, res) {
+  /* userId is in the quiz object  */
 
   res.end();
-
 });
 
-router.get('/getquiz/:quizId', function(req, res) {
+
+router.post('/update_quiz/:id', function(req, res) {
+  /* userId is in the quiz object  */
+  res.end();
+});
+
+
+router.post('/delete_quiz/:id', function(req, res) {
+  /* userId is in the quiz object  */
+  res.end();
+});
+
+
+router.get('/quiz/:quizId', function(req, res) {
+  /* userId is in the quiz object  */
   res.send('hi from stan')
 
-
   res.end();
-
 });
 
 
 /* Student route */
-
 router.get('/quizinfo/:quizId', function(req, res) {
-  res.send('hi from stan')
-
 
   res.end();
 
 });
 
-router.get('/submit/:quizId', function(req, res) {
-  res.send('hi from stan')
 
+router.get('/taketest/:quizId', function(req, res) {
 
   res.end();
+});
 
+
+router.post('/submit/:quizId', function(req, res) {
+
+  res.end();
 });
 
 
