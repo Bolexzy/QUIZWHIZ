@@ -3,8 +3,6 @@ import { ChakraProvider, theme } from '@chakra-ui/react';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Text, Center } from '@chakra-ui/react';
 
-// tfp_B7swZsvLcErHKmBxPGDCZ6VvvqZBU6YDG39iZgv8bsdC_h1JidZMSBpTN {typeformTOKEN}
-
 //Global Pages
 import LandingPage from './components/landing_page/LandingPage';
 import DashboardRoot from './components/DashboardRoot';
@@ -15,7 +13,7 @@ import Page from './components/Page';
 import './App.css';
 import './index.css';
 import QuizSettingPage from './components/quiz_settings_components/QuizSettingPage';
-import QuizTakingPage from './components/quiz_taking_component/QuizTakingPage';
+import QuizPage from './components/quiz_taking_component/QuizPage';
 import LoginPage from './components/LoginPage';
 
 //Bolexy Components
@@ -52,7 +50,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'takequiz',
-            element: <QuizTakingPage />,
+            element: <QuizPage />,
           },
           {
             // path: 'setquiz',
@@ -66,7 +64,7 @@ const router = createBrowserRouter([
           },
           {
             path: 'takequiz',
-            element: <QuizTakingPage />,
+            element: <QuizPage />,
           },
         ],
       },

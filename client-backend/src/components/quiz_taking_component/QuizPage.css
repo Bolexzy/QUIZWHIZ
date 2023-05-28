@@ -1,0 +1,107 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+}
+
+.quiz-page-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  /* background-color: red; */
+  /* color: rgb(97 97 97); */
+  box-shadow: 20px 20px 30px rgba(0, 0, 0, 0.05);
+  gap: 1rem;
+  margin-top: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 60%;
+  height: auto;
+  /* padding: 0.8rem; */
+  border-radius: 0.7rem;
+  text-align: left;
+  /* background-image: url(../../assets/images/gradient-bg.png); */
+  background-color: rgba(255, 255, 255, 0.074);
+  border: 1px solid rgba(255, 255, 255, 0.222);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(10px);
+  transition: all ease 0.3s;
+}
+
+.layout {
+  width: 100%;
+  /* height: 768px; */
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  justify-content: space-evenly;
+}
+/* 
+.section {
+  width: 100%;
+} */
+
+/* question box styles */
+.question--card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: left;
+  background: #eceff1;
+  padding: 0.5rem;
+  /* border-radius: 0.7rem 0.7rem 0 0; */
+  background-size: cover;
+}
+
+/* question box styles end*/
+
+.options--container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  gap: 2rem;
+  margin: 1rem;
+}
+
+.option {
+  font-size: 1.2rem;
+  height: 4rem;
+  border-bottom: 1px solid grey;
+  align-content: center;
+}
+
+.action-btns {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+button {
+  width: fit-content;
+  min-width: 100px;
+  height: 45px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 2.5px solid #e0e1e4;
+  box-shadow: 0px 0px 20px -20px;
+  cursor: pointer;
+  background-color: white;
+  transition: all 0.2s ease-in-out 0ms;
+  user-select: none;
+  font-family: 'Poppins', sans-serif;
+  color: #000000;
+}
+
+button:hover {
+  background-color: #f2f2f2;
+  box-shadow: 0px 0px 20px -18px;
+}
+
+button:active {
+  transform: scale(0.95);
+}
