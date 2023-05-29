@@ -69,7 +69,7 @@ quizSchema.pre('save', function (next) {
 
 // Before updating a document
 quizSchema.pre('findOneAndUpdate', function (next) {
-	const doc = this._update;
+	const doc = this;
 
 	// Set the updatedAt field
 	doc.updatedAt = Date.now();
