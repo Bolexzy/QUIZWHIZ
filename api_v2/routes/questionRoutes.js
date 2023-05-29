@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const questionsController = require('../controllers/quizController');
+const { verifyToken } = require('../middleware/jwtMiddleware')
 
 router.get('/find_all_quiz', questionsController.getAllQuiz)
 router.post('/create_quiz', questionsController.createQuiz);
