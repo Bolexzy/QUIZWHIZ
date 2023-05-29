@@ -57,7 +57,7 @@ const quizSchema = new mongoose.Schema({
 })
 
 // Before saving a document
-schema.pre('save', function (next) {
+quizSchema.pre('save', function (next) {
 	const doc = this;
 
 	// Set the createdAt field if not already set
@@ -68,7 +68,7 @@ schema.pre('save', function (next) {
 })
 
 // Before updating a document
-schema.pre('findOneAndUpdate', function (next) {
+quizSchema.pre('findOneAndUpdate', function (next) {
 	const doc = this._update;
 
 	// Set the updatedAt field
