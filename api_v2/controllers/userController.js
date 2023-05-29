@@ -26,67 +26,68 @@ exports.register = async (req, res) => {
 		const verificationToken = crypto.randomBytes(8).toString('hex');
 		const user = new User({ email, password, verificationToken })
 		const { valid, reason, validators } = await isEmailValid(email);
-		const { smtp, regex, mx, typo } = validators;
+		const { smtp, regex, mx, typo } = validators
+		let emailExists = false
 
-		if (!smtp || !regex || !mx || !typo) {
+		if (!regex.valid || !typo.valid) {
 			return res.status(400).send({
 				message: "Please provide a valid email address.",
 				reason: validators[reason].reason
 			})
 		}
+		else {
+			/* check if user is already verified */
+			await User.find({ email })
+				.then((result) => {
+					if (result.length > 0 && result[0].isVerified) {
+						emailExists = true
+						logger.log('info', "email already exists")
+					}
+					else {
+						const transporter = nodemailer.createTransport({
+							service: process.env.email_service,
+							auth: {
+								user: process.env.email,
+								pass: process.env.password,
+							},
+						});
+						const mailOptions = {
+							from: "no-reply@gmail.com",
+							to: email,
+							subject: 'Verify your email address',
+							html: `<p>Please click this link to verify your email address: <a href="http://${process.env.api_address}/api/v2/verify/${user.verificationToken}">Link<a>`
+						};
 
-		/* check if user is already verified */
-		let emailExists = false
-		await User.find({ email })
-			.then((result) => {
-				if (result.length > 0 && result[0].isVerified) {
-					emailExists = true
-					logger.log('info', "email already exists")
-				}
-				else {
-					const transporter = nodemailer.createTransport({
-						service: process.env.email_service,
-						auth: {
-							user: process.env.email,
-							pass: process.env.password,
-						},
-					});
-					const mailOptions = {
-						from: "no-reply@gmail.com",
-						to: email,
-						subject: 'Verify your email address',
-						html: `<p>Please click this link to verify your email address: <a href="http://${process.env.api_address}/api/v2/verify/${user.verificationToken}">Link<a>`
-					};
+						transporter.sendMail(mailOptions, async (error, info) => {
+							if (error) {
+								logger.log('info', error)
+							} else {
+								logger.log('info', 'Verification email sent: ' + info.response);
 
-					transporter.sendMail(mailOptions, async (error, info) => {
-						if (error) {
-							logger.log('info', error)
-						} else {
-							logger.log('info', 'Verification email sent: ' + info.response);
+								await user.save().then(() => {
+									/* user saved */
+									logger.log('info', "user saved")
+								}).catch(async error => {
+									if (error.code == 11000) {
+										await User.findOneAndUpdate({ email }, { verificationToken })
+											.then(() => {
+												logger.log('info', 'verification token updated')
+											})
+											.catch(error => {
+												logger.log('info', { message: error })
+											})
+									}
+								})
+							}
+						})
+					}
+				})
+				.catch(error => {
+					logger.log('info', { message: error.message })
+				})
 
-							await user.save().then(() => {
-								/* user saved */
-								logger.log('info', "user saved")
-							}).catch(async error => {
-								if (error.code == 11000) {
-									await User.findOneAndUpdate({ email }, { verificationToken })
-										.then(() => {
-											logger.log('info', 'verification token updated')
-										})
-										.catch(error => {
-											logger.log('info', { message: error })
-										})
-								}
-							})
-						}
-					})
-				}
-			})
-			.catch(error => {
-				logger.log('info', { message: error.message })
-			})
-
-		return emailExists ? res.status(500).json({ message: "Email already exists" }) : res.status(200).json({ message: "Check your inbox to verify your email" })
+			return emailExists ? res.status(500).json({ message: "Email already exists" }) : res.status(200).json({ message: "Check your inbox to verify your email" })
+		}
 
 	} catch (error) {
 		return res.status(500).json({ message: error.message })
