@@ -68,6 +68,7 @@ exports.register = async (req, res) => {
 									/* user saved */
 									logger.log('info', "user saved")
 								}).catch(async error => {
+									logger.log('info', error.message)
 									if (error.code == 11000) {
 										await User.findOneAndUpdate({ email }, { verificationToken })
 											.then(() => {
