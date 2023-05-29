@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
 })
 
 // Before saving a document
-userSchema.pre('save', function (next) {
+userSchema.pre('save', () => {
 	const doc = this;
 
 	// Set the createdAt field if not already set
@@ -55,7 +55,7 @@ userSchema.pre('save', function (next) {
 })
 
 // Before updating a document
-userSchema.pre('findOneAndUpdate', function (next) {
+userSchema.pre('findOneAndUpdate', () => {
 	const doc = this._update;
 
 	// Set the updatedAt field
