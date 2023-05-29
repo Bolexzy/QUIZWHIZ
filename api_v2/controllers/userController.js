@@ -3,6 +3,15 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const nodemailer = require('nodemailer')
 const crypto = require('crypto');
+var admin = require("firebase-admin");
+
+var serviceAccount = require("../firebaseServiceAccount.json");
+
+admin.initializeApp({
+	credential: admin.credential.cert(serviceAccount),
+	/* databaseURL: "https://quizwhiz-72df8-default-rtdb.firebaseio.com" */
+});
+
 
 const winston = require('winston');
 const logger = winston.createLogger({
@@ -97,27 +106,70 @@ exports.register = async (req, res) => {
 /* login user */
 exports.login = async (req, res) => {
 	try {
-		const user = await User.findOne({ email: req.body.email });
+		let token = null
+		logger.log('info', req.body)
+		if (req.body.google_login) {
+			/* implement google login */
+			const firebaseToken = req.body.password;
+			admin.auth().verifyIdToken(firebaseToken)
+				.then(async decodedToken => {
+					// Token is valid, "decodedToken" contains user info
+					const userId = decodedToken.uid;
 
-		if (!user) {
-			return res.status(401).json({ message: "Authentication failed" })
+					await User.find({ email: req.body.email })
+						.then(async result => {
+							if (result.isVerified) {
+								return res.status(401).json({ message: "User already exists" })
+							}
+							else {
+								/* insert user in db if not already existing */
+								await User.updateOne(
+									{ email: req.body.email },
+									{ ...req.body, password: userId, isVerified: true, verificationToken: undefined },
+									{ upsert: true },
+									(err, doc) => {
+										if (!err) {
+											/* Generate token */
+											token = jwt.sign({ userId: doc._id, email: doc.email, role: doc.role }, process.env.JWT_SECRET, { expiresIn: '48h' });
+											return res.status(200).json({ token: token });
+										}
+										else {
+											logger.log('info', err)
+											return res.status(401).json({ message: "Authentication failed" })
+										}
+									}
+								)
+							}
+						})
+						.catch(error => {
+							return res.status(401).json({ message: error.message })
+						})
+				})
+				.catch(error => {
+					return res.status(500).json({message: error.message})
+				})
+		} else {
+			const user = await User.findOne({ email: req.body.email });
+
+			if (!user) {
+				return res.status(401).json({ message: "Authentication failed" })
+			}
+
+			const passwordMatch = await bcrypt.compare(req.body.password, user.password);
+			if (!passwordMatch) {
+				return res.status(401).json({ message: "Incorrect password" })
+			}
+
+			if (!user.isVerified) {
+				return res.status(401).json({ message: "Email address is not verified" })
+			}
+
+			token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '48h' });
+
+			return res.status(200).json({ token: token });
 		}
-
-		const passwordMatch = await bcrypt.compare(req.body.password, user.password);
-		if (!passwordMatch) {
-			return res.status(401).json({ message: "Incorrect password" })
-		}
-
-		if (!user.isVerified) {
-			return res.status(401).json({ message: "Email address is not verified" })
-		}
-
-		const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '48h' });
-
-		res.status(200).json({ token: token });
-
 	} catch (error) {
-		res.status(500).json({ message: error.message })
+		return res.status(500).json({ message: error.message })
 	}
 }
 
