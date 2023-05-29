@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
-const resultSchema  = new mongoose.Schema({
-	test_id : {
+const resultSchema = new mongoose.Schema({
+	test_id: {
 		type: String
 	},
 	user_id: {
@@ -9,7 +9,7 @@ const resultSchema  = new mongoose.Schema({
 	},
 	user_name: {
 		type: String
-	}, 
+	},
 	profile_url: {
 		type: String
 	},
@@ -21,8 +21,35 @@ const resultSchema  = new mongoose.Schema({
 	},
 	right_answers: {
 		type: Number
+	},
+	createdAt: {
+		type: Date,
+		default: Date.now()
+	},
+	updatedAt: {
+		type: Date,
+		default: Date.now()
 	}
 })
 
+// Before saving a document
+schema.pre('save', function (next) {
+	const doc = this;
+
+	// Set the createdAt field if not already set
+	if (!doc.createdAt) {
+		doc.createdAt = Date.now();
+	}
+	next();
+})
+
+// Before updating a document
+schema.pre('findOneAndUpdate', function (next) {
+	const doc = this._update;
+
+	// Set the updatedAt field
+	doc.updatedAt = Date.now();
+	next();
+})
 const Result = mongoose.model('Result', resultSchema)
 module.exports = Result;

@@ -1,3 +1,5 @@
 node*
 env
 .env
+start_remote.bash
+
