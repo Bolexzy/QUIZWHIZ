@@ -2,10 +2,9 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const nodemailer = require('nodemailer')
-const winston = require('winston');
 const crypto = require('crypto');
 
-
+const winston = require('winston');
 const logger = winston.createLogger({
 	level: 'info',
 	transports: [new winston.transports.Console()]
@@ -70,7 +69,7 @@ exports.register = async (req, res) => {
 								}).catch(async error => {
 									logger.log('info', error.message)
 									if (error.code == 11000) {
-										await User.findOneAndUpdate({ email }, { verificationToken })
+										await User.findOneAndUpdate({ email }, { verificationToken, updatedAt: Date.now() })
 											.then(() => {
 												logger.log('info', 'verification token updated')
 											})
@@ -149,7 +148,7 @@ exports.password_reset = async (req, res) => {
 		res.status(401).json({ message: 'Invalid email' });
 	} else {
 		const newPasswordHash = await bcrypt.hash(newPassword, 10);
-		await User.findOneAndUpdate({ email }, { password: newPasswordHash });
+		await User.findOneAndUpdate({ email }, { password: newPasswordHash, updatedAt: Date.now() });
 		res.status(200).json({ message: 'Password reset successful' });
 	}
 }
