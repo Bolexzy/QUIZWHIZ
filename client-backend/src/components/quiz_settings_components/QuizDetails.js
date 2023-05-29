@@ -14,6 +14,7 @@ const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFor
 
     return (
         <Box>
+            {console.log('form:', formValues)}
             <Accordion defaultIndex={[0]} allowMultiple>
                 <AccordionItem>
                     {({ isExpanded }) => (
@@ -63,6 +64,7 @@ const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFor
                                                 id="alloted_time_in_mins"
                                                 name="alloted_time_in_mins"
                                                 value={formValues.alloted_time_in_mins}
+                                                min={1}
                                                 onChange={handleQuizDetailsChange}
                                             />
                                         </div>
@@ -71,18 +73,18 @@ const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFor
                                             <input
                                                 type="datetime-local"
                                                 id="quiz_start_datetime"
-                                                name="quiz_start_datetime"
-                                                value={formValues.quiz_start_datetime}
+                                                name="quiz_start_time"
+                                                value={formValues.quiz_start_time}
                                                 onChange={handleQuizDetailsChange}
                                             />
                                         </div>
                                         <div className="form-row">
-                                            <label htmlFor="quiz_end_datetime">Quiz End Date/Time:</label>
+                                            <label htmlFor="quiz_end_time">Quiz End Date/Time:</label>
                                             <input
                                                 type="datetime-local"
                                                 id="quiz_end_datetime"
-                                                name="quiz_end_datetime"
-                                                value={formValues.quiz_end_datetime}
+                                                name="quiz_end_time"
+                                                value={formValues.quiz_end_time}
                                                 onChange={handleQuizDetailsChange}
                                             />
                                         </div>

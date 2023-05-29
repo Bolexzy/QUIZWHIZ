@@ -1,40 +1,69 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button, Flex, Box, Text } from '@chakra-ui/react';
 import { v4 } from "uuid";
 import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase__init_scripts/firebaseAppInit';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import DisplayQuestions from './DisplayQuestions';
-import questions from '../../set_quiz_questions.json';
 import QuizDetails from './QuizDetails';
 import AIQuestionGenerator from './ai_question_generator/AIQuestionGenerator';
-
-const axios = require('axios');
 
 
 export default function QuizSettingPage() {
     const [user, loading, error] = useAuthState(auth);
-    const [quiz, setQuiz] = useState(questions);
+    const [quiz, setQuiz] = useState([]);
     const [toggleCloseAll, setToggleCloseAll] = useState(true);
     const [render, toggleRender] = useState(false);
     const addButton = useRef();
     const closeOptionsRef = useRef([]);
 
+    
+    const location = useLocation();
+    const navigate = useNavigate();
+
     //for getting url parameters
     const params = useParams();
 
     //quizId
-    const quizId = params.quizId;
-    console.log('quizid: ')
-    console.log(quizId)
+    const quizId = params.quizId || v4();
 
+    const HOST = process.env.HOST || 'http://localhost:4000';
+
+
+    // Load quiz data
+    useEffect(function () {
+        fetch(`${HOST}/quiz/${quizId}`, {
+            method: 'GET',
+        }).then((res) => res.text())
+            .then((text) => JSON.parse(text))
+            .then((quizObj) => {
+                console.log(quizObj)
+
+                // the timestamp loses 1 hour after conversion,so i am adding 3600000 millisecond (1hr) to it to make up for it.
+                let quiz_start_timeISO= new Date(quizObj.quiz_start_time + 3600000).toISOString()
+                let quiz_end_timeISO = new Date(quizObj.quiz_end_time + 3600000).toISOString()
+
+                setQuiz(quizObj.questions)
+                setFormValues({
+                    title: quizObj.title,
+                    description: quizObj.description,
+                    alloted_time_in_mins: quizObj.alloted_time_in_mins,
+                    quiz_start_time: quiz_start_timeISO.slice(0, quiz_start_timeISO.length - 8),
+                    quiz_end_time: quiz_end_timeISO.slice(0, quiz_end_timeISO.length -8),
+                });
+        
+            })
+            .catch((err) => { alert(err); });
+    }, [user])
 
 
     //Manage QuizDetails Component State
     const [formValues, setFormValues] = useState({
         title: '',
         description: '',
-        alloted_time_in_mins: '',
+        alloted_time_in_mins: 0,
         quiz_start_time: '',
         quiz_end_time: ''
     });
@@ -54,7 +83,7 @@ export default function QuizSettingPage() {
 
         console.log('userid: ', user.uid);
         let constantQuizData = {
-            "test_id": quizId ?? v4(),
+            "test_id": quizId,
             "user_id": user.uid,
         }
 
@@ -62,15 +91,27 @@ export default function QuizSettingPage() {
 
         quizData.questions = quiz;
 
-        console.log('quiz data to sned:', quizData);
+        quizData.quiz_start_time = new Date(quizData.quiz_start_time).getTime();
+        quizData.quiz_end_time = new Date(quizData.quiz_end_time).getTime();
+        quizData.alloted_time_in_mins = parseInt(quizData.alloted_time_in_mins, 10) || 1;
+
+        console.log('quiz data to send:', quizData);
         console.log('submit')
 
-        axios.post('https://quizwhiz.onrender.com', {
-            firstName: 'Fred',
-            lastName: 'Flintstone'
-        })
-    };
+        fetch( `${HOST}/create_quiz`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(quizData),
+        }).then((res) => {
+            navigate(`/dashboard/setquiz/${quizId}`);
+            res.text().then((text) => { console.log(text) });
+        }).catch((err) => {
+            console.log(err);
+        });
 
+    };
 
 
     const createNewQuestionObject = () => {
