@@ -33,7 +33,7 @@ const resultSchema = new mongoose.Schema({
 })
 
 // Before saving a document
-resultSchema.pre('save', function (next) {
+resultSchema.pre('save', () => {
 	const doc = this;
 
 	// Set the createdAt field if not already set
@@ -44,8 +44,8 @@ resultSchema.pre('save', function (next) {
 })
 
 // Before updating a document
-resultSchema.pre('findOneAndUpdate', function (next) {
-	const doc = this;
+resultSchema.pre('findOneAndUpdate', () => {
+	const doc = this._update;
 
 	// Set the updatedAt field
 	doc.updatedAt = Date.now();
