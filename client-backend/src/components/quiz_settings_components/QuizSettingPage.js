@@ -10,6 +10,8 @@ import DisplayQuestions from './DisplayQuestions';
 import QuizDetails from './QuizDetails';
 import AIQuestionGenerator from './ai_question_generator/AIQuestionGenerator';
 
+const HOST = process.env.HOST || 'http://localhost:4000';
+
 
 export default function QuizSettingPage() {
     const [user, loading, error] = useAuthState(auth);
@@ -28,8 +30,6 @@ export default function QuizSettingPage() {
 
     //quizId
     const quizId = params.quizId || v4();
-
-    const HOST = process.env.HOST || 'http://localhost:4000';
 
 
     // Load quiz data
@@ -217,12 +217,18 @@ export default function QuizSettingPage() {
         }
     }
 
+    function deleteQuiz (){
+        fetch(`${HOST}/delete_quiz/${quizId}`, {
+            method: 'Post',
+        }).then(()=> navigate('/dashboard'))
+    }
+
     return (
         <Box maxW='85vw' p='3px' boxSizing='boarder-box' pos='relative' mr='auto' ml='auto'>
             {console.log('quiz: ', quiz)}
             {console.log('user:', user)}
             <Box>
-                <QuizDetails formValues={formValues} handleQuizDetailsChange={handleQuizDetailsChange} handleQuziDetailsFormSubmit={handleQuziDetailsFormSubmit} />
+                <QuizDetails formValues={formValues} handleQuizDetailsChange={handleQuizDetailsChange} handleQuziDetailsFormSubmit={handleQuziDetailsFormSubmit} deleteQuiz={deleteQuiz} />
             </Box>
             <Flex justifyContent="space-around" h='100%'>
                 <Box flex='3' position='relative'>
