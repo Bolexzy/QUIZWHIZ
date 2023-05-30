@@ -34,38 +34,54 @@ router.get('/test', function(req, res) {
 //testpost
 router.post('/testpost', function(req, res) {
 
-  res.send('doing something');
-  
-  console.log(req.body)
 
-  res.end(req.body);
+  console.log(req.body);
+  
+  
+  res.send(JSON.stringify(req.body))
+
+  res.end();
 });
 
 
 /* Teacher routes */
-router.post('/create_quiz/:quizId', function(req, res) {
+router.post('/create_quiz/:quizId?', function(req, res) {
   /* userId is in the quiz object  */
+  let body = req.body;
 
+  console.log(body)
+
+  db.collection('tests').doc(body.test_id).set(body);
   res.end();
 });
 
 
-router.post('/update_quiz/:id', function(req, res) {
+router.get('/quiz/:quizId', async function(req, res) {
   /* userId is in the quiz object  */
-  res.end();
+  const quizId = req.params.quizId;
+
+
+  const testsRef = db.collection('tests');
+  const docRef = testsRef.doc(quizId);
+  const doc = await docRef.get();
+  res.json(doc.data());
+});
+
+
+router.get('/quiz/:userId', async function(req, res) {
+  /* userId is in the quiz object  */
+  const quizId = req.params.quizId;
+
+
+  const testsRef = db.collection('tests');
+  const docRef = testsRef.doc(quizId);
+  const doc = await docRef.get();
+  res.json(doc.data());
 });
 
 
 router.post('/delete_quiz/:id', function(req, res) {
   /* userId is in the quiz object  */
-  res.end();
-});
-
-
-router.get('/quiz/:quizId', function(req, res) {
-  /* userId is in the quiz object  */
-  res.send('hi from stan')
-
   res.end();
 });
 
