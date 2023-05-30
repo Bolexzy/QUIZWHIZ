@@ -6,7 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var indexRouter = require('./routes/index');
+var { router : indexRouter, admin } = require('./routes/index');
 
 var app = express();
 
@@ -21,7 +21,36 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+//my helper func
+async function getToken(request) {
+  if (!request.headers.authorization) {
+    return undefined;
+  }
+  const token =
+    request.headers.authorization.replace(/^Bearer\s/, '');
+  return token;
+}
+
+//Authorization route
+app.use('/', async function authorizeUsers(req, res, next) {
+  const token = await getToken(req)
+  const payload = await admin.auth().verifyIdToken(token)
+
+  if (payload) {
+    //auth token valid
+    req.quizwhiz_user = payload
+    next();
+  }
+  else{
+    // user does not exist
+    res.status(401).json({status:'error',message:'Not authorized'})
+  }
+});
+
+//add our routes
 app.use('/', indexRouter);
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));

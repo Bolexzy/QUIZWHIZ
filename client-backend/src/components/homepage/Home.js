@@ -9,7 +9,7 @@ import './Home.css';
 import SetQuizCard  from './SetQuizCard'
 
 
-const HOST = process.env.HOST || 'http://localhost:4000';
+const HOSTB = process.env.HOST || 'http://localhost:4000';
 
 const Content = () => {
   const [questionsSet, setQuestionsSet ] = useState([])
@@ -17,7 +17,7 @@ const Content = () => {
 
   useEffect(() => {
     if (user) {
-      fetch(`${HOST}/user/quiz/${user.uid}`, {
+      fetch(`${HOSTB}/user/quiz/${user.uid}`, {
         method: 'GET',
       }).then((res) => {
         res.text().then((text) => { setQuestionsSet(JSON.parse(text)) });

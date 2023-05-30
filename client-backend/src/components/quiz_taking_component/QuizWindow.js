@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button } from '@chakra-ui/react';
-import questions from '../../take_quiz_questions.json';
 import Question from './Question';
 
-export default function QuizWindow() {
+export default function QuizWindow({questions, updateQuizQuestionsarray}) {
   const [quiz, setQuiz] = useState(questions);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [render, toggleRender] = useState(false);
@@ -48,16 +46,16 @@ export default function QuizWindow() {
 
           // Trigger a re-render by toggling the render state
           toggleRender(!render);
-          console.log(prevState); // Log the updated state for debugging purposes
         }
       }
+      updateQuizQuestionsarray(prevState)
       return prevState; // Return the updated state
     });
   };
 
-  useEffect(() => {
-    console.log(questions);
-  }, [quiz]);
+  useEffect(()=>{
+    updateQuizQuestionsarray(quiz)
+  },[])
 
   return (
     <div className="layout">
