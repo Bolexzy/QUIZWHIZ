@@ -9,7 +9,7 @@ export default function Question({
   total,
 }) {
   return (
-    <section quiz--card>
+    <section className='quiz--card'>
       <div fontSize="xl" className="question--card">
         <p style={{ fontWeight: '500' }}>
           Quiz Question {questionIndex + 1} of {total}

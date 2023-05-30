@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Button, Flex } from '@chakra-ui/react'
 import {
     Text,
     Box,
@@ -10,7 +11,7 @@ import {
 } from '@chakra-ui/react'
 import './QuizDetails.css'
 
-const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFormSubmit }) => {
+const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFormSubmit, deleteQuiz }) => {
 
     return (
         <Box>
@@ -88,7 +89,11 @@ const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFor
                                                 onChange={handleQuizDetailsChange}
                                             />
                                         </div>
-                                        <button type="submit">Submit</button>
+                                        <Flex>
+                                            <Button colorScheme='red' onClick={deleteQuiz}>delete quiz</Button>
+                                            <button type="submit">Submit</button>
+                                        </Flex>
+                                        
                                     </form>
                                 </div>
 

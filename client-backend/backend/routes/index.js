@@ -16,28 +16,28 @@ admin.initializeApp({
 const db = admin.firestore();
 
 //Test routes
-router.get('/', function(req, res) {
+router.get('/', function (req, res) {
   res.end('home');
 });
 
-router.get('/test', function(req, res) {
+router.get('/test', function (req, res) {
 
   res.send('doing something');
-  
+
   db.collection('test').add({
-    me:'stan'
+    me: 'stan'
   });
 
   res.end();
 });
 
 //testpost
-router.post('/testpost', function(req, res) {
+router.post('/testpost', function (req, res) {
 
 
   console.log(req.body);
-  
-  
+
+
   res.send(JSON.stringify(req.body))
 
   res.end();
@@ -45,7 +45,7 @@ router.post('/testpost', function(req, res) {
 
 
 /* Teacher routes */
-router.post('/create_quiz/:quizId?', function(req, res) {
+router.post('/create_quiz/:quizId?', function (req, res) {
   /* userId is in the quiz object  */
   let body = req.body;
 
@@ -56,7 +56,7 @@ router.post('/create_quiz/:quizId?', function(req, res) {
 });
 
 
-router.get('/quiz/:quizId', async function(req, res) {
+router.get('/quiz/:quizId', async function (req, res) {
   /* userId is in the quiz object  */
   const quizId = req.params.quizId;
 
@@ -68,39 +68,53 @@ router.get('/quiz/:quizId', async function(req, res) {
 });
 
 
-router.get('/quiz/:userId', async function(req, res) {
+router.get('/user/quiz/:userId', async function (req, res) {
   /* userId is in the quiz object  */
-  const quizId = req.params.quizId;
+  const userId = req.params.userId;
 
+  console.log('user id: ', userId)
 
   const testsRef = db.collection('tests');
-  const docRef = testsRef.doc(quizId);
-  const doc = await docRef.get();
-  res.json(doc.data());
+  const query = testsRef.where('user_id', '==', `${userId}`).select('title','description','test_id',);
+  let result = await query.get()
+  let newresult = [];
+  result.forEach((quizDoc) => newresult.push(quizDoc.data()));
+  res.json(newresult);
 });
 
 
-router.post('/delete_quiz/:id', function(req, res) {
+router.post('/delete_quiz/:quizId', function (req, res) {
   /* userId is in the quiz object  */
+  const quizId = req.params.quizId;
+
+  const testsRef = db.collection('tests');
+  const docRef = testsRef.doc(quizId);
+  docRef.delete();
   res.end();
 });
 
 
 /* Student route */
-router.get('/quizinfo/:quizId', function(req, res) {
+router.get('/quizinfo/:quizId', async function (req, res) {
+  const quizId = req.params.quizId;
 
-  res.end();
+  const testsRef = db.collection('tests');
+  const query = testsRef.doc(quizId).select('title','description','test_id',);
+  let result = await query.get()
+  let quizInfo = result.data()
+  console.log(quizInfo)
+  res.json(quizInfo);
 
 });
 
 
-router.get('/taketest/:quizId', function(req, res) {
+router.get('/taketest/:quizId', function (req, res) {
 
   res.end();
 });
 
 
-router.post('/submit/:quizId', function(req, res) {
+router.post('/submit/:quizId', function (req, res) {
 
   res.end();
 });
