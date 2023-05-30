@@ -3,3 +3,4 @@ env
 .env
 start_remote.bash
 firebaseService*
+frontend

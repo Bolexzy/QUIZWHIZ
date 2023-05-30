@@ -45,10 +45,10 @@ exports.register = async (req, res) => {
 						returnMessage = "Email already exists"
 						logger.log('info', "email already exists")
 					} else if (result.length > 0 && !result[0].isVerified) {
+						returnMessage = "Verification email sent"
 						await User.findOneAndUpdate({ email }, { verificationToken, updatedAt: Date.now() })
 							.then(() => {
 								logger.log('info', 'verification token updated')
-								returnMessage = "Verification email sent"
 							})
 							.catch(error => {
 								logger.log('info', { message: error })
