@@ -44,15 +44,32 @@ exports.register = async (req, res) => {
 						emailExists = true
 						returnMessage = "Email already exists"
 						logger.log('info', "email already exists")
+						return res.status(500).json({ message: returnMessage })
+
 					} else if (result.length > 0 && !result[0].isVerified) {
+						returnMessage = "Verification email sent"
 						await User.findOneAndUpdate({ email }, { verificationToken, updatedAt: Date.now() })
 							.then(() => {
 								logger.log('info', 'verification token updated')
-								returnMessage = "Verification email sent"
+
+								const emailServiceOptions = emailService.setupNodemailer(email, user)
+								const transporter = emailServiceOptions.transporter
+								const mailOptions = emailServiceOptions.mailOptions
+								transporter.sendMail(mailOptions, async (error, info) => {
+									if (error) {
+										returnMessage = error.message
+										logger.log('info', error)
+										return res.status(500).json({ message: returnMessage })
+									} else {
+										returnMessage = "Verification email sent"
+										return res.status(500).json({ message: returnMessage })
+									}
+								})
 							})
 							.catch(error => {
 								logger.log('info', { message: error })
 								returnMessage = error.message
+								
 							})
 					}
 					else {
@@ -64,24 +81,27 @@ exports.register = async (req, res) => {
 							if (error) {
 								returnMessage = error.message
 								logger.log('info', error)
+								return res.status(500).json({ message: returnMessage })
 							} else {
 								await user.save().then(() => {
 									returnMessage = "Verification email sent"
 									logger.log('info', "user saved")
+									return res.status(200).json({ message: returnMessage })
 								}).catch(async error => {
 									logger.log('info', error.message)
 									returnMessage = error.message
+									return res.status(500).json({ message: returnMessage })
 								})
 							}
+
 						})
 					}
 				})
 				.catch(error => {
 					logger.log('info', { message: error.message })
 					returnMessage = error.message
+					return res.status(500).json({ message: returnMessage })
 				})
-
-			return emailExists ? res.status(500).json({ message: returnMessage }) : res.status(200).json({ message: returnMessage })
 		}
 
 	} catch (error) {
