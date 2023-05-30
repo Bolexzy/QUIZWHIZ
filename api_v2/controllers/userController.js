@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
-const nodemailer = require('nodemailer')
 const crypto = require('crypto');
+const emailService = require('../services/emailService')
 var admin = require("firebase-admin");
 
 var serviceAccount = require("../firebaseServiceAccount.json");
@@ -19,73 +19,58 @@ const logger = winston.createLogger({
 	transports: [new winston.transports.Console()]
 });
 
-const emailValidator = require('deep-email-validator');
-
-async function isEmailValid(email) {
-	return emailValidator.validate(email)
-}
-
 /* register user */
 exports.register = async (req, res) => {
 	try {
-		const hashedPassword = await bcrypt.hash(req.body.password, 10);
+		const password = await bcrypt.hash(req.body.password, 10);
 		const email = req.body.email;
-		const password = hashedPassword;
 		const verificationToken = crypto.randomBytes(8).toString('hex');
 		const user = new User({ email, password, verificationToken })
-		const { valid, reason, validators } = await isEmailValid(email);
-		const { smtp, regex, mx, typo } = validators
 		let emailExists = false
+		let returnMessage = ""
+		const isValidEmail = await emailService.isValidEmail(email)
 
-		if (!regex.valid || !typo.valid) {
+		if (isValidEmail !== "valid") {
 			return res.status(400).send({
 				message: "Please provide a valid email address.",
-				reason: validators[reason].reason
+				reason: isValidEmail
 			})
 		}
 		else {
 			/* check if user is already verified */
 			await User.find({ email })
-				.then((result) => {
+				.then(async (result) => {
 					if (result.length > 0 && result[0].isVerified) {
 						emailExists = true
+						returnMessage = "Email already exists"
 						logger.log('info', "email already exists")
+					} else if (result.length > 0 && !result[0].isVerified) {
+						await User.findOneAndUpdate({ email }, { verificationToken, updatedAt: Date.now() })
+							.then(() => {
+								logger.log('info', 'verification token updated')
+								returnMessage = "Verification email sent"
+							})
+							.catch(error => {
+								logger.log('info', { message: error })
+								returnMessage = error.message
+							})
 					}
 					else {
-						const transporter = nodemailer.createTransport({
-							service: process.env.email_service,
-							auth: {
-								user: process.env.email,
-								pass: process.env.password,
-							},
-						});
-						const mailOptions = {
-							from: "no-reply@gmail.com",
-							to: email,
-							subject: 'Verify your email address',
-							html: `<p>Please click this link to verify your email address: <a href="http://${process.env.api_address}/api/v2/verify/${user.verificationToken}">Link<a>`
-						};
+						const emailServiceOptions = emailService.setupNodemailer(email, user)
+						const transporter = emailServiceOptions.transporter
+						const mailOptions = emailServiceOptions.mailOptions
 
 						transporter.sendMail(mailOptions, async (error, info) => {
 							if (error) {
+								returnMessage = error.message
 								logger.log('info', error)
 							} else {
-								logger.log('info', 'Verification email sent: ' + info.response);
-
 								await user.save().then(() => {
-									/* user saved */
+									returnMessage = "Verification email sent"
 									logger.log('info', "user saved")
 								}).catch(async error => {
 									logger.log('info', error.message)
-									if (error.code == 11000) {
-										await User.findOneAndUpdate({ email }, { verificationToken, updatedAt: Date.now() })
-											.then(() => {
-												logger.log('info', 'verification token updated')
-											})
-											.catch(error => {
-												logger.log('info', { message: error })
-											})
-									}
+									returnMessage = error.message
 								})
 							}
 						})
@@ -93,9 +78,10 @@ exports.register = async (req, res) => {
 				})
 				.catch(error => {
 					logger.log('info', { message: error.message })
+					returnMessage = error.message
 				})
 
-			return emailExists ? res.status(500).json({ message: "Email already exists" }) : res.status(200).json({ message: "Check your inbox to verify your email" })
+			return emailExists ? res.status(500).json({ message: returnMessage }) : res.status(200).json({ message: returnMessage })
 		}
 
 	} catch (error) {
@@ -146,7 +132,7 @@ exports.login = async (req, res) => {
 						})
 				})
 				.catch(error => {
-					return res.status(500).json({message: error.message})
+					return res.status(500).json({ message: error.message })
 				})
 		} else {
 			const user = await User.findOne({ email: req.body.email });
