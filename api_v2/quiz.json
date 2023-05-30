@@ -1,32 +1,92 @@
-{
-	"created_by": "wizdoz@hi2.in",
-	"title": "math",
-	"time_of_quiz": "datetime",
-	"alloted_time_mins": "30",
-	"questions": [
+[
+	{
+		"_id": "64744a8d850813eb1c1e5f27",
+		"test_id": "test1",
+		"user_id": "user1",
+		"description": "Sample quiz 1",
+		"title": "Sample Quiz",
+		"quiz_start_time": 1608095600,
+		"quiz_end_time": 1608135200,
+		"alloted_time_mins": 30,
+		"questions": [
 			{
-					"id": "1",
-					"options": {
-							"A": "america",
-							"B": "nigeria",
-							"C": "ghana",
-							"D": "south africa"
-					},
-					"answer": [
-							"A"
-					]
+				"id": "1",
+				"question": "What is the capital of India?",
+				"options": {
+					"A": "Delhi",
+					"B": "Mumbai",
+					"C": "Chennai",
+					"D": "Kolkata"
+				},
+				"answer": [
+					"A"
+				]
 			},
 			{
-					"id": "2",
-					"options": {
-							"A": ";alsplsad",
-							"B": "pqlwdwl",
-							"C": "qwldko",
-							"D": "[wd[d"
-					},
-					"answer": [
-							"A"
-					]
+				"id": "2",
+				"question": "What is the capital of Nigeria?",
+				"options": {
+					"A": "Delhi",
+					"B": "Mumbai",
+					"C": "Abuja",
+					"D": "Kolkata"
+				},
+				"answer": [
+					"C"
+				]
+			},
+			{
+				"id": "3",
+				"question": "What is the capital of Portugal?",
+				"options": {
+					"A": "Delhi",
+					"B": "Mumbai",
+					"C": "Chennai",
+					"D": "Lisbon"
+				},
+				"answer": [
+					"D"
+				]
+			},
+			{
+				"id": "4",
+				"question": "What is the capital of Rwanda?",
+				"options": {
+					"A": "Delhi",
+					"B": "Kigali",
+					"C": "Chennai",
+					"D": "Kolkata"
+				},
+				"answer": [
+					"B"
+				]
+			},
+			{
+				"id": "5",
+				"question": "What is the capital of France?",
+				"options": {
+					"A": "Paris",
+					"B": "Mumbai",
+					"C": "Chennai",
+					"D": "Kolkata"
+				},
+				"answer": [
+					"A"
+				]
+			},
+			{
+				"id": "7",
+				"question": "What is the capital of Egypt?",
+				"options": {
+					"A": "Delhi",
+					"B": "Mumbai",
+					"C": "Cairo",
+					"D": "Kolkata"
+				},
+				"answer": [
+					"C"
+				]
 			}
-	]
-}
+		]
+	}
+]

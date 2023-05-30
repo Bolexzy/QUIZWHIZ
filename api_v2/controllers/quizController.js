@@ -35,7 +35,7 @@ exports.createQuiz = (req, res) => {
 }
 
 exports.updateQuiz = (req, res) => {
-	Quiz.findOneAndUpdate({ test_id: req.params.id }, { ...req.body, updatedAt: Date.now() })
+	Quiz.findOneAndUpdate({ test_id: req.params.id }, { ...req.body, updatedAt: Date.now() }, { new: true })
 		.then(result => {
 			return res.status(200).json(result)
 		})
