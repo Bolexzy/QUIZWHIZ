@@ -9,7 +9,7 @@ import SetQuizCard from './SetQuizCard'
 import { Link } from 'react-router-dom';
 
 
-const HOSTB = process.env.HOST || 'http://localhost:4000';
+const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
 const Content = () => {
   const [questionsSet, setQuestionsSet] = useState([]);
@@ -18,8 +18,9 @@ const Content = () => {
 
   useEffect(() => {
     if (user) {
+      console.log(user)
       user.getIdToken().then((token) => {
-        fetch(`${HOSTB}/user/quiz/${user.uid}`, {
+        fetch(`${REACT_APP_HOSTB}/user/quiz/${user.uid}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`
@@ -30,7 +31,7 @@ const Content = () => {
           console.log(err);
         });
 
-        fetch(`${HOSTB}/result/${user.uid}`, {
+        fetch(`${REACT_APP_HOSTB}/result/${user.uid}`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`

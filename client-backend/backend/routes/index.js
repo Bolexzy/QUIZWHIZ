@@ -212,9 +212,11 @@ router.get('/quiz/result/:quizId', async function (req, res) {
 router.get('/adduser', async function (req, res) {
   const userInfo = req.quizwhiz_user;
 
+  console.log(userInfo)
+
   const user = {
     name: userInfo.name,
-    email: userInfo.email,
+    email: userInfo?.email || '',
     uid: userInfo.uid,
     picture: userInfo.picture
   }

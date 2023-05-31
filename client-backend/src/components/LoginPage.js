@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { firebaseApp, auth } from './firebase__init_scripts/firebaseAppInit';
-import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider  } from "firebase/auth";
+import { getAuth, signInWithPopup, GoogleAuthProvider, GithubAuthProvider } from "firebase/auth";
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
-import { Button, Box, Skeleton, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import { Box, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import GoogleIcon from '../assets/google-color-svgrepo-com.svg';
+import GithubIcon from '../assets/github-octocat-svgrepo-com.svg';
+
+
+
 import '../styles/LoginPage.css';
 
-const HOSTB = process.env.HOSTB || 'http://localhost:4000';
+const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
 const googleProvider = new GoogleAuthProvider();
 const GithubProvider = new GithubAuthProvider();
@@ -29,7 +34,7 @@ const LoginPage = () => {
                 const user = result.user;
                 if (user) {
                     user.getIdToken().then((token) => {
-                        fetch(`${HOSTB}/adduser`, {
+                        fetch(`${REACT_APP_HOSTB}/adduser`, {
                             method: 'GET',
                             headers: {
                                 'Content-type': 'application/json',
@@ -57,41 +62,43 @@ const LoginPage = () => {
     };
 
 
-    const handleGithubSignup =()=>{
+    const handleGithubSignup = () => {
         signInWithPopup(auth, GithubProvider)
-        .then((result) => {
-          // This gives you a GitHub Access Token. You can use it to access the GitHub API.
-          const credential = GithubAuthProvider.credentialFromResult(result);
-          const token = credential.accessToken;
-      
-          // The signed-in user info.
-          const user = result.user;
-          if (user) {
-            user.getIdToken().then((token) => {
-                fetch(`${HOSTB}/adduser`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-type': 'application/json',
-                        Authorization: `Bearer ${token}`
-                    },
-                }).catch(() => { console.log('failed to add user to firestore') });
+            .then((result) => {
+                // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+                const credential = GithubAuthProvider.credentialFromResult(result);
+                const token = credential.accessToken;
+
+                // The signed-in user info.
+                const user = result.user;
+                if (user) {
+                    user.getIdToken().then((token) => {
+                        fetch(`${REACT_APP_HOSTB}/adduser`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-type': 'application/json',
+                                Authorization: `Bearer ${token}`
+                            },
+                        }).catch(() => { console.log('failed to add user to firestore') });
+                    });
+                    console.log('succeessful signin')
+                    navigate("/dashboard", { replace: true })
+                }
+                // IdP data available using getAdditionalUserInfo(result)
+                // ...
+            }).catch((error) => {
+                // Handle Errors here.
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                // The email of the user's account used.
+                const email = error.customData.email;
+                // The AuthCredential type that was used.
+                const credential = GithubAuthProvider.credentialFromError(error);
+                // ...
+                console.log('signin failed', error)
+                setLoginError('An error occurred during login. Please try again.');
             });
 
-            navigate("/dashboard", { replace: true })
-        }
-          // IdP data available using getAdditionalUserInfo(result)
-          // ...
-        }).catch((error) => {
-          // Handle Errors here.
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // The email of the user's account used.
-          const email = error.customData.email;
-          // The AuthCredential type that was used.
-          const credential = GithubAuthProvider.credentialFromError(error);
-          // ...
-        });
-      
     }
 
     if (loading) {
@@ -113,10 +120,14 @@ const LoginPage = () => {
                     <span className="login-error__message">{loginError}</span>
                 </div>
             }
-            <button className="google-signin-button" onClick={handleGoogleSignup}>
+            <button style={{margin:'20px'}} className="google-signin-button" onClick={handleGoogleSignup}>
+                <img style={{width:'30px', marginRight:'10px'}} src={GoogleIcon} alt='google icon' />
                 Continue with Google
             </button>
-            <Button colorScheme='gray' variant='outline' onClick={handleGithubSignup}>Continue with GitHub</Button>
+            <button style={{ backgroundColor: '#endregion', color: 'black' }} className="google-signin-button" onClick={handleGithubSignup}>
+                <img style={{width:'40px', marginRight:'10px'}} src={GithubIcon} alt='github icon' />
+                Continue with GitHub
+                </button>
         </div>
     );
 };

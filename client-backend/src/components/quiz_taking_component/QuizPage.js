@@ -8,7 +8,7 @@ import QuizInfo from './QuizInfo'
 import QuizWindow from './QuizWindow';
 import './QuizPage.css';
 
-const HOSTB = process.env.HOSTB || 'http://localhost:4000';
+const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
 export default function QuizTakingPage() {
   const [user, loading, error] = useAuthState(auth);
@@ -28,7 +28,7 @@ export default function QuizTakingPage() {
 
   const handleStartQuiz = () => {
     user.getIdToken().then((token) => {
-      fetch(`${HOSTB}/taketest/${quizId}`, {
+      fetch(`${REACT_APP_HOSTB}/taketest/${quizId}`, {
         method:'GET',
         headers: {
           Authorization: `Bearer ${token}`
@@ -56,7 +56,7 @@ export default function QuizTakingPage() {
         //user is logged in
         user.getIdToken()
           .then((token) => {
-            fetch(`${HOSTB}/quizinfo/${quizId}`, {
+            fetch(`${REACT_APP_HOSTB}/quizinfo/${quizId}`, {
               headers: {
                 Authorization: `Bearer ${token}`
               }
@@ -77,7 +77,7 @@ export default function QuizTakingPage() {
     quiztoSubmit.questions =  quizArrayRef.current;
     console.log(quiztoSubmit)
     user.getIdToken().then((token) => {
-      fetch(`${HOSTB}/submit/${quizId}`, {
+      fetch(`${REACT_APP_HOSTB}/submit/${quizId}`, {
         method:'POST',
         headers: {
           'Content-Type': 'application/json',

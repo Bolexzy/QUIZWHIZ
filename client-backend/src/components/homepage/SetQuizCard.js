@@ -2,8 +2,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const HOSTB = process.env.HOSTB || 'http://localhost:4000'
-const HOSTF = process.env.HOSTF || 'http://localhost:3000'
+const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000'
+const REACT_APP_HOSTF = process.env.REACT_APP_HOSTF || 'http://localhost:3000'
 
 
 const SetQuizCard = ({ quiz }) => {
@@ -25,7 +25,7 @@ const SetQuizCard = ({ quiz }) => {
 
         <div className="card-footer" style={{ display: 'flex', flexDirection: 'row' }}>
           <span style={{ fontSize: '10px' }}>
-            Share quiz link: {`${HOSTF}/dashboard/takequiz/${quiz.test_id}`}
+            Share quiz link: {`${REACT_APP_HOSTF}/dashboard/takequiz/${quiz.test_id}`}
           </span>
         </div>
       </div>

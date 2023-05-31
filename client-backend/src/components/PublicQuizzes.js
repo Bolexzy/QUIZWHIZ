@@ -5,7 +5,7 @@ import { Button, Heading, Stack, Skeleton, SkeletonCircle, SkeletonText } from '
 import { firebaseApp, auth } from './firebase__init_scripts/firebaseAppInit';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
-const HOSTB = process.env.HOSTB || 'http://localhost:4000';
+const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
 export default function PublicQuizzes() {
 
@@ -17,7 +17,7 @@ export default function PublicQuizzes() {
         if (!loading) {
             user.getIdToken().then((token) => {
 
-                fetch(`${HOSTB}/public/quiz`, {
+                fetch(`${REACT_APP_HOSTB}/public/quiz`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`

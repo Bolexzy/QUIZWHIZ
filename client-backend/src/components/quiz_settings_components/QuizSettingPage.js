@@ -12,7 +12,7 @@ import DisplayQuestions from './DisplayQuestions';
 import QuizDetails from './QuizDetails';
 import AIQuestionGenerator from './ai_question_generator/AIQuestionGenerator';
 
-const HOSTB = process.env.HOSTB || 'http://localhost:4000';
+const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
 
 export default function QuizSettingPage() {
@@ -38,7 +38,7 @@ export default function QuizSettingPage() {
     useEffect(function () {
         if (!loading) {
             user.getIdToken().then((token) => {
-                fetch(`${HOSTB}/quiz/${quizId}`, {
+                fetch(`${REACT_APP_HOSTB}/quiz/${quizId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -110,7 +110,7 @@ export default function QuizSettingPage() {
         quizData.allotted_time_in_mins = parseInt(quizData.allotted_time_in_mins, 10) || 1;
 
         user.getIdToken().then((token) => {
-            fetch(`${HOSTB}/create_quiz`, {
+            fetch(`${REACT_APP_HOSTB}/create_quiz`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -233,7 +233,7 @@ export default function QuizSettingPage() {
 
     function deleteQuiz() {
         user.getIdToken().then((token) => {
-            fetch(`${HOSTB}/delete_quiz/${quizId}`, {
+            fetch(`${REACT_APP_HOSTB}/delete_quiz/${quizId}`, {
                 method: 'Post',
                 headers: {
                     Authorization: `Bearer ${token}`

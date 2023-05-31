@@ -3,7 +3,7 @@ import { Flex, Select, Text, Heading, Avatar, Button, Image, Box, Card, CardHead
 import { firebaseApp, auth } from "../firebase__init_scripts/firebaseAppInit";
 import { useAuthState } from "react-firebase-hooks/auth";
 
-const HOSTB = process.env.HOSTB || 'http://localhost:4000';
+const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
 const filterFunctions = {
     name: (fisrtItem, secondItem) => { return fisrtItem.user_name - secondItem.user_name },
@@ -30,7 +30,7 @@ export default function QuizResultComponent({ quizId }) {
     useEffect(function () {
         if (!loading) {
             user.getIdToken().then((token) => {
-                fetch(`${HOSTB}/quiz/result/${quizId}`, {
+                fetch(`${REACT_APP_HOSTB}/quiz/result/${quizId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`
