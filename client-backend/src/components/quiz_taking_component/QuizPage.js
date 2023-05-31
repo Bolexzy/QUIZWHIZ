@@ -29,6 +29,7 @@ export default function QuizTakingPage() {
   const handleStartQuiz = () => {
     user.getIdToken().then((token) => {
       fetch(`${HOSTB}/taketest/${quizId}`, {
+        method:'GET',
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -39,7 +40,7 @@ export default function QuizTakingPage() {
           setQuizObject(res)
 
           setStartTime(Date.now());
-          setEndTime((res.alloted_time_in_mins * 60 * 1000) + Date.now());
+          setEndTime((res.allotted_time_in_mins * 60 * 1000) + Date.now());
         })
       });
     });
@@ -87,7 +88,6 @@ export default function QuizTakingPage() {
         res.text().then((res) => {
           console.log(res)
           navigate('/dashboard', {replace: true})
-          setEndTime((res.alloted_time_in_mins * 60 * 1000) + Date.now());
         })
       });
     });
@@ -125,7 +125,7 @@ export default function QuizTakingPage() {
           :
           (<div />)
         }
-        <p className="quiz-time">Allotted Time: {quizInfo.alloted_time_in_mins} minutes</p>
+        <p className="quiz-time">Allotted Time: {quizInfo.allotted_time_in_mins} minutes</p>
         <div>
           NOTE: Do not click outside of the browser Window, refresh or leave the page or the quiz will be submitted automatically
         </div>

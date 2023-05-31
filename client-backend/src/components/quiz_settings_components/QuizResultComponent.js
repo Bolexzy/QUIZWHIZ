@@ -40,15 +40,15 @@ export default function QuizResultComponent({ quizId }) {
                     .then((resultsArray) => {
                         setReaultsArray(resultsArray)
                     })
-                    .catch((err) => { alert(err); });
+                    .catch((err) => { console.log(err); });
             });
         }
     }, [user])
 
     return (
-        <Flex flexDirection='collumn'>
+        <Flex flexDirection='column'>
             <Text>Sort by</Text>
-            <Select placeholder='Select option' maxW='15rem' onChange={sortResult}>
+            <Select mb='30px' placeholder='Select option' maxW='15rem' onChange={sortResult}>
                 <option value='name'>name</option>
                 <option value='score'>score</option>
                 <option value='date'>date</option>

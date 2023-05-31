@@ -23,7 +23,7 @@
     "user_id": string,
     "title": string,
     "description": string,
-    "alloted_time_mins": int,
+    "allotted_time_mins": int,
     "quiz_start_time": int,  //(unix epoch timestamp in milliseconds as in javascript)
     "quiz_end_time": int,  //(unix epoch timestamp in milliseconds as in javascript)
     "questions": [array of question objects (see below)],

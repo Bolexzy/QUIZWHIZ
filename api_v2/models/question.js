@@ -39,7 +39,7 @@ const quizSchema = new mongoose.Schema({
 	quiz_end_time: {
 		type: Number
 	},
-	alloted_time_mins: {
+	allotted_time_mins: {
 		type: Number,
 	},
 	questions: {

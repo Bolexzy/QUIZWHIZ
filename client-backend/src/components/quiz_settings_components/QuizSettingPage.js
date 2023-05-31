@@ -12,7 +12,7 @@ import DisplayQuestions from './DisplayQuestions';
 import QuizDetails from './QuizDetails';
 import AIQuestionGenerator from './ai_question_generator/AIQuestionGenerator';
 
-const HOST = process.env.HOST || 'http://localhost:4000';
+const HOSTB = process.env.HOSTB || 'http://localhost:4000';
 
 
 export default function QuizSettingPage() {
@@ -36,9 +36,9 @@ export default function QuizSettingPage() {
 
     // Load quiz data
     useEffect(function () {
-        if (!loading){
+        if (!loading) {
             user.getIdToken().then((token) => {
-                fetch(`${HOST}/quiz/${quizId}`, {
+                fetch(`${HOSTB}/quiz/${quizId}`, {
                     method: 'GET',
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -46,22 +46,23 @@ export default function QuizSettingPage() {
                 }).then((res) => res.text())
                     .then((text) => JSON.parse(text))
                     .then((quizObj) => {
-    
+
                         // the timestamp loses 1 hour after conversion,so i am adding 3600000 millisecond (1hr) to it to make up for it.
                         let quiz_start_timeISO = new Date(quizObj.quiz_start_time + 3600000).toISOString()
                         let quiz_end_timeISO = new Date(quizObj.quiz_end_time + 3600000).toISOString()
-    
+
                         setQuiz(quizObj.questions)
                         setFormValues({
                             title: quizObj.title,
                             description: quizObj.description,
-                            alloted_time_in_mins: quizObj.alloted_time_in_mins,
+                            allotted_time_in_mins: quizObj.allotted_time_in_mins,
                             quiz_start_time: quiz_start_timeISO.slice(0, quiz_start_timeISO.length - 8),
                             quiz_end_time: quiz_end_timeISO.slice(0, quiz_end_timeISO.length - 8),
+                            private: quizObj.private,
                         });
-    
+
                     })
-                    .catch((err) => { alert(err); });
+                    .catch((err) => { console.log(err); });
             });
         }
     }, [user])
@@ -71,17 +72,26 @@ export default function QuizSettingPage() {
     const [formValues, setFormValues] = useState({
         title: '',
         description: '',
-        alloted_time_in_mins: 0,
+        allotted_time_in_mins: 0,
         quiz_start_time: '',
-        quiz_end_time: ''
+        quiz_end_time: '',
+        private: true
     });
 
     const handleQuizDetailsChange = (e) => {
         const { name, value } = e.target;
-        setFormValues((prevValues) => ({
-            ...prevValues,
-            [name]: value
-        }));
+        if (name === 'private') {
+            const { name, checked } = e.target;
+            setFormValues((prevValues) => ({
+                ...prevValues,
+                [name]: checked
+            }));
+        } else {
+            setFormValues((prevValues) => ({
+                ...prevValues,
+                [name]: value
+            }));
+        }
     };
 
     const handleQuziDetailsFormSubmit = (e) => {
@@ -97,10 +107,10 @@ export default function QuizSettingPage() {
 
         quizData.quiz_start_time = new Date(quizData.quiz_start_time).getTime();
         quizData.quiz_end_time = new Date(quizData.quiz_end_time).getTime();
-        quizData.alloted_time_in_mins = parseInt(quizData.alloted_time_in_mins, 10) || 1;
+        quizData.allotted_time_in_mins = parseInt(quizData.allotted_time_in_mins, 10) || 1;
 
         user.getIdToken().then((token) => {
-            fetch(`${HOST}/create_quiz`, {
+            fetch(`${HOSTB}/create_quiz`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8',
@@ -108,7 +118,7 @@ export default function QuizSettingPage() {
                 },
                 body: JSON.stringify(quizData),
             }).then((res) => {
-                navigate(`/dashboard/setquiz/${quizId}`);
+                navigate(`/dashboard/setquiz/${quizId}`, {replace:true});
                 // res.text().then((text) => { console.log(text) });
             }).catch((err) => {
                 console.log(err);
@@ -223,7 +233,7 @@ export default function QuizSettingPage() {
 
     function deleteQuiz() {
         user.getIdToken().then((token) => {
-            fetch(`${HOST}/delete_quiz/${quizId}`, {
+            fetch(`${HOSTB}/delete_quiz/${quizId}`, {
                 method: 'Post',
                 headers: {
                     Authorization: `Bearer ${token}`

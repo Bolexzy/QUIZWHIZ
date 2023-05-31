@@ -98,10 +98,10 @@ router.get('/quizinfo/:quizId', async function (req, res) {
   const quizId = req.params.quizId;
 
   const testsRef = db.collection('tests');
-  const query = testsRef.where('test_id','==',quizId).select('title','description','alloted_time_in_mins', 'quiz_start_time','quiz_end_time');
+  const query = testsRef.where('test_id', '==', quizId).select('title', 'description', 'allotted_time_in_mins', 'quiz_start_time', 'quiz_end_time');
   let result = await query.get()
   let newResults = []
-  result.forEach((quizDoc)=>{
+  result.forEach((quizDoc) => {
     newResults.push(quizDoc.data())
   })
   res.json(newResults[0])
@@ -115,7 +115,7 @@ router.get('/taketest/:quizId', async function (req, res) {
   const docRef = testsRef.doc(quizId);
   let result = await docRef.get();
   result = result.data();
-  result.questions.forEach((question)=>{
+  result.questions.forEach((question) => {
     delete question.answer
   })
   res.json(result);
@@ -134,36 +134,60 @@ router.post('/submit/:quizId', async function (req, res) {
 
   numOfRightAnswers = getNumOfRightAnswers(serverQuiz.questions, req.body.questions)
 
-  const testResult={
+  const testResult = {
     quiz_id: serverQuiz.test_id,
-    quiz_title:serverQuiz.title,
+    quiz_title: serverQuiz.title,
     quiz_description: serverQuiz.description,
     user_id: authUser.uid,
     user_name: authUser.name,
-    profile_picture:authUser.picture,
+    profile_picture: authUser.picture,
     date_taken: Date.now(),
     total_questions: serverQuiz.questions.length,
-    right_answers:numOfRightAnswers,
+    right_answers: numOfRightAnswers,
   }
 
   db.collection('results').add(testResult)
 
-  res.json({status:'success'})
+  res.json({ status: 'success' })
 });
 
 
 
 //UTILITY ROUTES
 
+//public quiz endpoint
+router.get('/public/quiz', async function (req, res) {
+
+  const resultRef = db.collection('tests');
+  const query = resultRef.where('private', '==', false)
+  let result = await query.get()
+  let newResults = []
+
+  for (var i in result.docs){
+    const doc = result.docs[i];
+    const docData = doc.data();
+
+    let quizCreatorDoc = await db.collection('users').doc(docData.user_id).get();
+    let quizCreatorData =quizCreatorDoc.data()
+
+    docData.quizCreator = quizCreatorData;
+    newResults.push(docData)
+  }
+ 
+  res.json(newResults)
+});
+
+
+
 //get all the quiz results for a particular user
 router.get('/result/:userId', async function (req, res) {
   const userId = req.params.userId;
 
   const resultRef = db.collection('results');
-  const query = resultRef.where('user_id','==',userId)
+  const query = resultRef.where('user_id', '==', userId)
   let result = await query.get()
   let newResults = []
-  result.forEach((quizDoc)=>{
+  result.forEach((quizDoc) => {
     newResults.push(quizDoc.data())
   })
   res.json(newResults)
@@ -174,13 +198,30 @@ router.get('/quiz/result/:quizId', async function (req, res) {
   const quizId = req.params.quizId;
 
   const resultRef = db.collection('results');
-  const query = resultRef.where('quiz_id','==',quizId)
+  const query = resultRef.where('quiz_id', '==', quizId)
   let result = await query.get()
   let newResults = []
-  result.forEach((quizDoc)=>{
+  result.forEach((quizDoc) => {
     newResults.push(quizDoc.data())
   })
   res.json(newResults)
+});
+
+
+//add user to database
+router.get('/adduser', async function (req, res) {
+  const userInfo = req.quizwhiz_user;
+
+  const user = {
+    name: userInfo.name,
+    email: userInfo.email,
+    uid: userInfo.uid,
+    picture: userInfo.picture
+  }
+
+  let usersRef = db.collection('users');
+  usersRef.doc(userInfo.uid).set(user)
+  res.end()
 });
 
 
@@ -203,4 +244,4 @@ router.get('/quiz/result/:quizId', async function (req, res) {
 // }
 
 
-module.exports = {router, admin};
+module.exports = { router, admin };

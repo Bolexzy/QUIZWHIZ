@@ -58,12 +58,12 @@ const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFor
                                             />
                                         </div>
                                         <div className="form-row">
-                                            <label htmlFor="alloted_time_in_mins">Alloted Time (mins):</label>
+                                            <label htmlFor="allotted_time_in_mins">allotted Time (mins):</label>
                                             <input
                                                 type="number"
-                                                id="alloted_time_in_mins"
-                                                name="alloted_time_in_mins"
-                                                value={formValues.alloted_time_in_mins}
+                                                id="allotted_time_in_mins"
+                                                name="allotted_time_in_mins"
+                                                value={formValues.allotted_time_in_mins}
                                                 min={1}
                                                 onChange={handleQuizDetailsChange}
                                             />
@@ -85,6 +85,16 @@ const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFor
                                                 id="quiz_end_datetime"
                                                 name="quiz_end_time"
                                                 value={formValues.quiz_end_time}
+                                                onChange={handleQuizDetailsChange}
+                                            />
+                                        </div>
+                                        <div className="form-row" style={{width:'20%'}}>
+                                            <label htmlFor="private">Make Private:</label>
+                                            <input
+                                                type="checkbox"
+                                                id="private"
+                                                name="private"
+                                                checked={formValues.private}
                                                 onChange={handleQuizDetailsChange}
                                             />
                                         </div>

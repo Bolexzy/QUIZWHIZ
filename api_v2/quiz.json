@@ -7,7 +7,7 @@
 		"title": "Sample Quiz",
 		"quiz_start_time": 1608095600,
 		"quiz_end_time": 1608135200,
-		"alloted_time_mins": 30,
+		"allotted_time_mins": 30,
 		"questions": [
 			{
 				"id": "1",

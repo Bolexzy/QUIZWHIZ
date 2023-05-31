@@ -23,7 +23,7 @@ axios.get('https://api.example.com/data', {
     "title": "math",
     "created_by": "wizdoz@hi2.in",
     "time_of_quiz": "2023-05-27T12:00:00.000Z",
-    "alloted_time_mins": 30,
+    "allotted_time_mins": 30,
     "questions": [
         {
             "id": "1",

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Image } from '@chakra-ui/react'
+import { Image, Button } from '@chakra-ui/react'
+import { Link } from 'react-router-dom';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { firebaseApp, auth } from '../firebase__init_scripts/firebaseAppInit';
 
@@ -38,6 +39,12 @@ const Sidebar = ({ isSidebarOpen, closeNav }) => {
       }
       <br></br>
       <h3>Hi {user?.displayName}!</h3>
+
+      <Link to='/dashboard/publicquizzes'>
+        <Button colorScheme='yellow'>
+          Try Quizzes by our users
+        </Button>
+      </Link>
 
       <div className="stats">
         <div className="quiz--total">
