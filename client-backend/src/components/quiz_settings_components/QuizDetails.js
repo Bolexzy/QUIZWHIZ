@@ -15,7 +15,6 @@ const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFor
 
     return (
         <Box>
-            {console.log('form:', formValues)}
             <Accordion defaultIndex={[0]} allowMultiple>
                 <AccordionItem>
                     {({ isExpanded }) => (

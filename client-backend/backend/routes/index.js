@@ -3,6 +3,9 @@ var router = express.Router();
 
 const admin = require("firebase-admin");
 
+const { getNumOfRightAnswers } = require('../helper functions/quizMarker');
+
+
 admin.initializeApp({
   apiKey: "AIzaSyDrcB0RrBSaQn5-2mbYmGyS5zlzkc9slps",
   authDomain: "quizwhiz-72df8.firebaseapp.com",
@@ -120,10 +123,8 @@ router.get('/taketest/:quizId', async function (req, res) {
 
 
 router.post('/submit/:quizId', async function (req, res) {
-  const quizId = req.params.quizId;
   const authUser = req.quizwhiz_user;
 
-  let totalQuestion;
   let numOfRightAnswers;
 
   //get the question from the database
@@ -131,15 +132,16 @@ router.post('/submit/:quizId', async function (req, res) {
   let doc = await docRef.get()
   const serverQuiz = doc.data()
 
-  totalQuestion = serverQuiz.questions.length;
   numOfRightAnswers = getNumOfRightAnswers(serverQuiz.questions, req.body.questions)
 
   const testResult={
-    test_id: serverQuiz.test_id,
+    quiz_id: serverQuiz.test_id,
+    quiz_title:serverQuiz.title,
+    quiz_description: serverQuiz.description,
     user_id: authUser.uid,
     user_name: authUser.name,
     profile_picture:authUser.picture,
-    date_tekne: Date.now(),
+    date_taken: Date.now(),
     total_questions: serverQuiz.questions.length,
     right_answers:numOfRightAnswers,
   }
@@ -151,31 +153,36 @@ router.post('/submit/:quizId', async function (req, res) {
 
 
 
+//UTILITY ROUTES
 
-//helper functions
-function getNumOfRightAnswers (serverQuestion, userQuestion){
-  let numOfRightAnswers = 0;
+//get all the quiz results for a particular user
+router.get('/result/:userId', async function (req, res) {
+  const userId = req.params.userId;
 
-  for (let i=0; i< serverQuestion.length; i++){
-    if (!userQuestion[i].myanswer || userQuestion[i].myanswer.length === 0){
-      continue;
-    }
-    if (isSubSet(serverQuestion[i].answer,userQuestion[i].myanswer) && isSubSet(userQuestion[i].myanswer,serverQuestion[i].answer)){
-      numOfRightAnswers++;
-    }
-  }
-  return numOfRightAnswers
-}
+  const resultRef = db.collection('results');
+  const query = resultRef.where('user_id','==',userId)
+  let result = await query.get()
+  let newResults = []
+  result.forEach((quizDoc)=>{
+    newResults.push(quizDoc.data())
+  })
+  res.json(newResults)
+});
 
-//is subset a subset of parent
-function isSubSet(parent, subset){
-  for (let i=0; i < subset.length; i++){
-    if (!parent.includes(subset[i])){
-      return false;
-    }
-  }
-  return true;
-}
+//get all the quiz results for a particular quiz
+router.get('/quiz/result/:quizId', async function (req, res) {
+  const quizId = req.params.quizId;
+
+  const resultRef = db.collection('results');
+  const query = resultRef.where('quiz_id','==',quizId)
+  let result = await query.get()
+  let newResults = []
+  result.forEach((quizDoc)=>{
+    newResults.push(quizDoc.data())
+  })
+  res.json(newResults)
+});
+
 
 
 

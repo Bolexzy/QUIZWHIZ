@@ -6,7 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
-var { router : indexRouter, admin } = require('./routes/index');
+var { router: indexRouter, admin } = require('./routes/index');
 
 var app = express();
 
@@ -35,16 +35,22 @@ async function getToken(request) {
 //Authorization route
 app.use('/', async function authorizeUsers(req, res, next) {
   const token = await getToken(req)
-  const payload = await admin.auth().verifyIdToken(token)
-
-  if (payload) {
-    //auth token valid
-    req.quizwhiz_user = payload
-    next();
-  }
-  else{
+  if (!token) {
     // user does not exist
-    res.status(401).json({status:'error',message:'Not authorized'})
+    res.status(401).json({ status: 'error', message: 'Not authorized' })
+  }
+  else {
+    const payload = await admin.auth().verifyIdToken(token)
+
+    if (payload) {
+      //auth token valid
+      req.quizwhiz_user = payload
+      next();
+    }
+    else {
+      // user does not exist
+      res.status(401).json({ status: 'error', message: 'Not authorized' })
+    }
   }
 });
 
