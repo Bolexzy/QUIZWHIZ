@@ -18,82 +18,121 @@ admin.initializeApp({
 
 const db = admin.firestore();
 
-//Test routes
-router.get('/', function (req, res) {
-  res.end('home');
-});
 
-router.get('/test', function (req, res) {
+/* TEACHER'S ROUTE */
 
-  res.send('doing something');
-
-  db.collection('test').add({
-    me: 'stan'
-  });
-
-  res.end();
-});
-
-//testpost
-router.post('/testpost', function (req, res) {
-
-
-  console.log(req.body);
-
-
-  res.send(JSON.stringify(req.body))
-
-  res.end();
-});
-
-
-/* Teacher routes */
+/*create quiz*/
 router.post('/create_quiz/:quizId?', function (req, res) {
   /* userId is in the quiz object  */
   let body = req.body;
+  let authUser = req.quizwhiz_user;
 
-  db.collection('tests').doc(body.test_id).set(body);
-  res.end();
+  if (body.user_id !== authUser.uid) {
+    res.status(401).json({ status: 'error', message: 'Not authorized' })
+  } else {
+    db.collection('tests').doc(body.test_id).set(body);
+    res.json({ status: 'success' });
+  }
 });
 
 
+/*get quiz*/
 router.get('/quiz/:quizId', async function (req, res) {
   /* userId is in the quiz object  */
   const quizId = req.params.quizId;
+  let authUser = req.quizwhiz_user;
 
 
   const testsRef = db.collection('tests');
   const docRef = testsRef.doc(quizId);
-  const doc = await docRef.get();
-  res.json(doc.data());
+  const quizDoc = await docRef.get();
+  const quiz = quizDoc.data();
+
+  //if entry exists in the database
+  if (quiz === undefined) {
+    res.status(401).json({ status: 'error', message: 'Not authorized' })
+  } else if (quiz.user_id !== authUser.uid) {
+    res.status(401).json({ status: 'error', message: 'Not authorized' })
+  }
+  res.json(quiz);
 });
 
 
-router.get('/user/quiz/:userId', async function (req, res) {
+/*get all quiz set by a particular user*/
+router.get('/user/quiz/', async function (req, res) {
   /* userId is in the quiz object  */
-  const userId = req.params.userId;
+  let authUser = req.quizwhiz_user;
 
   const testsRef = db.collection('tests');
-  const query = testsRef.where('user_id', '==', `${userId}`).select('title', 'description', 'test_id',);
+  const query = testsRef.where('user_id', '==', `${authUser.uid}`).select('title', 'description', 'test_id', 'user_id');
   let result = await query.get()
   let newresult = [];
   result.forEach((quizDoc) => newresult.push(quizDoc.data()));
-  res.json(newresult);
+
+  if (newresult.length !== 0 && newresult[0].user_id !== authUser.uid) {
+    res.status(402).json({ status: 'error', message: 'Not authorized' })
+  } else {
+    res.json(newresult);
+  }
 });
 
 
-router.post('/delete_quiz/:quizId', function (req, res) {
+/*delete quiz*/
+router.delete('/delete_quiz/:quizId', async function (req, res) {
   /* userId is in the quiz object  */
   const quizId = req.params.quizId;
+  let authUser = req.quizwhiz_user;
 
   const testsRef = db.collection('tests');
   const docRef = testsRef.doc(quizId);
-  docRef.delete();
-  res.end();
+  const quizSnapshot = await docRef.get();
+  const quiz = quizSnapshot.data();
+
+  if (quiz.user_id !== authUser.uid) {
+    res.status(401).json({ status: 'error', message: 'Not authorized' })
+  } else {
+    docRef.delete();
+    res.json({ status: 'success' });
+  }
 });
 
 
-/* Student route */
+//get all the quiz results for a particular quiz
+router.get('/quiz/result/:quizId', async function (req, res) {
+  const quizId = req.params.quizId;
+  let authUser = req.quizwhiz_user;
+
+
+  const resultRef = db.collection('results');
+  const query = resultRef.where('quiz_id', '==', quizId)
+  let result = await query.get();
+  let newResults = []
+  result.forEach((quizDoc) => {
+    newResults.push(quizDoc.data())
+  })
+
+  if (newResults.length !== 0) {
+    let quizSnapshot = await db.collection('tests').doc(newResults[0].quiz_id).get();
+    let quiz = quizSnapshot.data();
+    let quizAuthorSnapshot = await db.collection('users').doc(quiz.user_id).get();
+    let quizOwner = quizAuthorSnapshot.data();
+
+    if (quizOwner.uid !== authUser.uid) {
+      res.append('Cache-Control', 'max-age=300')
+      res.status(401).json({ status: 'error', message: 'Not authorized' })
+    } else {
+      res.append('Cache-Control', 'max-age=300')
+      res.json(newResults)
+    }
+  }
+});
+
+
+
+
+/* STUDENT'S ROUTES */
+
+/*get information ablout a quiz*/
 router.get('/quizinfo/:quizId', async function (req, res) {
   const quizId = req.params.quizId;
 
@@ -104,24 +143,36 @@ router.get('/quizinfo/:quizId', async function (req, res) {
   result.forEach((quizDoc) => {
     newResults.push(quizDoc.data())
   })
+  res.append('Cache-Control', 'max-age=300')
   res.json(newResults[0])
-
 });
 
+
+/*take quiz*/
 router.get('/taketest/:quizId', async function (req, res) {
   const quizId = req.params.quizId;
+  const timestamp = Date.now();
+
 
   const testsRef = db.collection('tests');
   const docRef = testsRef.doc(quizId);
-  let result = await docRef.get();
-  result = result.data();
-  result.questions.forEach((question) => {
-    delete question.answer
-  })
-  res.json(result);
+  let quizSnapshot = await docRef.get();
+  let quiz = quizSnapshot.data();
+
+  if ((quiz.quiz_start_time !== null && quiz.quiz_start_time !== 0) && timestamp < quiz.quiz_start_time) {
+    res.json({ status: 'error', message: `Test will start on ${new Date(quiz.quiz_start_time).toString()}` })
+  } else if ((quiz.quiz_end_time !== null && quiz.quiz_end_time !== 0) && timestamp > quiz.quiz_end_time) {
+    res.json({ status: 'error', message: `Test ended on ${new Date(quiz.quiz_end_time).toString()}` })
+  } else {
+    quiz.questions.forEach((question) => {
+      delete question.answer
+    })
+    res.json(quiz);
+  }
 });
 
 
+/*submit quiz*/
 router.post('/submit/:quizId', async function (req, res) {
   const authUser = req.quizwhiz_user;
 
@@ -147,15 +198,37 @@ router.post('/submit/:quizId', async function (req, res) {
   }
 
   db.collection('results').add(testResult)
-
   res.json({ status: 'success' })
 });
+
+
+//get all the quiz results for a particular user
+router.get('/result/:userId', async function (req, res) {
+  const userId = req.params.userId;
+  const authUser = req.quizwhiz_user
+
+  if (authUser.uid !== userId) {
+    res.status(401).json({ status: 'error', message: 'Not authorized' })
+  } else {
+    const resultRef = db.collection('results');
+    const query = resultRef.where('user_id', '==', userId)
+    let result = await query.get()
+    let newResults = []
+    result.forEach((quizDoc) => {
+      newResults.push(quizDoc.data())
+    })
+    res.append('Cache-Control', 'max-age=300')
+    res.json(newResults)
+  }
+});
+
+
 
 
 
 //UTILITY ROUTES
 
-//public quiz endpoint
+//get all quiz marked as public
 router.get('/public/quiz', async function (req, res) {
 
   const resultRef = db.collection('tests');
@@ -163,48 +236,42 @@ router.get('/public/quiz', async function (req, res) {
   let result = await query.get()
   let newResults = []
 
-  for (var i in result.docs){
+  for (var i in result.docs) {
     const doc = result.docs[i];
     const docData = doc.data();
 
     let quizCreatorDoc = await db.collection('users').doc(docData.user_id).get();
-    let quizCreatorData =quizCreatorDoc.data()
+    let quizCreatorData = quizCreatorDoc.data()
 
     docData.quizCreator = quizCreatorData;
     newResults.push(docData)
   }
- 
+
+  res.append('Cache-Control', 'max-age=300')
   res.json(newResults)
 });
 
 
 
-//get all the quiz results for a particular user
-router.get('/result/:userId', async function (req, res) {
-  const userId = req.params.userId;
-
-  const resultRef = db.collection('results');
-  const query = resultRef.where('user_id', '==', userId)
-  let result = await query.get()
-  let newResults = []
-  result.forEach((quizDoc) => {
-    newResults.push(quizDoc.data())
-  })
-  res.json(newResults)
-});
-
-//get all the quiz results for a particular quiz
-router.get('/quiz/result/:quizId', async function (req, res) {
+//get all the quiz results for a public quiz
+router.get('/public/results/:quizId', async function (req, res) {
   const quizId = req.params.quizId;
 
-  const resultRef = db.collection('results');
-  const query = resultRef.where('quiz_id', '==', quizId)
-  let result = await query.get()
-  let newResults = []
-  result.forEach((quizDoc) => {
-    newResults.push(quizDoc.data())
-  })
-  res.json(newResults)
+  let quizSnapshot = await db.collection('tests').doc(quizId).get();
+  let quiz = quizSnapshot.data();
+
+  if (quiz.private === false) {
+    let results = [];
+    let resultsSnapshot = await db.collection('results').where('quiz_id', '==', quizId).get()
+    resultsSnapshot.forEach((resultDoc) => {
+      results.push(resultDoc.data())
+    })
+    res.append('Cache-Control', 'max-age=300')
+    res.json(results)
+  } else {
+    res.append('Cache-Control', 'max-age=300')
+    res.status(401).json({ status: 'error', message: 'Not authorized' })
+  }
 });
 
 
@@ -223,7 +290,8 @@ router.get('/adduser', async function (req, res) {
 
   let usersRef = db.collection('users');
   usersRef.doc(userInfo.uid).set(user)
-  res.end()
+
+  res.json({ status: 'success' })
 });
 
 

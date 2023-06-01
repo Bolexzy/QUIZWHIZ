@@ -46,24 +46,24 @@ export default function QuizSettingPage() {
                 }).then((res) => res.text())
                     .then((text) => JSON.parse(text))
                     .then((quizObj) => {
+                        if (!quizObj?.status) {
+                            // the timestamp loses 1 hour after conversion,so i am adding 3600000 millisecond (1hr) to it to make up for it.
+                            let quiz_start_timeISO = new Date(quizObj.quiz_start_time + 3600000).toISOString()
+                            let quiz_end_timeISO = new Date(quizObj.quiz_end_time + 3600000).toISOString()
 
-                        // the timestamp loses 1 hour after conversion,so i am adding 3600000 millisecond (1hr) to it to make up for it.
-                        let quiz_start_timeISO = new Date(quizObj.quiz_start_time + 3600000).toISOString()
-                        let quiz_end_timeISO = new Date(quizObj.quiz_end_time + 3600000).toISOString()
-
-                        setQuiz(quizObj.questions)
-                        setFormValues({
-                            title: quizObj.title,
-                            description: quizObj.description,
-                            allotted_time_in_mins: quizObj.allotted_time_in_mins,
-                            quiz_start_time: quiz_start_timeISO.slice(0, quiz_start_timeISO.length - 8),
-                            quiz_end_time: quiz_end_timeISO.slice(0, quiz_end_timeISO.length - 8),
-                            private: quizObj.private,
-                        });
-
+                            setQuiz(quizObj.questions)
+                            setFormValues({
+                                title: quizObj.title,
+                                description: quizObj.description,
+                                allotted_time_in_mins: quizObj.allotted_time_in_mins,
+                                quiz_start_time: quiz_start_timeISO.slice(0, quiz_start_timeISO.length - 8),
+                                quiz_end_time: quiz_end_timeISO.slice(0, quiz_end_timeISO.length - 8),
+                                private: quizObj.private,
+                            });
+                        }
                     })
                     .catch((err) => {
-                        alert('unable to load quiz data. Please try again')
+                        // alert('unable to load quiz data. Please try again')
                     });
             });
         }
@@ -121,9 +121,10 @@ export default function QuizSettingPage() {
                 body: JSON.stringify(quizData),
             }).then((res) => {
                 navigate(`/dashboard/setquiz/${quizId}`, { replace: true });
+                alert('uploaded successfully')
                 // res.text().then((text) => { console.log(text) });
             }).catch((err) => {
-                alert('unable to create/update quiz. Please try again.')
+                // alert('unable to create/update quiz. Please try again.')
             });
 
         });
@@ -236,7 +237,7 @@ export default function QuizSettingPage() {
     function deleteQuiz() {
         user.getIdToken().then((token) => {
             fetch(`${REACT_APP_HOSTB}/delete_quiz/${quizId}`, {
-                method: 'Post',
+                method: 'DELETE',
                 headers: {
                     Authorization: `Bearer ${token}`
                 },

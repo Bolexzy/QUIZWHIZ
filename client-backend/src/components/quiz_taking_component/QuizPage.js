@@ -40,11 +40,16 @@ export default function QuizTakingPage() {
       }).then((res) => {
         res.json().then((res) => {
           console.log(res)
-          setStartQuiz(true)
-          setQuizObject(res)
+          if (!res?.message) {
+            setStartQuiz(true)
+            setQuizObject(res)
 
-          setStartTime(Date.now());
-          setEndTime((res.allotted_time_in_mins * 60 * 1000) + Date.now());
+            setStartTime(Date.now());
+            setEndTime((res.allotted_time_in_mins * 60 * 1000) + Date.now());
+          }
+          else{
+            alert(res.message)
+          }
         })
       }).catch(() => {
         alert('failed to get quiz. please try again')

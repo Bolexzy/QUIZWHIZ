@@ -8,7 +8,7 @@ const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 const filterFunctions = {
     name: (fisrtItem, secondItem) => { return fisrtItem.user_name - secondItem.user_name },
     date: (fisrtItem, secondItem) => { return secondItem.date_taken - fisrtItem.date_taken },
-    score: (fisrtItem, secondItem) => { return (secondItem.right_answers / fisrtItem.total_questions * 100) - (fisrtItem.right_answers / fisrtItem.total_questions * 100)},
+    score: (fisrtItem, secondItem) => { return (secondItem.right_answers / fisrtItem.total_questions * 100) - (fisrtItem.right_answers / fisrtItem.total_questions * 100) },
 }
 
 export default function QuizResultComponent({ quizId }) {
@@ -20,7 +20,7 @@ export default function QuizResultComponent({ quizId }) {
 
     function sortResult(e) {
         const sortFunction = filterFunctions[e.target.value];
-        setReaultsArray((prevState)=>{
+        setReaultsArray((prevState) => {
             let newresult = JSON.parse(JSON.stringify(prevState))
             newresult.sort(sortFunction);
             return newresult
@@ -41,14 +41,14 @@ export default function QuizResultComponent({ quizId }) {
                         setReaultsArray(resultsArray)
                     })
                     .catch((err) => {
-                         alert('unable to get results, please try again')
-                        });
+                        alert('unable to get results, please try again')
+                    });
             });
         }
     }, [user])
 
     return (
-        <Flex flexDirection='column'>
+        <Flex flexDirection='column' alignItems='center'>
             <Text>Sort by</Text>
             <Select mb='30px' placeholder='Select option' maxW='15rem' onChange={sortResult}>
                 <option value='name'>name</option>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Text } from '@chakra-ui/react';
 
 const QuizResultCard = ({ result }) => {
     return (
         <>
-            <div className="card">
+            <div className="card" style={{height:'auto', padding:'10px', paddingBottom:'0px'}}>
                 <div className="card-img">
                     <img
                         src={result.profile_picture}
@@ -15,8 +16,8 @@ const QuizResultCard = ({ result }) => {
                     <p className="text-title">{result.quiz_title}</p>
                     <p className="text-body">{result.quiz_description}</p>
                 </div>
-                <div className="card-footer">
-                    <span className="text-title">
+                <div className="card-footer" style={{padding:'2px', display:'flex', flexDirection:'column', alignItems:'flex-start'}} >
+                    <span className="text-title" style={{height:'auto', paddingBottom:'5px'}} >
                         Score{': '}
                         <span
                             style={
@@ -27,6 +28,7 @@ const QuizResultCard = ({ result }) => {
                         >
                             {result.right_answers}/{result.total_questions}
                         </span>
+                        <Text style={{padding:'0px'}}>percentage score: {result.right_answers / result.total_questions * 100}%</Text>
                     </span>
                     <Link to={`/dashboard/takequiz/${result.quiz_id}`} className="card-button">
                         Try again

@@ -7,7 +7,7 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 
 const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
-export default function PublicQuizzes() {
+export default function PublicQuizzesList() {
 
 
     const [user, loading, error] = useAuthState(auth);
@@ -60,7 +60,7 @@ export default function PublicQuizzes() {
     }
 
     return (
-        <Flex flexWrap={'wrap'} style={{ marginTop: '20px', padding: '10px' }}>
+        <Flex flexWrap={'wrap'} style={{ marginTop: '20px', padding: '10px', justifyContent:'center' }}>
             {PublicQuizzes.map((quiz) => (
                 <Card maxW='15rem' key={quiz.test_id}>
                     <CardHeader mb='5px' p='2px' style={{ border: '1px solid transparent' }}>
@@ -85,6 +85,7 @@ export default function PublicQuizzes() {
                             <Button colorScheme='teal' variant='outline'>
                                 Take quiz
                             </Button>
+                            <Link to={`/dashboard/publicquizresult/${quiz.test_id}`}> See Results</Link>
                         </Link>
 
                     </CardBody>

@@ -14,7 +14,8 @@ import './App.css';
 import './index.css';
 import QuizSettingPage from './components/quiz_settings_components/QuizSettingPage';
 import QuizPage from './components/quiz_taking_component/QuizPage';
-import PublicQuizzes from './components/PublicQuizzes'
+import PublicQuizzesList from './components/PublicQuizzesList';
+import PublicQuizzesResult from './components/PublicQuizzesResult';
 import LoginPage from './components/LoginPage';
 
 //Bolexy Components
@@ -60,7 +61,11 @@ const router = createBrowserRouter([
           },
           {
             path: 'publicquizzes',
-            element: <PublicQuizzes />,
+            element: <PublicQuizzesList />,
+          },
+          {
+            path: 'publicquizresult/:quizId',
+            element: <PublicQuizzesResult />,
           },
         ],
       },

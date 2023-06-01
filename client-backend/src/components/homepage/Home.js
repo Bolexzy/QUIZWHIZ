@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { firebaseApp, auth } from '../firebase__init_scripts/firebaseAppInit';
-import { Stack, Skeleton, Box, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
+import { Text, Select, Flex, Stack, Skeleton, Box, SkeletonCircle, SkeletonText } from '@chakra-ui/react'
 import { useAuthState } from 'react-firebase-hooks/auth';
 import QuizResultCard from './QuizResultCard';
 import './Home.css';
@@ -9,6 +9,11 @@ import './Home.css';
 import SetQuizCard from './SetQuizCard'
 import { Link } from 'react-router-dom';
 
+const filterFunctions = {
+  name: (fisrtItem, secondItem) => { return fisrtItem.user_name - secondItem.user_name },
+  date: (fisrtItem, secondItem) => { return secondItem.date_taken - fisrtItem.date_taken },
+  score: (fisrtItem, secondItem) => { return (secondItem.right_answers / fisrtItem.total_questions * 100) - (fisrtItem.right_answers / fisrtItem.total_questions * 100) },
+}
 
 const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
@@ -20,20 +25,29 @@ const Content = () => {
   const [loadingYourQuizzes, setLoadingYourQuizzes] = useState(true);
   const [loadingYourResult, setLoadingYourResult] = useState(true);
 
+  function sortResult(e) {
+    const sortFunction = filterFunctions[e.target.value];
+    setQuizTaken((prevState) => {
+        let newresult = JSON.parse(JSON.stringify(prevState))
+        newresult.sort(sortFunction);
+        return newresult
+    })
+}
 
   useEffect(() => {
     if (user) {
-      console.log(user)
       user.getIdToken().then((token) => {
-        fetch(`${REACT_APP_HOSTB}/user/quiz/${user.uid}`, {
+        fetch(`${REACT_APP_HOSTB}/user/quiz/`, {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${token}`
           },
         }).then((res) => {
-          res.text().then((text) => {
-            setQuestionsSet(JSON.parse(text))
-            setLoadingYourQuizzes(false);
+          res.json().then((result) => {
+            if (Array.isArray(result)) {
+              setQuestionsSet(result)
+              setLoadingYourQuizzes(false);
+            }
           });
         }).catch((err) => {
           alert('an error occurred while loading your quizzes. Please try again')
@@ -45,9 +59,11 @@ const Content = () => {
             Authorization: `Bearer ${token}`
           },
         }).then((res) => {
-          res.text().then((text) => {
-            setQuizTaken(JSON.parse(text))
-            setLoadingYourResult(false)
+          res.json().then((results) => {
+            if (Array.isArray(results)) {
+              setQuizTaken(results)
+              setLoadingYourResult(false)
+            }
           });
         }).catch((err) => {
           alert('an error occurred while loading your answers. Please try again')
@@ -124,7 +140,23 @@ const Content = () => {
           </Stack>
         ) : (
           <div className="quiz--cards" style={{ display: 'flex', flexWrap: 'wrap' }}>
-            {quizResultElements.length > 0 ? quizResultElements : <div>Nothing here</div>}
+            {quizResultElements.length > 0 ?
+              (
+                <Flex style={{flexDirection:'column'}}>
+                   <Text>Sort by</Text>
+                    <Select mb='30px' placeholder='Select option' maxW='15rem' onChange={sortResult}>
+                        <option value='name'>name</option>
+                        <option value='score'>score</option>
+                        <option value='date'>date</option>
+                    </Select>
+                  <Flex style={{flexWrap:'wrap', justifyContent:'center'}}>
+                    {
+                      quizResultElements
+                    }
+                  </Flex>
+                </Flex>
+              ) :
+              (<div>Nothing here</div>)}
           </div>
         )
         }
