@@ -246,7 +246,7 @@ export default function QuizSettingPage() {
     }
 
     return (
-        <Tabs variant='soft-rounded' colorScheme='green' maxWidth={'100vw'} padding={'30px'}>
+        <Tabs style={{margin:'20px'}} variant='soft-rounded' colorScheme='green' maxWidth={'100vw'} padding={'30px'}>
             <TabList>
                 <Tab>Quiz Settings</Tab>
                 <Tab>Quiz results</Tab>
@@ -257,20 +257,20 @@ export default function QuizSettingPage() {
                         <Box marginY={'20px'}>
                             <QuizDetails formValues={formValues} handleQuizDetailsChange={handleQuizDetailsChange} handleQuziDetailsFormSubmit={handleQuziDetailsFormSubmit} deleteQuiz={deleteQuiz} />
                         </Box>
-                        <Flex justifyContent="space-around" h='100%'>
-                            <Box flex='3' position='relative'>
-                                <Box w='70%' overflowY='auto' p='15px' pt='30px' ml='70px' bg='white' borderRadius='20px' boxShadow='dark-lg'>
+                        <Flex h='100%' style={{flexDirection:'row' ,flexWrap:'wrap', justifyContent:'center',alignContent:'space-evenly'}}>
+                            <Box flex='1'>
+                                <Box mt='20px'>
+                                    <AIQuestionGenerator extendQuizArray={extendQuizArray} appendQuestionToQuiz={appendQuestionToQuiz} />
+                                </Box>
+                            </Box>
+                            <Box flex='3' position='relative' mt={'20px'}>
+                                <Box minW={'450px'} w='70%' overflowY='auto' p='15px' pt='30px' ml='70px' bg='white' borderRadius='20px' boxShadow='dark-lg'>
                                     <Text fontSize='2xl' fontWeight='bold'>Questions: {quiz.length}</Text>
                                     {
                                         <Button w='100%' mb='15px' colorScheme='facebook' onClick={toggleCloseAllOption}>Toggle Close/Open All Options</Button>
                                     }
                                     <DisplayQuestions quiz={quiz} removeQuestion={removeQuestion} setQuestiontext={setQuestiontext} setOptionsText={setOptionsText} addOptionToCorrectAnswer={addOptionToCorrectAnswer} closeOptionsRef={closeOptionsRef} />
                                     <Button ref={addButton} w='100%' mt='15px' colorScheme='facebook' onClick={createNewQuestionObject}>+ Add Question</Button>
-                                </Box>
-                            </Box>
-                            <Box flex='1'>
-                                <Box mt='20px'>
-                                    <AIQuestionGenerator extendQuizArray={extendQuizArray} appendQuestionToQuiz={appendQuestionToQuiz} />
                                 </Box>
                             </Box>
                         </Flex>

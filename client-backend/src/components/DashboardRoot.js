@@ -35,12 +35,14 @@ const DashboardRoot = () => {
   }
 
   return (
-    <div>
+    <div style={{padding:'20px'}}>
       <Main isSidebarOpen={isSidebarOpen} openNav={openNav} />
       {isSidebarOpen && (
         <Sidebar isSidebarOpen={isSidebarOpen} closeNav={closeNav} />
       )}
+      <div style={{padding:'20px', width:'100%', minWidth:'240px'}}>
       <Outlet />
+      </div>
     </div>
   );
 };

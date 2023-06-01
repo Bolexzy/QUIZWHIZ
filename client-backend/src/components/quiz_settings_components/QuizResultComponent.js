@@ -5,7 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000';
 
-const filterFunctions = {
+const sortFunctions = {
     name: (fisrtItem, secondItem) => { return fisrtItem.user_name - secondItem.user_name },
     date: (fisrtItem, secondItem) => { return secondItem.date_taken - fisrtItem.date_taken },
     score: (fisrtItem, secondItem) => { return (secondItem.right_answers / fisrtItem.total_questions * 100) - (fisrtItem.right_answers / fisrtItem.total_questions * 100) },
@@ -14,13 +14,12 @@ const filterFunctions = {
 export default function QuizResultComponent({ quizId }) {
 
     const [user, loading, error] = useAuthState(auth);
-    const [filerfunction, setFilterFunction] = useState('');
-    const [resultsArray, setReaultsArray] = useState([]);
+    const [resultsArray, setResultsArray] = useState([]);
 
 
     function sortResult(e) {
-        const sortFunction = filterFunctions[e.target.value];
-        setReaultsArray((prevState) => {
+        const sortFunction = sortFunctions[e.target.value];
+        setResultsArray((prevState) => {
             let newresult = JSON.parse(JSON.stringify(prevState))
             newresult.sort(sortFunction);
             return newresult
@@ -38,10 +37,12 @@ export default function QuizResultComponent({ quizId }) {
                 }).then((res) => res.text())
                     .then((text) => JSON.parse(text))
                     .then((resultsArray) => {
-                        setReaultsArray(resultsArray)
+                        if (Array.isArray(resultsArray)) {
+                            setResultsArray(resultsArray)
+                        }
                     })
                     .catch((err) => {
-                        alert('unable to get results, please try again')
+                        // alert('unable to get results, please try again')
                     });
             });
         }
