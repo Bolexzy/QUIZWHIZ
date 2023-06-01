@@ -246,18 +246,18 @@ export default function QuizSettingPage() {
     }
 
     return (
-        <Tabs style={{margin:'20px'}} variant='soft-rounded' colorScheme='green' maxWidth={'100vw'} padding={'30px'}>
+        <Tabs style={{margin:'20px'}} variant='soft-rounded' colorScheme='green' padding={'30px'}>
             <TabList>
                 <Tab>Quiz Settings</Tab>
                 <Tab>Quiz results</Tab>
             </TabList>
             <TabPanels>
                 <TabPanel>
-                    <Box maxW='85vw' p='3px' boxSizing='boarder-box' pos='relative' mr='auto' ml='auto'>
-                        <Box marginY={'20px'}>
+                    <Box p='3px' boxSizing='boarder-box' pos='relative' mr='auto' ml='auto'>
+                        <Box marginY={'20px'} minW={'450px'}>
                             <QuizDetails formValues={formValues} handleQuizDetailsChange={handleQuizDetailsChange} handleQuziDetailsFormSubmit={handleQuziDetailsFormSubmit} deleteQuiz={deleteQuiz} />
                         </Box>
-                        <Flex h='100%' style={{flexDirection:'row' ,flexWrap:'wrap', justifyContent:'center',alignContent:'space-evenly'}}>
+                        <Flex minW={'450px'} h='100%' style={{flexDirection:'row' ,flexWrap:'wrap', justifyContent:'center',alignContent:'space-evenly'}}>
                             <Box flex='1'>
                                 <Box mt='20px'>
                                     <AIQuestionGenerator extendQuizArray={extendQuizArray} appendQuestionToQuiz={appendQuestionToQuiz} />

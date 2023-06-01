@@ -35,7 +35,7 @@ export default function PublicQuizzesList() {
 
     if (loading) {
         return (
-            <Stack padding={4} spacing={1}>
+            <Stack padding={4} spacing={1} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}>
                 <Skeleton height='40px'>
                     <Box>Hello World!</Box>
                 </Skeleton>
@@ -53,16 +53,15 @@ export default function PublicQuizzesList() {
                     bg='blue.500'
                     color='white'
                 >
-                    <Box>Hello ChakraUI!</Box>
                 </Skeleton>
             </Stack>
         )
     }
 
     return (
-        <Flex flexWrap={'wrap'} style={{ marginTop: '20px', padding: '10px', justifyContent:'center' }}>
+        <Flex flexWrap={'wrap'} style={{ marginTop: '20px', padding: '10px', justifyContent: 'center', minWidth: '450px' }}>
             {PublicQuizzes.map((quiz) => (
-                <Card maxW='15rem' key={quiz.test_id}>
+                <Card maxW='19rem' key={quiz.test_id} style={{ margin: '10px' }}>
                     <CardHeader mb='5px' p='2px' style={{ border: '1px solid transparent' }}>
                         <Flex spacing='4'>
                             <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
@@ -74,20 +73,27 @@ export default function PublicQuizzesList() {
                             </Flex>
                         </Flex>
                     </CardHeader>
-                    <CardBody mt='5px' p='2px' style={{ border: '1px solid transparent' }}>
-                        <Text>Title</Text>
-                        <Text>{quiz.title}</Text>
-                        <Text>description:</Text>
-                        <Text>{quiz.description}</Text>
-                        <Text>Time:</Text>
-                        <Text>{quiz.allotted}</Text>
-                        <Link to={`/dashboard/takequiz/${quiz.test_id}`}>
-                            <Button colorScheme='teal' variant='outline'>
-                                Take quiz
-                            </Button>
-                            <Link to={`/dashboard/publicquizresult/${quiz.test_id}`}> See Results</Link>
-                        </Link>
+                    <CardBody mt='5px' p='2px'>
+                        <Box style={{ fontWeight: 'bold' }}>
+                            <Text>Title:</Text>
+                            <Text>{quiz.title}</Text>
+                            <Text>description:</Text>
+                            <Text>{quiz.description}</Text>
+                            <Text>Time: {quiz.allotted_time_in_mins} mins</Text>
+                        </Box>
 
+                        <Flex flexWrap={'wrap'}>
+                            <Link to={`/dashboard/takequiz/${quiz.test_id}`}>
+                                <Button colorScheme='teal' variant='outline'>
+                                    Take quiz
+                                </Button>
+                            </Link>
+                            <Link to={`/dashboard/publicquizresult/${quiz.test_id}`}>
+                                <Button colorScheme='teal' variant='outline'>
+                                    See Results
+                                </Button>
+                            </Link>
+                        </Flex>
                     </CardBody>
                 </Card>
 

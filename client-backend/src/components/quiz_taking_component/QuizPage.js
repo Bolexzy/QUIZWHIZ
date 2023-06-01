@@ -122,7 +122,7 @@ export default function QuizTakingPage() {
 
   if (loading || loadingQuizInfo) {
     return (
-      <Box padding='6' boxShadow='lg' bg='white'>
+      <Box padding='6' boxShadow='lg' bg='white' style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}>
         <SkeletonCircle size='10' />
         <SkeletonText mt='4' noOfLines={20} spacing='4' skeletonHeight='2' />
       </Box>
@@ -166,7 +166,7 @@ export default function QuizTakingPage() {
   }
 
   return (
-    <div className="quiz-page-container">
+    <div style={{minWidth:'450px'}} className="quiz-page-container">
       <QuizInfo startTime={startTime} endTime={endTime} submitQuiz={submitQuiz} />
       <QuizWindow questions={quizObject.questions} updateQuizQuestionsarray={updateQuizQuestionsarray} />
     </div>

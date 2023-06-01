@@ -103,7 +103,7 @@ const LoginPage = () => {
 
     if (loading) {
         return (
-            <Box padding='6' boxShadow='lg' bg='white'>
+            <Box padding='6' boxShadow='lg' bg='white' style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}>
                 <SkeletonCircle size='20' />
                 <SkeletonText mt='4' noOfLines={20} spacing='5' skeletonHeight='5' />
             </Box>

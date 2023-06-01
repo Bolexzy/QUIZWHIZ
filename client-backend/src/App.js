@@ -42,14 +42,6 @@ const router = createBrowserRouter([
             index: true,
             element: <Home />,
           },
-          {
-            path: 'setting',
-            element: (
-              <Center>
-                <Text>Setting page</Text>
-              </Center>
-            ),
-          },
           // setquiz page
           {
             path: 'setquiz/:quizId?',

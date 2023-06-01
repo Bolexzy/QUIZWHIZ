@@ -99,7 +99,7 @@ const Content = () => {
 
   if (loading) {
     return (
-      <Box padding='6' boxShadow='lg' bg='white'>
+      <Box padding='6' boxShadow='lg' bg='white' style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}>
         <SkeletonCircle size='10' />
         <SkeletonText mt='4' noOfLines={4} spacing='4' skeletonHeight='2' />
       </Box>
@@ -149,7 +149,7 @@ const Content = () => {
                         <option value='score'>score</option>
                         <option value='date'>date</option>
                     </Select>
-                  <Flex style={{flexWrap:'wrap', justifyContent:'center'}}>
+                  <Flex style={{flexWrap:'wrap', justifyContent:'space-around'}}>
                     {
                       quizResultElements
                     }

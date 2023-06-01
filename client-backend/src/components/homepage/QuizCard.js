@@ -2,8 +2,7 @@ import React from 'react';
 
 const QuizCard = props => {
   return (
-    <>
-      <div className="card">
+      <div className="card" style={{height:'auto'}}>
         <div className="card-img">
           <img
             src={require(`../../assets/images/${
@@ -37,7 +36,6 @@ const QuizCard = props => {
           </a>
         </div>
       </div>
-    </>
   );
 };
 

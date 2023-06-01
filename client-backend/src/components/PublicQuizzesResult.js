@@ -57,7 +57,7 @@ export default function PublicQuizzesResult() {
 
     if (loading) {
         return (
-            <Stack padding={4} spacing={1}>
+            <Stack padding={4} spacing={1} style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, width: '100vw', height: '100vh' }}>
                 <Skeleton height='40px'>
                     <Box>Hello World!</Box>
                 </Skeleton>
@@ -89,13 +89,12 @@ export default function PublicQuizzesResult() {
                         <option value='score'>score</option>
                         <option value='date'>date</option>
                     </Select>
-            <Flex style={{flexWrap:'wrap'}}>
+            <Flex style={{flexWrap:'wrap', justifyContent:'center'}} >
             {publicQuizResults.length !== 0 ?
                 (<>
                     {
                         publicQuizResults.map((result) => (
-
-                            <Card maxW='15rem' key={result.date_taken}>
+                            <Card m={'10px'} maxW='15rem' key={result.date_taken}>
                                 <CardHeader>
                                     <Flex spacing='4'>
                                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
@@ -106,7 +105,7 @@ export default function PublicQuizzesResult() {
                                         </Flex>
                                     </Flex>
                                 </CardHeader>
-                                <CardBody>
+                                <CardBody style={{fontWeight:'bold'}}>
                                     <Text>Date: {new Date(result.date_taken).toString()}</Text>
                                     <Text> score: {result.right_answers}/{result.total_questions}</Text>
                                     <Text>percentage score: {result.right_answers / result.total_questions * 100}%</Text>
