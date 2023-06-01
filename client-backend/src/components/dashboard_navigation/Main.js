@@ -14,7 +14,9 @@ const Main = ({ isSidebarOpen, openNav }) => {
           <i className="fa-solid fa-bars"></i>
         </button>
         <nav className="container">
-          <div className="logo"></div>
+          <Link to='/'>
+            <div className="logo"></div>
+          </Link>
           <div className="search">
             <input
               type="text"

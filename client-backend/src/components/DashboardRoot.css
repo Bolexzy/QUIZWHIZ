@@ -238,9 +238,6 @@ i:hover {
   .open-btn {
     display: none;
   }
-  .close-btn {
-    display: none;
-  }
 }
 
 .close-btn:hover {

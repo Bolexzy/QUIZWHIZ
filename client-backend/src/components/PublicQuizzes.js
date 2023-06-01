@@ -25,12 +25,9 @@ export default function PublicQuizzes() {
                 }).then((res) => {
                     res.json().then((quiz) => {
                         setPublicQuizzes(quiz)
-                    }).catch((error) => {
-
                     })
-
                 }).catch((err) => {
-                    console.log(err);
+                    alert('failed to get quizzes. please try again')
                 });
             });
         }
@@ -85,9 +82,9 @@ export default function PublicQuizzes() {
                         <Text>Time:</Text>
                         <Text>{quiz.allotted}</Text>
                         <Link to={`/dashboard/takequiz/${quiz.test_id}`}>
-                        <Button colorScheme='teal' variant='outline'>
-                            Take quiz
-                        </Button>
+                            <Button colorScheme='teal' variant='outline'>
+                                Take quiz
+                            </Button>
                         </Link>
 
                     </CardBody>

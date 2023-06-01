@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { firebaseApp, auth } from '../firebase__init_scripts/firebaseAppInit';
 import { useAuthState, useSignOut } from 'react-firebase-hooks/auth';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 
 const Header = () => {
   const [user] = useAuthState(auth);
@@ -19,15 +19,21 @@ const Header = () => {
   return (
     <header className="landing--header">
       <nav className="container">
-        <a href="#" className="logo"></a>
+        <i className="logo"></i>
         <ul className={`links ${isActive ? 'active' : ''}`}>
           <li>How it Works?</li>
           <li>Features</li>
           <li>About us</li>
           {user ? (
-            <li onClick={logout} className="login">
-              signOut
-            </li>
+            <>
+              <Link to='/dashboard'>
+                Dashboard
+              </Link>
+              <li onClick={logout} className="login">
+                signOut
+              </li>
+            </>
+
           ) : (
             <NavLink to="/login" end>
               <li className="login">Login</li>

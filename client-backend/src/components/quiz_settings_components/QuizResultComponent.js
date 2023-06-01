@@ -40,7 +40,9 @@ export default function QuizResultComponent({ quizId }) {
                     .then((resultsArray) => {
                         setReaultsArray(resultsArray)
                     })
-                    .catch((err) => { console.log(err); });
+                    .catch((err) => {
+                         alert('unable to get results, please try again')
+                        });
             });
         }
     }, [user])

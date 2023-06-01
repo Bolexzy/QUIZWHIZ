@@ -62,7 +62,9 @@ export default function QuizSettingPage() {
                         });
 
                     })
-                    .catch((err) => { console.log(err); });
+                    .catch((err) => {
+                        alert('unable to load quiz data. Please try again')
+                    });
             });
         }
     }, [user])
@@ -118,10 +120,10 @@ export default function QuizSettingPage() {
                 },
                 body: JSON.stringify(quizData),
             }).then((res) => {
-                navigate(`/dashboard/setquiz/${quizId}`, {replace:true});
+                navigate(`/dashboard/setquiz/${quizId}`, { replace: true });
                 // res.text().then((text) => { console.log(text) });
             }).catch((err) => {
-                console.log(err);
+                alert('unable to create/update quiz. Please try again.')
             });
 
         });
@@ -243,8 +245,7 @@ export default function QuizSettingPage() {
     }
 
     return (
-
-        <Tabs variant='soft-rounded' colorScheme='green'>
+        <Tabs variant='soft-rounded' colorScheme='green' maxWidth={'100vw'} padding={'30px'}>
             <TabList>
                 <Tab>Quiz Settings</Tab>
                 <Tab>Quiz results</Tab>
@@ -252,7 +253,7 @@ export default function QuizSettingPage() {
             <TabPanels>
                 <TabPanel>
                     <Box maxW='85vw' p='3px' boxSizing='boarder-box' pos='relative' mr='auto' ml='auto'>
-                        <Box>
+                        <Box marginY={'20px'}>
                             <QuizDetails formValues={formValues} handleQuizDetailsChange={handleQuizDetailsChange} handleQuziDetailsFormSubmit={handleQuziDetailsFormSubmit} deleteQuiz={deleteQuiz} />
                         </Box>
                         <Flex justifyContent="space-around" h='100%'>

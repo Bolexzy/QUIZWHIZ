@@ -1,6 +1,7 @@
 // stan
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Text } from '@chakra-ui/react';
 
 const REACT_APP_HOSTB = process.env.REACT_APP_HOSTB || 'http://localhost:4000'
 const REACT_APP_HOSTF = process.env.REACT_APP_HOSTF || 'http://localhost:3000'
@@ -9,7 +10,7 @@ const REACT_APP_HOSTF = process.env.REACT_APP_HOSTF || 'http://localhost:3000'
 const SetQuizCard = ({ quiz }) => {
   return (
     <>
-      <div className="card">
+      <div className="card" style={{height:'auto' }}>
         <Link to={`/dashboard/setquiz/${quiz.test_id}`}>
           <div className="card-img">
             <img
@@ -23,10 +24,11 @@ const SetQuizCard = ({ quiz }) => {
           </div>
         </Link>
 
-        <div className="card-footer" style={{ display: 'flex', flexDirection: 'row' }}>
-          <span style={{ fontSize: '10px' }}>
-            Share quiz link: {`${REACT_APP_HOSTF}/dashboard/takequiz/${quiz.test_id}`}
-          </span>
+        <div className="card-footer" style={{display:'block'}}>
+          <div style={{ fontSize: '10px', position:'relative' }}>
+            <Text mb='1px' style={{padding:'0px'}}>Share quiz link:</Text> 
+            {`${REACT_APP_HOSTF}/dashboard/takequiz/${quiz.test_id}`}
+          </div>
         </div>
       </div>
     </>

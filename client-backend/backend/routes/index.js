@@ -228,22 +228,4 @@ router.get('/adduser', async function (req, res) {
 
 
 
-
-
-// export async function verifyToken(request){
-//   try {
-//     const token = await getToken(request);
-
-//     if (!token) {
-//       return false;
-//     }
-
-//     const payload = await auth.verifyIdToken(token);
-//     return payload !== null;
-//   } catch (err) {
-//     return false;
-//   }
-// }
-
-
 module.exports = { router, admin };

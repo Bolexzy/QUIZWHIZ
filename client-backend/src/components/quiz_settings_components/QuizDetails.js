@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Flex } from '@chakra-ui/react'
+import { Container ,Button, Flex } from '@chakra-ui/react'
 import {
     Text,
     Box,
@@ -27,7 +27,12 @@ const QuizDetails = ({ formValues, handleQuizDetailsChange, handleQuziDetailsFor
                                         ) : (
                                             <>
                                                 {
-                                                    // question.answer.length > 0 ? question.answer.map((letter) => <Text fontFamily='cursive' color='black'>Ans{')'}  {question.options[letter]}</Text>) : (<Text color='CaptionText' opacity='0.6'>No Option selected yet</Text>)
+                                                    <>
+                                                    <Text>{formValues.title}</Text>
+                                                    <Container>
+                                                        {formValues.description}
+                                                    </Container>
+                                                    </>
                                                 }
                                             </>
                                         )}

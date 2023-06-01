@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
+import { Flex, Box, SkeletonCircle, SkeletonText } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { Navigate, useNavigate } from "react-router-dom";
 import { firebaseApp, auth } from '../firebase__init_scripts/firebaseAppInit';
@@ -14,6 +14,7 @@ export default function QuizTakingPage() {
   const [user, loading, error] = useAuthState(auth);
   const [shouldRedirect, setShouldRedirect] = useState(false);
   const [quizInfo, setQuizInfo] = useState({});
+  const [loadingQuizInfo, setLoadingQuizInfo] = useState(true);
 
   const [startQuiz, setStartQuiz] = useState(false);
   const [quizObject, setQuizObject] = useState({});
@@ -25,11 +26,14 @@ export default function QuizTakingPage() {
 
   let { quizId } = useParams();
 
+  const [submittingQuiz, setSubmittingQuiz] = useState(false);
+
+
 
   const handleStartQuiz = () => {
     user.getIdToken().then((token) => {
       fetch(`${REACT_APP_HOSTB}/taketest/${quizId}`, {
-        method:'GET',
+        method: 'GET',
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -42,6 +46,8 @@ export default function QuizTakingPage() {
           setStartTime(Date.now());
           setEndTime((res.allotted_time_in_mins * 60 * 1000) + Date.now());
         })
+      }).catch(() => {
+        alert('failed to get quiz. please try again')
       });
     });
   };
@@ -63,22 +69,27 @@ export default function QuizTakingPage() {
             }).then((res) => {
               res.json()
                 .then((QuizDetail) => {
+                  setLoadingQuizInfo(false)
                   setQuizInfo(QuizDetail)
                 })
+            }).catch(() => {
+              alert('failed to load quiz information. please try again')
             });
           });
       }
     }
   }, [user, loading, quizId]);
 
+  const submitAttempts = useRef(0)
 
-  const submitQuiz = ()=>{
+  const submitQuiz = () => {
+    setSubmittingQuiz(true)
     let quiztoSubmit = quizObject;
-    quiztoSubmit.questions =  quizArrayRef.current;
+    quiztoSubmit.questions = quizArrayRef.current;
     console.log(quiztoSubmit)
     user.getIdToken().then((token) => {
       fetch(`${REACT_APP_HOSTB}/submit/${quizId}`, {
-        method:'POST',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`
@@ -87,19 +98,24 @@ export default function QuizTakingPage() {
       }).then((res) => {
         res.text().then((res) => {
           console.log(res)
-          navigate('/dashboard', {replace: true})
+          navigate('/dashboard', { replace: true })
         })
+      }).catch(() => {
+        if (submitAttempts.current < 1000) {
+          setTimeout(submitQuiz(), 10000);
+          submitAttempts.current++
+        }
       });
     });
   }
 
-  const updateQuizQuestionsarray =(quizQuestions)=>{
+  const updateQuizQuestionsarray = (quizQuestions) => {
     quizArrayRef.current = quizQuestions;
   }
 
-  
 
-  if (loading) {
+
+  if (loading || loadingQuizInfo) {
     return (
       <Box padding='6' boxShadow='lg' bg='white'>
         <SkeletonCircle size='10' />
@@ -136,10 +152,18 @@ export default function QuizTakingPage() {
     );
   }
 
+  if (submittingQuiz) {
+    return (
+      <Box>
+        Submitting Quiz...
+      </Box>
+    )
+  }
+
   return (
     <div className="quiz-page-container">
       <QuizInfo startTime={startTime} endTime={endTime} submitQuiz={submitQuiz} />
-      <QuizWindow questions={quizObject.questions} updateQuizQuestionsarray={updateQuizQuestionsarray}/>
+      <QuizWindow questions={quizObject.questions} updateQuizQuestionsarray={updateQuizQuestionsarray} />
     </div>
   );
 }
