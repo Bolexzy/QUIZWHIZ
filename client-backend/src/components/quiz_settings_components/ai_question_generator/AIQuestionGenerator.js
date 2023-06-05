@@ -13,7 +13,7 @@ import './AIQuestionGenerator.css';
 const { Configuration, OpenAIApi } = require("openai");
 
 const configuration = new Configuration({
-    apiKey: "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",
+    apiKey: process.env.REACT_APP_OPENAI_APIKEY,
 });
 const openai = new OpenAIApi(configuration);
 
