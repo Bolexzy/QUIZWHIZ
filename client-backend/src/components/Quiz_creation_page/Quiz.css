@@ -51,7 +51,11 @@ body {
   margin-right: auto; */
   padding: 0.9rem;
   background-color: var(--accent-cream);
-  background-image: linear-gradient(to top right, var(--accent-grey), var(--accent--cream) );
+  background-image: linear-gradient(
+    to top right,
+    var(--accent-grey),
+    var(--accent--cream)
+  );
   margin: 0.7rem;
   border-radius: 0.75rem;
   overflow: hidden;
@@ -195,7 +199,7 @@ form {
   justify-content: space-between;
 }
 
-button[type='submit'] {
+.quiz--page button[type='submit'] {
   appearance: none;
   background-color: transparent;
   border: 0.125em solid #1a1a1a;

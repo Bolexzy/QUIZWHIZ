@@ -81,7 +81,7 @@ body {
   justify-content: space-evenly;
 }
 
-button {
+.quiz-page-container button {
   width: fit-content;
   min-width: 100px;
   height: 45px;
@@ -105,8 +105,6 @@ button:hover {
 button:active {
   transform: scale(0.95);
 }
-
-
 
 /* Quiz Info Component */
 .quiz-container {
