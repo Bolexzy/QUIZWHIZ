@@ -46,12 +46,6 @@ const Main = ({ isSidebarOpen, openNav }) => {
               </Link>
 
             </i>
-            <a href="/learning/">
-              <i
-                className="fa-solid fa-bell fa-2xl"
-                style={{ color: '#0d0d0d' }}
-              ></i>
-            </a>
           </div>
         </nav>
         <hr></hr>

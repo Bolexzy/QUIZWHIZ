@@ -95,7 +95,7 @@ const Sidebar = ({ isSidebarOpen, closeNav }) => {
       </div>
 
 
-      <div className="score--streak" style={{ position: 'relative' }}>
+      {/* <div className="score--streak" style={{ position: 'relative' }}>
         <h4 style={{ textAlign: 'center' }}>Achievements</h4>
         <p style={{ textAlign: 'center' }}>
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Esse veniam
@@ -103,22 +103,22 @@ const Sidebar = ({ isSidebarOpen, closeNav }) => {
           dignissimos quidem delectus consectetur ratione vitae, voluptatibus,
           veritatis maxime ullam.
         </p>
-      </div>
+      </div> */}
 
       <div className="side--footer" style={{ position: 'absolute', bottom: 0 }}>
         <div className="pages">
-          <a href="/learning/about">About</a>
-          <a href="/learning/features">Features</a>
-          <a href="/learning/contact">Contact</a>
+          <Link to="/">About</Link>
+          <Link to="/">Features</Link>
+          <Link to="/">Contact</Link>
         </div>
 
         <div className="exit--setting">
           <span href="/learning/logout" onClick={logout}>
             <i className="fa-solid fa-right-from-bracket fa-xl"></i>
           </span>
-          <a href="/learning/setting">
+          {/* <a href="/learning/setting">
             <i className="fa-solid fa-gear fa-xl"></i>
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

@@ -16,7 +16,9 @@ const Header = () => {
     <header className="landing--header w-100">
       <nav className="navbar navbar-expand-lg  py-4 fixed-top container-sm">
         <div className="container-fluid">
-          <a className="navbar-brand me-auto ms-md-5" href="/" role="button">
+
+        <Link to='/' replace='true'>
+          <div className="navbar-brand me-auto ms-md-5" href="/" role="button">
             <img
               src={logo}
               alt="quizwhiz"
@@ -24,7 +26,8 @@ const Header = () => {
               height="auto"
               className="img-fluid "
             />
-          </a>
+          </div>
+          </Link>
           <button
             className="navbar-toggler focus-ring"
             style={{ '--bs-focus-ring-color': '#e0e0e0' }}
