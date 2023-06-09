@@ -54,7 +54,7 @@ const LoginPage = () => {
                 // The email of the user's account used.
                 const email = error.customData.email;
                 // The AuthCredential type that was used.
-                console.log('signin failed', error)
+                // console.log('signin failed', error)
                 setLoginError('An error occurred during login. Please try again.');
                 const credential = GoogleAuthProvider.credentialFromError(error);
                 // ...

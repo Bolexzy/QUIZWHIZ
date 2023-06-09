@@ -3,7 +3,7 @@ var router = express.Router();
 
 const admin = require("firebase-admin");
 
-const { getNumOfRightAnswers } = require('../helper functions/quizMarker');
+const { getNumOfRightAnswers } = require('../helper_functions/quizMarker');
 
 
 admin.initializeApp({
@@ -50,7 +50,7 @@ router.get('/quiz/:quizId', async function (req, res) {
 
   //if entry exists in the database
   if (quiz === undefined) {
-    res.status(401).json({ status: 'error', message: 'Not authorized' })
+    res.status(404).json({ status: 'error', message: 'Not Found' })
   } else if (quiz.user_id !== authUser.uid) {
     res.status(401).json({ status: 'error', message: 'Not authorized' })
   }
@@ -118,10 +118,10 @@ router.get('/quiz/result/:quizId', async function (req, res) {
     let quizOwner = quizAuthorSnapshot.data();
 
     if (quizOwner.uid !== authUser.uid) {
-      res.append('Cache-Control', 'max-age=300')
+      res.append('Cache-Control', 'max-age=10')
       res.status(401).json({ status: 'error', message: 'Not authorized' })
     } else {
-      res.append('Cache-Control', 'max-age=300')
+      res.append('Cache-Control', 'max-age=10')
       res.json(newResults)
     }
   }
@@ -143,7 +143,7 @@ router.get('/quizinfo/:quizId', async function (req, res) {
   result.forEach((quizDoc) => {
     newResults.push(quizDoc.data())
   })
-  res.append('Cache-Control', 'max-age=300')
+  res.append('Cache-Control', 'max-age=10')
   res.json(newResults[0])
 });
 
@@ -217,7 +217,7 @@ router.get('/result/:userId', async function (req, res) {
     result.forEach((quizDoc) => {
       newResults.push(quizDoc.data())
     })
-    res.append('Cache-Control', 'max-age=300')
+    res.append('Cache-Control', 'max-age=10')
     res.json(newResults)
   }
 });
@@ -247,7 +247,7 @@ router.get('/public/quiz', async function (req, res) {
     newResults.push(docData)
   }
 
-  res.append('Cache-Control', 'max-age=300')
+  res.append('Cache-Control', 'max-age=10')
   res.json(newResults)
 });
 
@@ -266,10 +266,10 @@ router.get('/public/results/:quizId', async function (req, res) {
     resultsSnapshot.forEach((resultDoc) => {
       results.push(resultDoc.data())
     })
-    res.append('Cache-Control', 'max-age=300')
+    res.append('Cache-Control', 'max-age=10')
     res.json(results)
   } else {
-    res.append('Cache-Control', 'max-age=300')
+    res.append('Cache-Control', 'max-age=10')
     res.status(401).json({ status: 'error', message: 'Not authorized' })
   }
 });

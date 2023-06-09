@@ -26,15 +26,14 @@ const AIQuestionGenerator = ({ extendQuizArray, appendQuestionToQuiz }) => {
     const [level, setLevel] = useState('');
 
     const buttonRef = useRef([]);
-
-
     const [question, setQuestion] = useState('');
+
+
     const submitSecondForm = async (e) => {
         disableAllAIButton();
         e.preventDefault();
 
 
-        console.log(question);
         let prompt = AIGenerateSingleQuestion(question);
 
         let completion;

@@ -145,7 +145,7 @@ const Content = () => {
                 <Flex style={{flexDirection:'column'}}>
                    <Text>Sort by</Text>
                     <Select mb='30px' placeholder='Select option' maxW='15rem' onChange={sortResult}>
-                        <option value='name'>name</option>
+                        {/* <option value='name'>name</option> */}
                         <option value='score'>score</option>
                         <option value='date'>date</option>
                     </Select>
