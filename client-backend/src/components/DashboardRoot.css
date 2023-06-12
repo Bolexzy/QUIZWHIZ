@@ -16,9 +16,21 @@ body {
   background-repeat: no-repeat !important;
 }
 
+.dashboard--header .navbar {
+  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1) !important;
+}
+
+.menuDisplayed {
+  padding-left: 300px !important;
+}
+
+.fixed-top {
+  z-index: 1;
+}
+
 #main {
   transition: margin-left 0.5s;
-  padding-right: 15px;
+  margin-bottom: 70px;
 }
 
 a {
@@ -29,71 +41,71 @@ a {
 }
 
 /* header styles starts here */
-
+/* 
 #main header .container {
   display: flex;
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
-}
+} */
 
 /* Small */
-@media (min-width: 768px) {
+/* @media (min-width: 768px) {
   #main header .container {
     width: 750px;
   }
-}
+} */
 /* Medium */
-@media (min-width: 992px) {
+/* @media (min-width: 992px) {
   #main header .container {
     width: 970px;
   }
-}
+} */
 /* Large */
-@media (min-width: 1200px) {
+/* @media (min-width: 1200px) {
   #main header .container {
     width: 100%;
   }
-}
+} */
 
-#main header {
+/* #main header {
   display: flex;
   padding: 0px;
   width: 100vw;
-  background-color: #fff;
-  /* justify-content: first baseline; */
-  /* background-color: blue; */
-  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
-}
-
+  background-color: #fff; */
+/* justify-content: first baseline; */
+/* background-color: blue; */
+/* box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
+} */
+/* 
 @media (max-width: 767px) {
   #main header {
     min-height: auto;
     display: initial;
   }
-}
+} */
 
-@media (max-width: 767px) {
+/* @media (max-width: 767px) {
   #main header .container {
     flex-direction: column;
     justify-content: center;
   }
-}
+} */
 
-#main header .logo {
+/* #main header .logo {
   width: 130px;
   height: 60px;
   background-image: url('../assets/images/logo.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
-}
+} */
 
 hr {
   border: 0.527835px solid #ecece8;
 }
 
-.nav--menu {
+/* .nav--menu {
   margin-left: auto;
   margin-right: auto;
   align-self: center;
@@ -102,11 +114,10 @@ hr {
 .nav--menu a {
   cursor: pointer;
   margin-right: 50px;
-}
+} */
 
-.nav--menu a:hover,
-i:hover {
-  color: #f1f1f1;
+.add-icon i:hover {
+  color: #0b7b03 !important;
 }
 
 /* header styles ends here */
@@ -171,22 +182,26 @@ i:hover {
 
 /* sidebar starts here */
 
-.sidebar {
+.sidebar-wrapper {
+  z-index: 1;
   height: 100%;
-  position: fixed;
+  position: absolute;
   z-index: 1;
   top: 0;
   left: 0;
   /* background-color: #f8dda4; */
   overflow-x: hidden;
+  overflow-y: hidden;
+  opacity: 0.9;
+  transition: all 0.5s;
   border-radius: 0 10px 5px 0;
-  transition: 0.5s;
   padding-top: 60px;
-  background-color: #f8dda4;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23f9a03f' fill-opacity='0.64' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+  background-color: #000000;
+  color: white;
+  /* background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23f9a03f' fill-opacity='0.64' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E"); */
 }
 
-.sidebar .close-btn {
+.sidebar-wrapper .close-btn {
   position: absolute;
   top: 0;
   right: 25px;
@@ -199,8 +214,7 @@ i:hover {
   cursor: pointer;
   background-color: transparent;
   border: none;
-  padding-left: 0.9375rem;
-  padding-top: 0.65rem;
+  padding: 0.9375rem;
   align-self: center;
 }
 
@@ -214,10 +228,10 @@ i:hover {
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
 @media screen and (max-height: 450px) {
-  .sidebar {
+  .sidebar-wrapper {
     padding-top: 15px;
   }
-  .sidebar a {
+  .sidebar-wrapper a {
     font-size: 18px;
   }
 }
@@ -226,10 +240,10 @@ i:hover {
 @media screen and (max-width: 700px) {
   #profile--sidebar {
     width: 100%;
-    height: auto;
-    position: relative;
+    height: 100%;
+    /* position: relative; */
   }
-  .sidebar a {
+  .sidebar-wrapper a {
     float: left;
   }
   #main {
@@ -246,7 +260,7 @@ i:hover {
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
 @media screen and (max-width: 400px) {
-  .sidebar a {
+  .sideba-wrapper a {
     text-align: center;
     float: none;
   }
@@ -262,17 +276,17 @@ i:hover {
   border-radius: 50%;
 }
 
-.sidebar h3 {
+.sidebar-wrapper h3 {
   font-weight: 400;
   font-size: 22px;
   line-height: 33px;
   /* display: flex;
   justify-content: space-around; */
   text-align: center;
-  color: #000000;
+  color: white;
 }
 
-.sidebar .stats {
+.sidebar-wrapper .stats {
   width: 100%;
   height: 200px;
   display: flex;
@@ -287,7 +301,7 @@ i:hover {
   font-weight: bold;
 }
 
-.sidebar .stats .quiz--total {
+.sidebar-wrapper .stats .quiz--total {
   width: 120px;
   background: #f9a03f;
   opacity: 0.5;
@@ -300,7 +314,7 @@ i:hover {
   flex-direction: column;
 }
 
-.sidebar .stats .iq--level {
+.sidebar-wrapper .stats .iq--level {
   width: 120px;
   background: var(--accent-green);
   opacity: 0.5;
@@ -339,7 +353,8 @@ i:hover {
   padding-top: 0.75rem;
   text-align: center;
   align-items: center;
-  background-color: #813405;
+  background-color: #767575;
+  color: white;
   border-radius: 5px 5px 0 0;
 }
 
@@ -355,13 +370,13 @@ i:hover {
   padding: 8px 8px 8px 10px;
   text-decoration: none;
   font-size: 0.875rem;
-  color: #818181;
+  color: #fff;
   transition: 0.3s;
 }
 
 .side--footer a:hover,
 .exit--setting i:hover {
-  color: #f1f1f1;
+  color: #d0cece;
 }
 
 /* sidebar ends here */

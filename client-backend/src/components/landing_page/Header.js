@@ -16,17 +16,20 @@ const Header = () => {
     <header className="landing--header w-100">
       <nav className="navbar navbar-expand-lg  py-4 fixed-top container-sm">
         <div className="container-fluid">
-
-        <Link to='/' replace='true'>
-          <div className="navbar-brand me-auto ms-md-5" href="/" role="button">
-            <img
-              src={logo}
-              alt="quizwhiz"
-              width="150"
-              height="auto"
-              className="img-fluid "
-            />
-          </div>
+          <Link to="/" replace="true">
+            <div
+              className="navbar-brand me-auto ms-md-5"
+              href="/"
+              role="button"
+            >
+              <img
+                src={logo}
+                alt="quizwhiz"
+                width="150"
+                height="auto"
+                className="img-fluid "
+              />
+            </div>
           </Link>
           <button
             className="navbar-toggler focus-ring"

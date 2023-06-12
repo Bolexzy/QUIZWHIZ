@@ -193,7 +193,7 @@ answer container style  end */
   display: none;
 }
 
-form {
+.quiz--page form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;

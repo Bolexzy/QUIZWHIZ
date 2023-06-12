@@ -80,13 +80,13 @@ const Team = () => {
         <div className="card-body">
           <ul className="list-inline mb-0 text-center">
             <li className="list-inline-item">
-              <a href="/">
+              <a href="https://twitter.com/wisdom209">
                 <span className="fa-brands fa-twitter"></span>
               </a>
             </li>
 
             <li className="list-inline-item">
-              <a href="/">
+              <a href="https://linkedin.com/in/ononiwuwisdom">
                 <span className="fa-brands fa-linkedin-in"></span>
               </a>
             </li>

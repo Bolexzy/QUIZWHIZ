@@ -16,10 +16,10 @@ body {
   background-repeat: no-repeat !important;
 }
 
-#main {
+/* #main {
   transition: margin-left 0.5s;
   padding-right: 15px;
-}
+} */
 
 a {
   line-height: 1em;
@@ -30,89 +30,38 @@ a {
 
 /* header styles starts here */
 
-#main header .container {
+/* #main header .container {
   display: flex;
   width: 100%;
   padding-left: 15px;
   padding-right: 15px;
-}
+} */
 
 /* Small */
-@media (min-width: 768px) {
-  #main header .container {
-    width: 750px;
-  }
-}
-/* Medium */
-@media (min-width: 992px) {
-  #main header .container {
-    width: 970px;
-  }
-}
-/* Large */
-@media (min-width: 1200px) {
-  #main header .container {
-    width: 100%;
-  }
-}
 
-#main header {
+/* #main header {
   display: flex;
   padding: 0px;
   width: 100vw;
   background-color: #fff;
   /* justify-content: first baseline; */
-  /* background-color: blue; */
-  box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
-}
+/* background-color: blue; */
+/*box-shadow: 0px 2.98256px 7.4564px rgba(0, 0, 0, 0.1);
+} */
 
-@media (max-width: 767px) {
-  #main header {
-    min-height: auto;
-    display: initial;
-  }
-}
-
-@media (max-width: 767px) {
-  #main header .container {
-    flex-direction: column;
-    justify-content: center;
-  }
-}
-
-#main header .logo {
+/* #main header .logo {
   width: 130px;
   height: 60px;
   background-image: url('../../assets/images/logo.png');
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center center;
-}
-
-hr {
-  border: 0.527835px solid #ecece8;
-}
-
-.nav--menu {
-  margin-left: auto;
-  margin-right: auto;
-  align-self: center;
-}
-
-.nav--menu a {
-  cursor: pointer;
-  margin-right: 50px;
-}
-
-.nav--menu a:hover,
-i:hover {
-  color: #f1f1f1;
-}
+} */
 
 /* header styles ends here */
 
 /* header nav search input start */
-.search {
+/* .search {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -131,8 +80,8 @@ i:hover {
   width: 12em;
   transition: all ease-in-out 0.5s;
   margin-right: -2rem;
-}
-
+} */
+/* 
 .search__input:hover,
 .search__input:focus {
   box-shadow: 0 0 1em #00000013;
@@ -156,9 +105,9 @@ i:hover {
   border: none;
   background-color: #f4f2f2;
   margin-top: 0.1em;
-}
+} */
 
-.search__button:hover {
+/* .search__button:hover {
   cursor: pointer;
 }
 
@@ -166,35 +115,35 @@ i:hover {
   height: 1.3em;
   width: 1.3em;
   fill: #b4b4b4;
-}
+} */
 /* header nav search input end */
 
 /* sidebar starts here */
 
-.sidebar {
+/* .sidebar {
   height: 100%;
   position: fixed;
   z-index: 1;
   top: 0;
-  left: 0;
-  /* background-color: #f8dda4; */
-  overflow-x: hidden;
+  left: 0; */
+/* background-color: #f8dda4; */
+/* overflow-x: hidden;
   border-radius: 0 10px 5px 0;
   transition: 0.5s;
   padding-top: 60px;
   background-color: #f8dda4;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%23f9a03f' fill-opacity='0.64' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
-}
+} */
 
-.sidebar .close-btn {
+/* .sidebar .close-btn {
   position: absolute;
   top: 0;
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
-}
+} */
 
-.open-btn {
+/* .open-btn {
   font-size: 1.875rem;
   cursor: pointer;
   background-color: transparent;
@@ -202,28 +151,28 @@ i:hover {
   padding-left: 0.9375rem;
   padding-top: 0.65rem;
   align-self: center;
-}
+} */
 
-.open-btn i {
+/* .open-btn i {
   color: var(--accent-brown);
 }
 
 .open-btn i:hover {
   color: var(--primary-orange);
-}
+} */
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
-@media screen and (max-height: 450px) {
+/* @media screen and (max-height: 450px) {
   .sidebar {
     padding-top: 15px;
   }
   .sidebar a {
     font-size: 18px;
   }
-}
+} */
 
 /* On screens that are less than 700px wide, make the sidebar into a topbar */
-@media screen and (max-width: 700px) {
+/* @media screen and (max-width: 700px) {
   #profile--sidebar {
     width: 100%;
     height: auto;
@@ -238,14 +187,14 @@ i:hover {
   .open-btn {
     display: none;
   }
-}
-
+} */
+/* 
 .close-btn:hover {
   color: red;
-}
+} */
 
 /* On screens that are less than 400px, display the bar vertically, instead of horizontally */
-@media screen and (max-width: 400px) {
+/* @media screen and (max-width: 400px) {
   .sidebar a {
     text-align: center;
     float: none;
@@ -260,19 +209,19 @@ i:hover {
   width: 100%;
   height: 150px;
   border-radius: 50%;
-}
+} */
 
-.sidebar h3 {
+/* .sidebar h3 {
   font-weight: 400;
   font-size: 22px;
-  line-height: 33px;
-  /* display: flex;
+  line-height: 33px; */
+/* display: flex;
   justify-content: space-around; */
-  text-align: center;
+/* text-align: center;
   color: #000000;
-}
+} */
 
-.sidebar .stats {
+/* .sidebar .stats {
   width: 100%;
   height: 200px;
   display: flex;
@@ -285,9 +234,9 @@ i:hover {
 #iq {
   color: red;
   font-weight: bold;
-}
+} */
 
-.sidebar .stats .quiz--total {
+/* .sidebar .stats .quiz--total {
   width: 120px;
   background: #f9a03f;
   opacity: 0.5;
@@ -298,9 +247,9 @@ i:hover {
   align-items: center;
   text-align: center;
   flex-direction: column;
-}
+} */
 
-.sidebar .stats .iq--level {
+/* .sidebar .stats .iq--level {
   width: 120px;
   background: var(--accent-green);
   opacity: 0.5;
@@ -321,9 +270,9 @@ i:hover {
   font-size: 1.375rem;
   text-align: left;
   padding-left: 20px;
-}
+} */
 
-.score--streak p {
+/* .score--streak p {
   font-size: 0.75rem;
   padding: 0.625rem;
   text-align: right;
@@ -341,9 +290,9 @@ i:hover {
   align-items: center;
   background-color: #813405;
   border-radius: 5px 5px 0 0;
-}
+} */
 
-.side--footer .exit--setting {
+/* .side--footer .exit--setting {
   display: flex;
   justify-content: space-around;
   flex-direction: row;
@@ -357,16 +306,20 @@ i:hover {
   font-size: 0.875rem;
   color: #818181;
   transition: 0.3s;
-}
+} */
 
-.side--footer a:hover,
+/* .side--footer a:hover,
 .exit--setting i:hover {
   color: #f1f1f1;
-}
+} */
 
 /* sidebar ends here */
 
 /* home content starts here */
+
+.home-wrapper {
+  margin-top: auto;
+}
 
 .home--content {
   /* display: flex;
