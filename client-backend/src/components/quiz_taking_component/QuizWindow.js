@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Question from './Question';
 
-export default function QuizWindow({questions, updateQuizQuestionsarray}) {
+export default function QuizWindow({ questions, updateQuizQuestionsarray }) {
   const [quiz, setQuiz] = useState(questions);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [render, toggleRender] = useState(false);
@@ -48,14 +48,14 @@ export default function QuizWindow({questions, updateQuizQuestionsarray}) {
           toggleRender(!render);
         }
       }
-      updateQuizQuestionsarray(prevState)
+      updateQuizQuestionsarray(prevState);
       return prevState; // Return the updated state
     });
   };
 
-  useEffect(()=>{
-    updateQuizQuestionsarray(quiz)
-  },[])
+  useEffect(() => {
+    updateQuizQuestionsarray(quiz);
+  }, []);
 
   return (
     <div className="layout">

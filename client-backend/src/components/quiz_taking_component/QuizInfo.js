@@ -52,7 +52,7 @@ export default function QuizInfo({ startTime, endTime, submitQuiz }) {
 
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between' }} className='p-2'>
             <div>Remaining time : {minref.current}:{secref.current}</div>
             <div>
                 <Button colorScheme='green' onClick={submitQuiz}>Submit</Button>

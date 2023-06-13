@@ -83,7 +83,7 @@ body {
 
 .quiz-page-container button {
   width: fit-content;
-  min-width: 100px;
+  min-width: 60px;
   height: 45px;
   padding: 8px;
   border-radius: 5px;
