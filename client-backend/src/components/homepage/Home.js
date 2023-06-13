@@ -132,7 +132,7 @@ const Content = () => {
 
   return (
     <div className="container home-wrapper">
-      <div className="home--content ">
+      <div className="home--content container ">
         <h2>My Quizzes</h2>
         <p>These are the quiz you have set. Click to edit</p>
         {loadingYourQuizzes ? (
@@ -143,8 +143,8 @@ const Content = () => {
           </Stack>
         ) : (
           <div
-            className="quiz--cards"
-            style={{ display: 'flex', flexWrap: 'wrap' }}
+            className="d-flex align-items-stretch flex-wrap justify-content-evenly  flex-sm-row"
+            // style={{ display: 'flex', flexWrap: 'wrap' }}
           >
             {questionsSet.length > 0 ? (
               setQuizElements
@@ -166,7 +166,7 @@ const Content = () => {
           </Stack>
         ) : (
           <div
-            className="quiz--cards"
+            className="d-flex align-items-stretch flex-wrap justify-content-evenly  flex-sm-row"
             style={{ display: 'flex', flexWrap: 'wrap' }}
           >
             {quizResultElements.length > 0 ? (

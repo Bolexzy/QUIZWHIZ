@@ -135,7 +135,7 @@ export default function QuizTakingPage() {
 
   if (!startQuiz) {
     return (
-      <div className="quiz-container">
+      <div className="container quiz-container mt-5">
         <h1 className="quiz-title">{quizInfo.title}</h1>
         <p className="quiz-description">{quizInfo.description}</p>
         {quizInfo.quiz_start_time ?
@@ -166,7 +166,7 @@ export default function QuizTakingPage() {
   }
 
   return (
-    <div style={{minWidth:'450px'}} className="quiz-page-container">
+    <div style={{minWidth:'450px'}} className="quiz-page-container mb-5">
       <QuizInfo startTime={startTime} endTime={endTime} submitQuiz={submitQuiz} />
       <QuizWindow questions={quizObject.questions} updateQuizQuestionsarray={updateQuizQuestionsarray} />
     </div>

@@ -401,7 +401,7 @@ hr {
 
 /* quiz card css starts here */
 
-.quiz--cards {
+/* .quiz--cards {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -416,9 +416,9 @@ hr {
   position: relative;
   overflow: visible;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-}
+} */
 
-.card-img {
+/* .card-img {
   background-color: #ffcaa6;
   height: 40%;
   width: 100%;
@@ -433,9 +433,9 @@ hr {
   background-size: contain;
   border-radius: 0.5rem;
   transition: 0.3s ease;
-}
+} */
 
-.card-info {
+/* .card-info {
   padding-top: 10%;
 }
 
@@ -446,9 +446,9 @@ hr {
   align-items: center;
   padding-top: 10px;
   border-top: 1px solid #ddd;
-}
+} */
 /*Text*/
-.text-title {
+/* .text-title {
   font-weight: 900;
   font-size: 1.2em;
   line-height: 1.5;
@@ -457,7 +457,7 @@ hr {
 .text-body {
   font-size: 0.9em;
   padding-bottom: 10px;
-}
+} */
 
 /*Button*/
 .card-button {
